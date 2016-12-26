@@ -8,6 +8,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK.Menu;
+using System.Collections.Generic;
 
 namespace ARAMDetFull
 {
@@ -34,7 +35,7 @@ namespace ARAMDetFull
          *  -Make velkoz
          */
         public static TextWriter defaultOut;
-
+        public delegate void OnGameEndHandler(bool win);
 
         public ARAMDetFull()
         {
@@ -50,9 +51,16 @@ namespace ARAMDetFull
         {
             get { return (int)DateTime.Now.TimeOfDay.TotalMilliseconds; }
         }
-        
+
+        public static List<int> allyIds;
+        public static List<int> enemyIds;
+
         private static void onLoad(object sender)
         {
+            r = new Random();
+            allyIds = new List<int>();
+            enemyIds = new List<int>();
+
             gameStart = now;
             Chat.Print("<font size='30'>AramDetFull</font> <font color='#b756c5'>ported by Hesa & Ouija</font>");
             try
@@ -72,22 +80,82 @@ namespace ARAMDetFull
                 
                 Drawing.OnDraw += onDraw;
                 Game.OnUpdate += OnGameUpdate;
-                Game.OnEnd += OnGameEnd;
+                Game.OnNotify += Game_OnNotify;
+                
+                var gameEndNotified = false;
+
+                OnGameEnd += ARAMDetFull_OnGameEnd;
+
+                Game.OnTick += delegate
+                {
+                    if (gameEndNotified)
+                    {
+                        return;
+                    }
+                    var nexus = ObjectManager.Get<Obj_HQ>();
+                    if (nexus == null)
+                    {
+                        return;
+                    }
+                    if (nexus.Any(n => n.IsDead || n.Health.Equals(0)))
+                    {
+                        var win = ObjectManager.Get<Obj_HQ>().Any(n => n.Health.Equals(0));
+                        OnGameEnd?.Invoke(win);
+                        gameEndNotified = true;
+                    }
+                };
+
                 ARAMSimulator.setupARMASimulator();
+
+                foreach (AIHeroClient ally in EloBuddy.SDK.EntityManager.Heroes.Allies)
+                {
+                    allyIds.Add(ally.NetworkId);
+                }
+
+                foreach (AIHeroClient enemy in EloBuddy.SDK.EntityManager.Heroes.Enemies)
+                {
+                    enemyIds.Add(enemy.NetworkId);
+                }
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex);
             }
         }
-        
 
-        private static void OnGameEnd(EventArgs args)
+        private static void Game_OnNotify(GameNotifyEventArgs args)
         {
-            Thread.Sleep(5000);//Stole from myo lol
-            Game.QuitGame();
+            if (args.EventId == GameEventId.OnChampionKill)
+            {
+                if (allyIds.Contains((int)args.NetworkId))
+                {
+                    teamKills++;
+                }
+                else
+                {
+                    enemyKills++;
+                }
+            }
+            if (args.EventId == GameEventId.OnChampionPentaKill && allyIds.Contains((int)args.NetworkId))
+            {
+                Chat.Say("ez");
+            }
+
+            if (args.EventId == GameEventId.OnSurrenderVote)
+                Core.DelayAction(() => Chat.Say("/ff"), r.Next(2000, 5000));
         }
+
+        public static Random r { get; private set; }
+
+        public static int teamKills;
+        public static int enemyKills;
         
+        private static void ARAMDetFull_OnGameEnd(bool win)
+        {
+            var rnd = new Random().Next(15000, 30000) + Game.Ping;
+            Core.DelayAction(() => { Game.QuitGame(); }, rnd);
+        }
+
         private static void onDraw(EventArgs args)
         {
             return;
@@ -141,6 +209,7 @@ namespace ARAMDetFull
             }
         }
 
+        public static event OnGameEndHandler OnGameEnd;
         private static int lastTick = now;
 
         private static int tickTimeRng = 77;

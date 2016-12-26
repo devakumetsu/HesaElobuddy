@@ -1,5 +1,4 @@
-﻿using EloBuddy.SDK;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace ARAMDetFull
@@ -16,7 +15,7 @@ namespace ARAMDetFull
 
         public static int getAgroBalance()
         {
-            agresiveMoves.RemoveAll(mov => mov.endAt < Core.GameTickCount);
+            agresiveMoves.RemoveAll(mov => mov.endAt < ARAMDetFull.now);
             if (!agresiveMoves.Any())
                 return 0;
             return agresiveMoves.Max(agr => agr.agroBalance);
@@ -24,14 +23,14 @@ namespace ARAMDetFull
 
         public static bool getIgnoreMinions()
         {
-            agresiveMoves.RemoveAll(mov => mov.endAt < Core.GameTickCount);
+            agresiveMoves.RemoveAll(mov => mov.endAt < ARAMDetFull.now);
             
             return agresiveMoves.Any(agr => agr.ignoreMinions);
         }
 
         public static bool getOneTime()
         {
-            agresiveMoves.RemoveAll(mov => mov.endAt < Core.GameTickCount);
+            agresiveMoves.RemoveAll(mov => mov.endAt < ARAMDetFull.now);
 
             return agresiveMoves.Any(agr => agr.oneTimeUse);
         }
@@ -46,7 +45,7 @@ namespace ARAMDetFull
         public AgresiveMove(int agro = 10, int duration = 5000, bool ignoreMins = false, bool oneTime = false)
         {
             agroBalance = 10;
-            endAt = Core.GameTickCount + duration;
+            endAt = ARAMDetFull.now + duration;
             ignoreMinions = ignoreMins;
             oneTimeUse = oneTime;
         }

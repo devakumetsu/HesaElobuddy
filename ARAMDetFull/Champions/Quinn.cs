@@ -7,20 +7,8 @@ namespace ARAMDetFull.Champions
 {
     class Quinn : Champion
     {
-
-        public override void useQ(Obj_AI_Base target)
+        public Quinn()
         {
-            if (!Q.IsReady())
-                return;
-            if (IsValorMode() && player.Distance(target,true) <= 375*375)
-            {
-                Q.Cast();
-            }
-            if (!IsValorMode())
-            {
-                Q.Cast(target);
-            }
-
             ARAMSimulator.champBuild = new Build
             {
                 coreItems = new List<ConditionalItem>
@@ -38,6 +26,20 @@ namespace ARAMDetFull.Champions
                     ItemId.Boots_of_Speed
                 }
             };
+        }
+        public override void useQ(Obj_AI_Base target)
+        {
+            if (!Q.IsReady())
+                return;
+            if (IsValorMode() && player.Distance(target,true) <= 375*375)
+            {
+                Q.Cast();
+            }
+            if (!IsValorMode())
+            {
+                Q.Cast(target);
+            }
+            Core.DelayAction(() => Player.IssueOrder(GameObjectOrder.AttackUnit, target), 100);
         }
 
         public override void useW(Obj_AI_Base target)
@@ -67,13 +69,13 @@ namespace ARAMDetFull.Champions
                         {
                             R.Cast();
                             E.CastOnUnit(target);
-                            Player.IssueOrder(GameObjectOrder.AttackUnit, target);
+                            Core.DelayAction(() => Player.IssueOrder(GameObjectOrder.AttackUnit, target), 100);
                         }
                     }
                     else
                     {
                         E.CastOnUnit(target);
-                        Player.IssueOrder(GameObjectOrder.AttackUnit, target);
+                        Core.DelayAction(() => Player.IssueOrder(GameObjectOrder.AttackUnit, target), 100);
                     }
                 }
                 else // human form
@@ -81,7 +83,7 @@ namespace ARAMDetFull.Champions
                     if (MapControl.balanceAroundPoint(target.Position.To2D(), 600) >= -1)
                     {
                         E.CastOnUnit(target);
-                        Player.IssueOrder(GameObjectOrder.AttackUnit, target);
+                        Core.DelayAction(() => Player.IssueOrder(GameObjectOrder.AttackUnit, target), 100);
                     }
                 }
             }
@@ -96,8 +98,6 @@ namespace ARAMDetFull.Champions
             {
                 R.Cast(player.Path[player.Path.Length - 1]);
             }
-
-
         }
 
         public override void setUpSpells()

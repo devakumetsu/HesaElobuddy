@@ -103,9 +103,9 @@ namespace ARAMDetFull
             private int lastCast = 0;
             public override void useSpell()
             {
-                if (!spell.IsReady() || lastCast + 700 > Core.GameTickCount)
+                if (!spell.IsReady() || lastCast + 700 > ARAMDetFull.now)
                     return;
-                lastCast = Core.GameTickCount;
+                lastCast = ARAMDetFull.now;
 
                 if (spell.Name.ToLower().Equals("snowballfollowupcast"))
                 {

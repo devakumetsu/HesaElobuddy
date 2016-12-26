@@ -742,7 +742,7 @@ namespace ARAMDetFull
 
         public static void buyItems()
         {
-            if (lastBuy + 125 <= Core.GameTickCount)//if (lastBuy < Game.Time - 2300)
+            if(lastBuy < ARAMDetFull.now - 2300)//if (lastBuy + 125 <= Core.GameTickCount)
             {
                 //Chat.Print("I should buy an item now.");
                 AutoShopper.buyNext();
@@ -814,24 +814,30 @@ namespace ARAMDetFull
 
         private static void TowerAttackOnCreate(GameObject sender, EventArgs args)
         {
-            if (sender is MissileClient)
+            try
             {
-                var missile = (MissileClient)sender;
-                // Ally Turret -> Enemy Hero
-                if (missile.SpellCaster is Obj_AI_Turret && missile.SpellCaster.IsEnemy && missile.Target is AIHeroClient && missile.Target.IsAlly)
+                if (sender is MissileClient && sender.IsValid && (MissileClient)sender != null)
                 {
-                    var turret = (Obj_AI_Turret)missile.SpellCaster;
-                    if (missile.Target.IsMe)
+                    var missile = (MissileClient)sender;
+                    if (missile.SpellCaster is Obj_AI_Turret && missile.SpellCaster.IsEnemy && missile.Target != null && missile.Target is AIHeroClient && missile.Target.IsAlly)
                     {
-                        towerAttackedMe = true;
-                        towerAttackedAlly = false;
-                    }
-                    else if (((AIHeroClient) missile.Target).Distance(turret) < 700)
-                    {
-                        towerAttackedAlly = true;
-                        towerAttackedMe = false;
+                        var turret = (Obj_AI_Turret)missile.SpellCaster;
+                        if (missile.Target.IsMe)
+                        {
+                            towerAttackedMe = true;
+                            towerAttackedAlly = false;
+                        }
+                        else if (((AIHeroClient)missile.Target).Distance(turret) < 700)
+                        {
+                            towerAttackedAlly = true;
+                            towerAttackedMe = false;
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
 
@@ -890,7 +896,7 @@ namespace ARAMDetFull
                 }
                 if (champ != null)
                 {
-                    //champ.alwaysCheck();
+                    champ.alwaysCheck();
                 }
 
                 setRambo();
@@ -901,7 +907,7 @@ namespace ARAMDetFull
 
                 var fightLevel = MapControl.fightLevel();
                 MapControl.updateReaches();
-                
+
                 var closestEnemy = EntityManager.Heroes.Enemies.Where(ene => !ene.IsDead && ene.IsTargetable && ene.IsHPBarRendered && !ARAMTargetSelector.IsInvulnerable(ene)).OrderBy(ene => player.Position.Distance(ene.Position, true)).FirstOrDefault();
                 if (closestEnemy != null && ramboMode)
                 {
@@ -934,6 +940,7 @@ namespace ARAMDetFull
                         Console.WriteLine(ex);
                     }
                 }
+
                 if (!player.IsUnderEnemyturret() || towerAttackedAlly || player.HealthPercent < 25)
                 {
                     try

@@ -93,7 +93,7 @@ namespace ARAMDetFull
                     if (cSpell.SpellTags == null || !(cSpell.SpellTags.Any(takeInCOunt.Contains)))
                         continue;
                     var spell = hero.Spellbook.GetSpell(cSpell.Slot);
-                    if ((spell.CooldownExpires - Game.Time) > 2.5f || spell.State == SpellState.NotLearned || cSpell.ManaCost > hero.Mana)
+                    if ((spell.CooldownExpires - Game.Time) > 3.5f || spell.State == SpellState.NotLearned || cSpell.ManaCost > hero.Mana)
                         continue;
                     var range = (spell.SData.CastRange < 1000) ? spell.SData.CastRange : 1000;
                     if (spell.SData.CastRange > range)
@@ -162,7 +162,7 @@ namespace ARAMDetFull
                 return bal;
             }
 
-            private int lastMinionSpellUse = Core.GameTickCount;
+            private int lastMinionSpellUse = ARAMDetFull.now;
             public void useSpellsOnMinions()
             {
                 var bTarg = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, Player.Instance.ServerPosition, Player.Instance.GetAutoAttackRange()).OrderBy(x => x.Distance(Player.Instance)).FirstOrDefault();
@@ -176,9 +176,9 @@ namespace ARAMDetFull
                 }
                 return;
                 
-                if (lastMinionSpellUse + 277 > Core.GameTickCount)
+                if (lastMinionSpellUse + 277 > ARAMDetFull.now)
                     return;
-                lastMinionSpellUse = Core.GameTickCount;
+                lastMinionSpellUse = ARAMDetFull.now;
                 if (hero.MaxMana > 300 && hero.ManaPercent < 78)
                     return;
                 if (hero.MaxMana >199 && hero.MaxMana < 201 && hero.ManaPercent < 95)
@@ -252,7 +252,7 @@ namespace ARAMDetFull
                 }
             }
 
-            private float lastSpellUse = Core.GameTickCount;
+            private float lastSpellUse = ARAMDetFull.now;
             public void useSpells()
             {
                 var bTarg = ARAMTargetSelector.getBestTarget(Player.Instance.GetAutoAttackRange(), true);
@@ -263,9 +263,9 @@ namespace ARAMDetFull
                 }
                 return;
                 
-                if (lastSpellUse + 277 > Core.GameTickCount)
+                if (lastSpellUse + 277 > ARAMDetFull.now)
                     return;
-                lastSpellUse = Core.GameTickCount;
+                lastSpellUse = ARAMDetFull.now;
                 foreach (var spell in spells)
                 {
                     if(!spell.IsReady() || spell.ManaCost > hero.Mana || (isTransformChampion() && sBook.GetSpell(spell.Slot).Name != spell.Name))

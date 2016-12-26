@@ -48,8 +48,8 @@ namespace ARAMDetFull.Champions
 
         public override void useW(Obj_AI_Base target)
         {
-            //if (!W.IsReady() || target == null)
-           //     return;
+            if (!W.IsReady() || target == null)
+                return;
             HealLogic(target);
         }
 
@@ -118,7 +118,6 @@ namespace ARAMDetFull.Champions
             if (player.Distance(target) > W.Range) // target out of range try bounce
             {
                 var bounceTarget = EntityManager.Heroes.AllHeroes.SingleOrDefault(hero => hero.IsValidTarget(W.Range) && hero.Distance(target) < W.Range);
-
                 if (bounceTarget != null && bounceTarget.MaxHealth - bounceTarget.Health > WHeal) // use bounce & heal
                 {
                     W.CastOnUnit(bounceTarget);

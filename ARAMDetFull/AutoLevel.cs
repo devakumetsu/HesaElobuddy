@@ -1,5 +1,4 @@
 ﻿using EloBuddy;
-using EloBuddy.SDK;
 
 namespace ARAMDetFull
 {
@@ -7,7 +6,7 @@ namespace ARAMDetFull
     {
         public static int[] abilitySequence;
         private static SpellSlot Smite;
-        private static int lastLevelup = Core.GameTickCount;
+        private static int lastLevelup = ARAMDetFull.now;
         public static string tipo = "";
 
         public static void setAutoLevel()
@@ -20,7 +19,7 @@ namespace ARAMDetFull
 
         public static void LevelUpOff()
         {
-            lastLevelup = Core.GameTickCount;
+            lastLevelup = ARAMDetFull.now;
             int qL = Player.Spellbook.GetSpell(SpellSlot.Q).Level + qOff;
             int wL = Player.Spellbook.GetSpell(SpellSlot.W).Level + wOff;
             int eL = Player.Spellbook.GetSpell(SpellSlot.E).Level + eOff;
