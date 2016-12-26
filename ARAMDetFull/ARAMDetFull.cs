@@ -45,7 +45,7 @@ namespace ARAMDetFull
         
         public static int gameStart = 0;
 
-        public static Menu Config, Extra, Debug;
+        public static Menu Config, Debug;
 
         public static int now
         {
@@ -69,15 +69,11 @@ namespace ARAMDetFull
                 Console.SetOut(new ErrorLogger(defaultOut));
                 
                 Config = MainMenu.AddMenu("ARAM", "aramDet");
-
-                Extra = Config.AddSubMenu("Extra", "aramDetExtra");
-                Extra.Add("debugDraw", new CheckBox("Debug draw", false));
-                Extra.Add("dataGathering", new CheckBox("Send errors to server", false));
-
+                
                 Debug = Config.AddSubMenu("Debug", "aramDetDebug");
                 Debug.Add("botOff", new CheckBox("Bot off", false));
-                Debug.Add("db_targ", new KeyBind("Debug Target", false, KeyBind.BindTypes.PressToggle, 'T'));
-                
+                Debug.Add("debugDraw", new CheckBox("Debug draw", false));
+
                 Drawing.OnDraw += onDraw;
                 Game.OnUpdate += OnGameUpdate;
                 Game.OnNotify += Game_OnNotify;
@@ -152,18 +148,18 @@ namespace ARAMDetFull
         
         private static void ARAMDetFull_OnGameEnd(bool win)
         {
+            Chat.Print("/all GG");
             var rnd = new Random().Next(15000, 30000) + Game.Ping;
             Core.DelayAction(() => { Game.QuitGame(); }, rnd);
         }
 
         private static void onDraw(EventArgs args)
         {
-            return;
             try
             {
                 if (!Debug["debugDraw"].Cast<CheckBox>().CurrentValue) return;
                 Drawing.DrawText(100, 100, Color.Red, "2bal: " + ARAMSimulator.balance+ " fear: "+MapControl.fearDistance );
-                
+
                 foreach (var hel in ObjectManager.Get<Obj_AI_Minion>().Where(r => r.IsValid && !r.IsDead && r.Name.ToLower().Contains("blobdrop")))
                 {
                     var spos = Drawing.WorldToScreen(hel.Position);
@@ -179,19 +175,20 @@ namespace ARAMDetFull
                     sec.draw();
                 }
 
+
                 foreach (var ene in MapControl.enemy_champions)
                 {
                     var spos = Drawing.WorldToScreen(ene.hero.Position);
                     Drawing.DrawCircle(ene.hero.Position, ene.reach , Color.Green);
                 
-                    Drawing.DrawText(spos.X, spos.Y, Color.Green,"Gold: "+ene.hero.Gold);
+                    Drawing.DrawText(spos.X, spos.Y, Color.LimeGreen,"Gold: "+ene.hero.Gold);
                 }
-                return;//????
-
+                
                 foreach (var ene in MapControl.enemy_champions)
                 {
                     Drawing.DrawCircle(ene.hero.Position, ene.reach, Color.Violet);
                 }
+                return;
             }
             catch (Exception ex)
             {
@@ -211,9 +208,7 @@ namespace ARAMDetFull
 
         public static event OnGameEndHandler OnGameEnd;
         private static int lastTick = now;
-
-        private static int tickTimeRng = 77;
-        private static Random rng = null;
+        
         private static void OnGameUpdate(EventArgs args)
         {
             try
@@ -221,13 +216,6 @@ namespace ARAMDetFull
                 if (Debug["botOff"].Cast<CheckBox>().CurrentValue)
                     return;
                 
-                if (Debug["db_targ"].Cast<KeyBind>().CurrentValue)
-                {
-                    foreach (var buf in ObjectManager.Player.Buffs)
-                    {
-                        Console.WriteLine(buf.Name);
-                    }
-                }
                 lastTick = now;
                 ARAMSimulator.updateArmaPlay();
             }

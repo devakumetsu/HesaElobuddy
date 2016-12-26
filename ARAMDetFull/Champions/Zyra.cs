@@ -39,6 +39,7 @@ namespace ARAMDetFull.Champions
             {
                  CastW(Q.GetPrediction(target).CastPosition);
             }
+            Core.DelayAction(() => Player.IssueOrder(GameObjectOrder.AttackUnit, target), 100);
         }
 
         public override void useW(Obj_AI_Base target)
@@ -54,6 +55,7 @@ namespace ARAMDetFull.Champions
             {
                   CastW(Q.GetPrediction(target).CastPosition);
             }
+            Core.DelayAction(() => Player.IssueOrder(GameObjectOrder.AttackUnit, target), 100);
         }
 
         public override void useR(Obj_AI_Base target)
@@ -64,6 +66,7 @@ namespace ARAMDetFull.Champions
             {
                 R.CastIfWillHit(target, 2);
             }
+            Core.DelayAction(() => Player.IssueOrder(GameObjectOrder.AttackUnit, target), 100);
         }
 
         public override void useSpells()

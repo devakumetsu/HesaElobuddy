@@ -31,7 +31,6 @@ namespace ARAMDetFull
 
         public SummonerSpells()
         {
-            Chat.Print(sum1.Name);
             switch (sum1.Name.ToLower())
             {
                 case "summonerflash":
@@ -59,7 +58,6 @@ namespace ARAMDetFull
                     sSpell1 = new SnowBall(sum1);
                     break;
             }
-            Chat.Print(sum2.Name);
             switch (sum2.Name.ToLower())
             {
                 case "summonerflash":
