@@ -89,7 +89,7 @@ namespace ARAMDetFull.Champions
             {
                 AllowedCollisionCount = int.MaxValue
             };
-            E = new Spell.Skillshot(SpellSlot.E, 600, SkillShotType.Linear, 250, 1150, 70)
+            E = new Spell.Skillshot(SpellSlot.E, 700, SkillShotType.Linear, 250, 1150, 70)
             {
                 AllowedCollisionCount = int.MaxValue
             };
@@ -118,6 +118,7 @@ namespace ARAMDetFull.Champions
             }
             if (ObjectManager.Player.HasBuff("khazixwevo") && !Wevolved)
             {
+                W.Range = 1000;
                 Wevolved = true;
                 //TODO shouldn't be a problem since the code above already tells that it's this spell and doesnt change anything, but take a look.
                 //W.IsSkillShot(250, 20, int.MaxValue, SkillShotType.Linear);
@@ -125,7 +126,7 @@ namespace ARAMDetFull.Champions
 
             if (ObjectManager.Player.HasBuff("khazixeevo") && !Eevolved)
             {
-                E.Range = 1000;
+                E.Range = 900;
                 Eevolved = true;
             }
             if (player.EvolvePoints > 0)
