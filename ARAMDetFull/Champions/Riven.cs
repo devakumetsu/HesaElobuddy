@@ -12,9 +12,9 @@ namespace ARAMDetFull.Champions
     class Riven : Champion
     {
 
-        public static bool rushDown = false;
+        public static bool RushDown = false;
 
-        public static bool rushDownQ = false;
+        public static bool RushDownQ = false;
 
         public static bool forceQ = false;
 
@@ -196,21 +196,21 @@ namespace ARAMDetFull.Champions
             if (target == null)
                 return;
 
-            rushDownQ = rushDmgBasedOnDist(target) * 0.7f > target.Health;
-            rushDown = rushDmgBasedOnDist(target) * 1.1f > target.Health;
-            if (rushDown || player.CountEnemiesInRange(600) > 2)
+            RushDownQ = RushDmgBasedOnDist(target) * 0.7f > target.Health;
+            RushDown = RushDmgBasedOnDist(target) * 1.1f > target.Health;
+            if (RushDown || player.CountEnemiesInRange(600) > 2)
                 useRSmart(target);
-            if (rushDown || safeGap(target))
+            if (RushDown || safeGap(target))
                 useESmart(target);
             useWSmart(target);
             
-            if (Orbwalker.CanMove && (target.Distance(player) < 700 || rushDown))
+            if (Orbwalker.CanMove && (target.Distance(player) < 700 || RushDown))
                 gapWithQ(target);
         }
 
         public void gapWithQ(Obj_AI_Base target)
         {
-            if ((E.IsReady() || !Q.IsReady()) && !rushDownQ || player.IsDashing())
+            if ((E.IsReady() || !Q.IsReady()) && !RushDownQ || player.IsDashing())
                 return;
             reachWithQ(target);
         }
@@ -235,9 +235,9 @@ namespace ARAMDetFull.Champions
             float targ_ms = (target.IsMoving && player.Distance(walkPos) > dist) ? target.MoveSpeed : 0;
             float msDif = (player.MoveSpeed - targ_ms) == 0 ? 0.0001f : (player.MoveSpeed - targ_ms);
             float timeToReach = (dist - trueAARange) / msDif;
-            if ((dist > trueAARange && dist < trueQRange) || rushDown)
+            if ((dist > trueAARange && dist < trueQRange) || RushDown)
             {
-                if (timeToReach > 2.5 || timeToReach < 0.0f || rushDown)
+                if (timeToReach > 2.5 || timeToReach < 0.0f || RushDown)
                 {
                     Vector2 to = player.Position.To2D().Extend(target.Position.To2D(), 50);
                     // Player.IssueOrder(GameObjectOrder.MoveTo,to.To3D());
@@ -283,7 +283,7 @@ namespace ARAMDetFull.Champions
                 Player.IssueOrder(GameObjectOrder.MoveTo, target.Position);
                 E.Cast(path.Count() > 1 ? path[1] : target.ServerPosition);
             }
-            if ((dist > trueAARange && dist < trueERange) || rushDown)
+            if ((dist > trueAARange && dist < trueERange) || RushDown)
             {
 
                 E.Cast(path.Count() > 1 ? path[1] : target.ServerPosition);
@@ -308,7 +308,7 @@ namespace ARAMDetFull.Champions
             {
                 var targ = target as AIHeroClient;
                 var po = R.GetPrediction(targ);
-                if (getTrueRDmgOn(targ) > ((targ.Health)) || rushDown)
+                if (GetTrueQDmOn(targ) > ((targ.Health)) || RushDown)
                 {
                     if (po.HitChance > HitChance.Medium && player.Distance(po.CastPosition) > 30)
                     {
@@ -318,20 +318,20 @@ namespace ARAMDetFull.Champions
             }
         }
 
-        public float getTrueQDmOn(Obj_AI_Base target)
+        public float GetTrueQDmOn(Obj_AI_Base target)
         {
             return player.CalculateDamageOnUnit(target, DamageType.Physical, -10f + Q.Level * 20f + (0.35f + (Q.Level * 0.05f)) * (player.FlatPhysicalDamageMod + player.BaseAttackDamage));
         }
 
-        public float rushDmgBasedOnDist(Obj_AI_Base target)
+        public float RushDmgBasedOnDist(Obj_AI_Base target)
         {
             float multi = 1.0f;
             if (!ultIsOn() && R.IsReady())
                 multi = 1.2f;
-            float Qdmg = getTrueQDmOn(target);
+            float Qdmg = GetTrueQDmOn(target);
             float Wdmg = (E.IsReady()) ? (float)player.GetSpellDamage(target, SpellSlot.W) : 0;
             float ADdmg = (float)player.GetAutoAttackDamage(target);
-            float Rdmg = (R.IsReady() && (canUseWindSlash() || !ultIsOn())) ? getTrueRDmgOn(target) : 0;
+            float Rdmg = (R.IsReady() && (canUseWindSlash() || !ultIsOn())) ? GetTrueQDmOn(target) : 0;
 
             float trueAARange = player.AttackRange + target.BoundingRadius - 15;
             float dist = player.Distance(target.ServerPosition);
@@ -354,7 +354,7 @@ namespace ARAMDetFull.Champions
             return (Qdmg * Qtimes + Wdmg + ADdmg * ADtimes + Rdmg) * multi;
         }
 
-        public float getTrueRDmgOn(Obj_AI_Base target, float minus = 0)
+        public float GetTrueQDmOn(Obj_AI_Base target, float minus = 0)
         {
             float baseDmg = 40 + 40 * R.Level + 0.6f * player.FlatPhysicalDamageMod;
             float eneMissHpProc = ((((target.MaxHealth - target.Health - minus) / target.MaxHealth) * 100f) > 75f) ? 75f : (((target.MaxHealth - target.Health) / target.MaxHealth) * 100f);
