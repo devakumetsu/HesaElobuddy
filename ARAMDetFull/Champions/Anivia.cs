@@ -45,7 +45,7 @@ namespace ARAMDetFull.Champions
 
         private void Gapcloser_OnGapcloser(AIHeroClient Target, Gapcloser.GapcloserEventArgs e)
         {
-            return;
+            if (Target == null && !Target.IsEnemy && Target.IsDead) return;
             if (Q.IsReady())
             {
                 if (Target.IsValidTarget(Q.Range))
@@ -64,13 +64,14 @@ namespace ARAMDetFull.Champions
 
         private void Interrupter_OnInterruptableSpell(Obj_AI_Base unit, Interrupter.InterruptableSpellEventArgs e)
         {
+            if (unit == null && !unit.IsEnemy && unit.IsDead) return;
             if (W.IsReady() && unit.IsValidTarget(W.Range))
                 W.Cast(unit);
         }
 
         private void Orbwalker_OnPreAttack(AttackableUnit target, Orbwalker.PreAttackArgs args)
         {
-
+            if (target == null && !target.IsEnemy && target.IsDead) return;
             if (FarmId != args.Target.NetworkId)
                 FarmId = args.Target.NetworkId;
         }
@@ -100,12 +101,10 @@ namespace ARAMDetFull.Champions
 
         public override void useQ(Obj_AI_Base target)
         {
-
         }
 
         public override void useW(Obj_AI_Base target)
         {
-
         }
 
         public override void useE(Obj_AI_Base target)
@@ -118,7 +117,7 @@ namespace ARAMDetFull.Champions
             if (!R.IsReady() || target == null)
                 return;
             if (target.HealthPercent < 35)
-                R.CastOnUnit(target);
+                R.Cast(target);
         }
 
         public override void useSpells()
@@ -169,6 +168,7 @@ namespace ARAMDetFull.Champions
                     }
                 }
             }
+            /*
             if (Q.IsReady() && QMissile == null)
             {
                 var t = ARAMTargetSelector.getBestTarget(Q.Range);
@@ -201,7 +201,7 @@ namespace ARAMDetFull.Champions
                         }
                     }
                 }
-            }
+            }*/
 
             if (E.IsReady())
             {
@@ -239,11 +239,12 @@ namespace ARAMDetFull.Champions
                 }
                 farmE();
             }
+            /*
             if (Q.IsReady() && QMissile != null)
             {
                 if (QMissile.Position.CountEnemyHeroesInRangeWithPrediction(220) > 0)
                     Q.Cast();
-            }
+            }*/
         }
 
         public void farmE()
@@ -274,6 +275,11 @@ namespace ARAMDetFull.Champions
 
         private void CastSpell(SpellBase QWER, AIHeroClient target, int HitChanceNum)
         {
+            QWER.CastIfHitchanceEquals(target, (EloBuddy.SDK.Enumerations.HitChance)HitChanceNum, true);
+            return;
+
+
+
             //HitChance 0 - 2
             // example CastSpell(Q, ts, 2);
             var poutput = QWER.GetPrediction(target);

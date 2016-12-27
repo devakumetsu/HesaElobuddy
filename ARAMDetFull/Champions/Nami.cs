@@ -4,6 +4,7 @@ using SharpDX;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
+using System;
 
 namespace ARAMDetFull.Champions
 {
@@ -50,7 +51,15 @@ namespace ARAMDetFull.Champions
         {
             if (!W.IsReady() || target == null)
                 return;
-            HealLogic(target);
+            //HealLogic(target);
+
+            foreach (var ally in EntityManager.Heroes.Allies.Where(x => x.HealthPercent < 20 && EnemyInRange(x)).OrderBy(x => !x.IsMe).ThenBy(x => x.MaxHealth))
+            {
+                if (!ally.IsInShopRange() && !ally.IsRecalling())
+                    W.Cast(ally);
+            }
+
+            WCombo((AIHeroClient) target);
         }
 
         public override void useE(Obj_AI_Base target)
@@ -59,7 +68,7 @@ namespace ARAMDetFull.Champions
                 return;
             if ((target.HasBuffOfType(BuffType.Poison)))
             {
-                E.CastOnUnit(target);
+                E.Cast(target);
             }
         }
 
@@ -110,7 +119,7 @@ namespace ARAMDetFull.Champions
             var ally = AllyBelowHp((player.ManaPercent>70)?70:35, W.Range);
             if (ally != null) // force heal low ally
             {
-                W.CastOnUnit(ally);
+                W.Cast(ally);
                 return;
             }
             if (target == null)
@@ -120,13 +129,101 @@ namespace ARAMDetFull.Champions
                 var bounceTarget = EntityManager.Heroes.AllHeroes.SingleOrDefault(hero => hero.IsValidTarget(W.Range) && hero.Distance(target) < W.Range);
                 if (bounceTarget != null && bounceTarget.MaxHealth - bounceTarget.Health > WHeal) // use bounce & heal
                 {
-                    W.CastOnUnit(bounceTarget);
+                    W.Cast(bounceTarget);
                 }
             }
             else // target in range
             {
-                W.CastOnUnit(target);
+                W.Cast(target);
             }
+        }
+
+        bool EnemyInRange(AIHeroClient ally)
+        {
+            return EntityManager.Heroes.Enemies.Any(x => x.Distance(ally) <= ally.AttackRange && x.IsValid);
+        }
+
+        private void WCombo(AIHeroClient target)
+        {
+            if (!W.IsReady()) return;
+            int enemyHitVal = 5, targetHitVal = 2, allyHealBounceVal = 4, lowAllyVal = 10, allyFullHp = -3, enemyKill = int.MaxValue;
+
+            float bestValue = -1;
+            AIHeroClient bestTarget = null;
+
+            foreach (var hero in EntityManager.Heroes.AllHeroes.Where(x => x.IsValid && x.Distance(player) <= W.Range))
+            {
+                float currentValue = 0;
+                float flyTime = W.CastDelay + (player.Distance(hero) / 2000) * 1000;//2000 = W speed
+
+                if (hero.IsAlly)
+                {
+                    if (hero.IsRecalling() || hero.IsInShopRange())
+                        continue;
+
+                    if (isEnemyHit(hero, flyTime))
+                        currentValue += enemyHitVal;
+
+                    if (hero.HealthPercent <= 30)
+                        currentValue += lowAllyVal;
+
+                    if (hero.HealthPercent >= 75)
+                        currentValue += allyFullHp;
+                }
+                else
+                {
+                    if (isAllyHit(hero, flyTime))
+                        currentValue += allyHealBounceVal;
+
+                    if (hero == target)
+                        currentValue += targetHitVal;
+
+                    if (player.GetSpellDamage(hero, SpellSlot.W) > hero.Health)
+                        currentValue += enemyKill;
+                    else if (player.GetSpellDamage(hero, SpellSlot.W) > hero.Health + player.GetAutoAttackDamage(hero))
+                        currentValue += enemyKill * 0.75f;
+
+                    if (EntityManager.Heroes.Allies.All(x => x.Distance(hero) > x.AttackRange) &&
+                        player.Distance(hero) <= W.Range)
+                        currentValue += 100;
+                }
+
+                if (currentValue > bestValue)
+                {
+                    bestValue = currentValue;
+                    bestTarget = hero;
+                }
+                else if (Math.Abs(currentValue - bestValue) <= 0.1f)
+                {
+                    if (hero.IsAlly)
+                    {
+                        bestValue = currentValue;
+                        bestTarget = hero;
+                    }
+                }
+            }
+
+            bool canKill = bestTarget.IsAlly ? true : player.GetSpellDamage(bestTarget, SpellSlot.W) > bestTarget.Health;
+
+            if (bestTarget.IsValid)
+                W.Cast(bestTarget);
+            //else Chat.Print("no w target");
+        }
+
+        bool isEnemyHit(AIHeroClient source, float delay)
+        {
+            return
+                EntityManager.Heroes.Enemies.Where(x => x.IsValid && x.Distance(source) <= 1500).
+                    Select(enemy => Prediction.Position.PredictUnitPosition(enemy, (int)delay)).
+                        Any(movePrd => movePrd.Distance(source) <= W.Range - 100);
+        }
+
+        bool isAllyHit(AIHeroClient enemy, float delay)
+        {
+            return
+                EntityManager.Heroes.Allies.Where(x => x.IsValid && x.Distance(enemy) <= 1500).
+                    Select(ally => Prediction.Position.PredictUnitPosition(ally, (int)delay)).
+                        Any(movePrd => movePrd.Distance(enemy) <= W.Range - 100);
         }
 
         public static AIHeroClient AllyBelowHp(int percentHp, float range)

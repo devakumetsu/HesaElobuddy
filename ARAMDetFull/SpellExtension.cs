@@ -20,6 +20,21 @@ namespace ARAMDetFull
             spell.Cast(target);
         }
 
+        public static bool IsCharging(this SpellBase spell)
+        {
+            return ((Chargeable)spell).IsCharging;
+        }
+
+        public static void StartCharging(this SpellBase spell)
+        {
+            ((Chargeable)spell).StartCharging();
+        }
+
+        public static int ChargedMaxRange(this SpellBase spell)
+        {
+            return (int) ((Chargeable)spell).MaximumRange;
+        }
+
         public static void CastIfWillHit(this SpellBase spell, Obj_AI_Base target, int hitNumber)
         {
             var prediction = (spell as Skillshot).GetPrediction(target);

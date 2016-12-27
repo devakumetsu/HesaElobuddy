@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LeagueSharp;
-using DetuksSharp;
-using LeagueSharp.Common;
-using SharpDX;
+﻿using System.Collections.Generic;
+using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
 
 namespace ARAMDetFull.Champions
 {
@@ -30,17 +25,17 @@ namespace ARAMDetFull.Champions
                     ItemId.Vampiric_Scepter, ItemId.Boots_of_Speed
                 }
             };
-            AttackableUnit.OnDamage +=AttackableUnitOnOnDamage;
+            AttackableUnit.OnDamage += AttackableUnitOnOnDamage;
         }
 
         private void AttackableUnitOnOnDamage(AttackableUnit sender, AttackableUnitDamageEventArgs args)
         {
-            if (args.TargetNetworkId != player.NetworkId)
+            if (args.Target.NetworkId != player.NetworkId)
                 return;
-            if (R.IsReady() && player.HealthPercent<25)
+            if (R.IsReady() && player.HealthPercent < 25)
             {
                 R.Cast();
-                Aggresivity.addAgresiveMove(new AgresiveMove(9999,5000,true));
+                Aggresivity.addAgresiveMove(new AgresiveMove(9999, 5000, true));
             }
 
             if (Q.IsReady() && player.HealthPercent < 30 && !player.HasBuff("UndyingRage"))
@@ -53,7 +48,7 @@ namespace ARAMDetFull.Champions
         {
             if (!Q.IsReady() || target == null)
                 return;
-            if(player.HealthPercent<30 && !player.HasBuff("UndyingRage"))
+            if (player.HealthPercent < 30 && !player.HasBuff("UndyingRage"))
                 Q.Cast();
         }
 
@@ -61,7 +56,7 @@ namespace ARAMDetFull.Champions
         {
             if (!W.IsReady() || target == null)
                 return;
-            if(player.IsFacing(target) && !target.IsFacing(player))
+            if (player.IsFacing(target) && !target.IsFacing(player))
                 W.Cast();
         }
 
@@ -74,7 +69,6 @@ namespace ARAMDetFull.Champions
 
         public override void useR(Obj_AI_Base target)
         {
-
         }
 
         public override void useSpells()
@@ -86,18 +80,15 @@ namespace ARAMDetFull.Champions
             tar = ARAMTargetSelector.getBestTarget(E.Range);
             if (tar != null) useE(tar);
         }
-
-
+        
         public override void setUpSpells()
         {
-            Q = new Spell(SpellSlot.Q, 700);
-            W = new Spell(SpellSlot.W, 830);
-            E = new Spell(SpellSlot.E, 660);
-            R = new Spell(SpellSlot.R, 800);
-            E.SetSkillshot(0, 93, 1300, false, SkillshotType.SkillshotLine);
+            Q = new Spell.Active(SpellSlot.Q);
+            W = new Spell.Active(SpellSlot.W, 850);
+            E = new Spell.Skillshot(SpellSlot.E, 650, SkillShotType.Linear, 250, 700, (int)92.5);
+            R = new Spell.Active(SpellSlot.R, 400);
         }
-
-
+        
         public override void farm()
         {
         }

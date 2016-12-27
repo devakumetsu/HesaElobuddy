@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LeagueSharp;using DetuksSharp;
-using LeagueSharp.Common;
+﻿using System.Collections.Generic;
+using EloBuddy;
+using EloBuddy.SDK;
 
 namespace ARAMDetFull.Champions
 {
     class Wukong : Champion
     {
-
         public Wukong()
         {
             ARAMSimulator.champBuild = new Build
@@ -26,7 +21,8 @@ namespace ARAMDetFull.Champions
                 },
                 startingItems = new List<ItemId>
                 {
-                    ItemId.Vampiric_Scepter,ItemId.Boots_of_Speed
+                    ItemId.Vampiric_Scepter,
+                    ItemId.Boots_of_Speed
                 }
             };
         }
@@ -59,7 +55,7 @@ namespace ARAMDetFull.Champions
         {
             if (!R.IsReady() || target == null)
                 return;
-            if (player.CountEnemiesInRange(350)>1)
+            if (player.CountEnemiesInRange(350) > 1)
             {
                 R.Cast();
             }
@@ -85,12 +81,10 @@ namespace ARAMDetFull.Champions
         public override void setUpSpells()
         {
             //Create the spells
-            Q = new Spell(SpellSlot.Q, 375f);
-            W = new Spell(SpellSlot.W, 375f);
-            E = new Spell(SpellSlot.E, 640f);
-            R = new Spell(SpellSlot.R, 375f);
-
-            E.SetTargetted(0.5f, 2000f);
+            Q = new Spell.Active(SpellSlot.Q, 375);
+            W = new Spell.Active(SpellSlot.W, 375);
+            E = new Spell.Targeted(SpellSlot.E, 640);
+            R = new Spell.Active(SpellSlot.R, 375);
         }
     }
 }

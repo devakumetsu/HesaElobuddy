@@ -1,36 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LeagueSharp;using DetuksSharp;
-using LeagueSharp.Common;
+using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
+using EloBuddy.SDK.Events;
 using SharpDX;
 
 namespace ARAMDetFull.Champions
 {
     class Viktor : Champion
     {
+        private static Spell.Targeted Q;
+        private static Spell.Skillshot W, E, R;
+
         public Viktor()
         {
             ARAMSimulator.champBuild = new Build
             {
                 coreItems = new List<ConditionalItem>
-                        {
-                            new ConditionalItem(ItemId.Perfect_Hex_Core),
-                            new ConditionalItem(ItemId.Sorcerers_Shoes),
-                            new ConditionalItem(ItemId.Rylais_Crystal_Scepter),
-                            new ConditionalItem(ItemId.Morellonomicon),
-                            new ConditionalItem(ItemId.Abyssal_Scepter,ItemId.Zhonyas_Hourglass,ItemCondition.ENEMY_AP),
-                            new ConditionalItem(ItemId.Rabadons_Deathcap,ItemId.Liandrys_Torment,ItemCondition.ENEMY_LOSING),
-                        },
+                {
+                    new ConditionalItem(ItemId.Perfect_Hex_Core),
+                    new ConditionalItem(ItemId.Sorcerers_Shoes),
+                    new ConditionalItem(ItemId.Rylais_Crystal_Scepter),
+                    new ConditionalItem(ItemId.Morellonomicon),
+                    new ConditionalItem(ItemId.Abyssal_Scepter, ItemId.Zhonyas_Hourglass, ItemCondition.ENEMY_AP),
+                    new ConditionalItem(ItemId.Rabadons_Deathcap, ItemId.Liandrys_Torment, ItemCondition.ENEMY_LOSING),
+                },
                 startingItems = new List<ItemId>
-                        {
-                            ItemId.Needlessly_Large_Rod
-                        }
+                {
+                    ItemId.Needlessly_Large_Rod
+                }
             };
 
-            Interrupter.OnPossibleToInterrupt += Interrupter_OnPossibleToInterrupt;
+            Interrupter.OnInterruptableSpell += Interrupter_OnPossibleToInterrupt;
         }
 
         private readonly int maxRangeE = 1175;
@@ -45,7 +48,7 @@ namespace ARAMDetFull.Champions
             if (!Q.IsReady() || target == null)
                 return;
             Q.Cast(target);
-            Aggresivity.addAgresiveMove(new AgresiveMove(50,1200,true));
+            Aggresivity.addAgresiveMove(new AgresiveMove(50, 1200, true));
         }
 
         public override void useW(Obj_AI_Base target)
@@ -72,11 +75,11 @@ namespace ARAMDetFull.Champions
 
         public override void useSpells()
         {
-            if (R.IsReady() && R.Instance.Name != "ViktorChaosStorm")
+            if (R.IsReady() && R.Name != "ViktorChaosStorm")
             {
                 var stormT = ARAMTargetSelector.getBestTarget(1100);
                 if (stormT != null)
-                     R.Cast(stormT.ServerPosition);
+                    R.Cast(stormT.ServerPosition);
             }
 
             var tar = ARAMTargetSelector.getBestTarget(Q.Range);
@@ -88,7 +91,7 @@ namespace ARAMDetFull.Champions
             tar = ARAMTargetSelector.getBestTarget(R.Range);
             if (tar != null) useR(tar);
 
-            if (evolveTimes < 4 && LeagueSharp.Common.Items.HasItem(3198) && player.EvolvePoints != 0)
+            if (evolveTimes < 4 && Item.HasItem(3198) && player.EvolvePoints != 0)
             {
                 Console.WriteLine("evolve");
                 player.Spellbook.EvolveSpell(SpellSlot.Q);
@@ -100,36 +103,41 @@ namespace ARAMDetFull.Champions
 
         public override void setUpSpells()
         {
-            Q = new Spell(SpellSlot.Q, 600);
-            W = new Spell(SpellSlot.W, 700);
-            E = new Spell(SpellSlot.E, maxRangeE);
-            R = new Spell(SpellSlot.R, 700);
-
-            // Finetune spells
-            Q.SetTargetted(0.25f, 2000);
-            W.SetSkillshot(0.25f, 300, float.MaxValue, false, SkillshotType.SkillshotCircle);
-            E.SetSkillshot(0, 90, speedE, false, SkillshotType.SkillshotLine);
-            R.SetSkillshot(0.25f, 450f, float.MaxValue, false, SkillshotType.SkillshotCircle);
+            Q = new Spell.Targeted(SpellSlot.Q, 670);
+            W = new Spell.Skillshot(SpellSlot.W, 700, SkillShotType.Circular, 500, int.MaxValue, 300);
+            W.AllowedCollisionCount = int.MaxValue;
+            E = new Spell.Skillshot(SpellSlot.E, 525, SkillShotType.Linear, 250, int.MaxValue, 100);
+            E.AllowedCollisionCount = int.MaxValue;
+            R = new Spell.Skillshot(SpellSlot.R, 700, SkillShotType.Circular, 250, int.MaxValue, 450);
+            R.AllowedCollisionCount = int.MaxValue;
         }
 
-        private void Interrupter_OnPossibleToInterrupt(Obj_AI_Base unit, InterruptableSpell spell)
+        private void Interrupter_OnPossibleToInterrupt(Obj_AI_Base unit, Interrupter.InterruptableSpellEventArgs spell)
         {
-            if (R.IsReady() && spell.DangerLevel == InterruptableDangerLevel.High && R.IsInRange(unit.ServerPosition))
-                R.Cast(unit.ServerPosition.To2D(), true);
+            if (R.IsReady() && spell.DangerLevel == DangerLevel.High && R.IsInRange(unit.ServerPosition))
+                R.Cast(unit);
         }
 
         private bool PredictCastMinionE(int requiredHitNumber = -1)
         {
             int hitNum = 0;
             Vector2 startPos = new Vector2(0, 0);
-            foreach (var minion in MinionManager.GetMinions(player.Position, rangeE))
+            var lanemonsterAGAIN = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy,
+                player.Position, rangeE);
+            foreach (var minion in lanemonsterAGAIN)
             {
-                var farmLocation = MinionManager.GetBestLineFarmLocation((from mnion in MinionManager.GetMinions(minion.Position, lengthE) select mnion.Position.To2D()).ToList<Vector2>(), E.Width, lengthE);
+                var farmLocation =
+                    ((from mnion in
+                        EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, minion.Position,
+                            lengthE)
+                      select mnion.Position.To2D()).ToList<Vector2>(), E.Width, lengthE);
                 if (farmLocation.MinionsHit > hitNum)
                 {
                     hitNum = farmLocation.MinionsHit;
                     startPos = minion.Position.To2D();
                 }
+                hitNum =
+                    startPos = minion.Position.To2D;
             }
 
             if (startPos.X != 0 && startPos.Y != 0)
@@ -137,10 +145,14 @@ namespace ARAMDetFull.Champions
 
             return false;
         }
-
+        //TODO hi hesa
         private bool PredictCastMinionE(Vector2 fromPosition, int requiredHitNumber = 1)
         {
-            var farmLocation = MinionManager.GetBestLineFarmLocation(MinionManager.GetMinionsPredictedPositions(MinionManager.GetMinions(fromPosition.To3D(), lengthE), E.Delay, E.Width, speedE, fromPosition.To3D(), lengthE, false, SkillshotType.SkillshotLine), E.Width, lengthE);
+            var farmLocation =
+                E.GetBestLinearCastPosition(
+                    EntityManager.GetMinionsPredictedPositions(MinionManager.GetMinions(fromPosition.To3D(), lengthE),
+                        E.CastDelay, E.Width, speedE, fromPosition.To3D(), lengthE, false, SkillShotType.Linear),
+                    E.Width, lengthE);
 
             if (farmLocation.MinionsHit >= requiredHitNumber)
             {
@@ -154,15 +166,19 @@ namespace ARAMDetFull.Champions
         private void PredictCastE(Obj_AI_Base target, bool longRange = false)
         {
             // Helpers
-            bool inRange = Vector2.DistanceSquared(target.ServerPosition.To2D(), player.Position.To2D()) < E.Range * E.Range;
-            PredictionOutput prediction;
+            bool inRange = Vector2.DistanceSquared(target.ServerPosition.To2D(), player.Position.To2D()) <
+                           E.Range * E.Range;
+            Prediction.Manager.PredictionOutput prediction;
             bool spellCasted = false;
 
             // Positions
             Vector3 pos1, pos2;
 
             // Champs
-            var nearChamps = (from champ in ObjectManager.Get<AIHeroClient>() where champ.IsValidTarget(maxRangeE) && target != champ select champ).ToList();
+            var nearChamps =
+            (from champ in ObjectManager.Get<AIHeroClient>()
+             where champ.IsValidTarget(maxRangeE) && target != champ
+             select champ).ToList();
             var innerChamps = new List<AIHeroClient>();
             var outerChamps = new List<AIHeroClient>();
             foreach (var champ in nearChamps)
@@ -174,7 +190,8 @@ namespace ARAMDetFull.Champions
             }
 
             // Minions
-            var nearMinions = MinionManager.GetMinions(player.Position, maxRangeE);
+            var nearMinions = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy,
+                player.Position, maxRangeE);
             var innerMinions = new List<Obj_AI_Base>();
             var outerMinions = new List<Obj_AI_Base>();
             foreach (var minion in nearMinions)
@@ -190,7 +207,8 @@ namespace ARAMDetFull.Champions
             {
                 // Get prediction reduced speed, adjusted sourcePosition
                 E.Speed = speedE * 0.9f;
-                E.From = target.ServerPosition + (Vector3.Normalize(player.Position - target.ServerPosition) * (lengthE * 0.1f));
+                E.From = target.ServerPosition +
+                         (Vector3.Normalize(player.Position - target.ServerPosition) * (lengthE * 0.1f));
                 prediction = E.GetPrediction(target);
                 E.From = player.Position;
 
@@ -221,7 +239,8 @@ namespace ARAMDetFull.Champions
                         // Get prediction
                         prediction = E.GetPrediction(enemy);
                         // Validate target
-                        if (prediction.Hitchance >= HitChance.High && Vector2.DistanceSquared(pos1.To2D(), prediction.CastPosition.To2D()) < (E.Range * E.Range) * 0.8)
+                        if (prediction.HitChance >= HitChance.High &&
+                            Vector2.DistanceSquared(pos1.To2D(), prediction.CastPosition.To2D()) < (E.Range * E.Range) * 0.8)
                             closeToPrediction.Add(enemy);
                     }
 
@@ -266,7 +285,12 @@ namespace ARAMDetFull.Champions
                 Vector3 startPoint = player.Position + Vector3.Normalize(target.ServerPosition - player.Position) * rangeE;
 
                 // Potential start from postitions
-                var targets = (from champ in nearChamps where Vector2.DistanceSquared(champ.ServerPosition.To2D(), startPoint.To2D()) < startPointRadius * startPointRadius && Vector2.DistanceSquared(player.Position.To2D(), champ.ServerPosition.To2D()) < rangeE * rangeE select champ).ToList();
+                var targets = (from champ in nearChamps
+                               where
+                               Vector2.DistanceSquared(champ.ServerPosition.To2D(), startPoint.To2D()) <
+                               startPointRadius * startPointRadius &&
+                               Vector2.DistanceSquared(player.Position.To2D(), champ.ServerPosition.To2D()) < rangeE * rangeE
+                               select champ).ToList();
                 if (targets.Count > 0)
                 {
                     // Sort table by health DEC
@@ -278,7 +302,12 @@ namespace ARAMDetFull.Champions
                 }
                 else
                 {
-                    var minionTargets = (from minion in nearMinions where Vector2.DistanceSquared(minion.ServerPosition.To2D(), startPoint.To2D()) < startPointRadius * startPointRadius && Vector2.DistanceSquared(player.Position.To2D(), minion.ServerPosition.To2D()) < rangeE * rangeE select minion).ToList();
+                    var minionTargets = (from minion in nearMinions
+                                         where
+                                         Vector2.DistanceSquared(minion.ServerPosition.To2D(), startPoint.To2D()) <
+                                         startPointRadius * startPointRadius &&
+                                         Vector2.DistanceSquared(player.Position.To2D(), minion.ServerPosition.To2D()) < rangeE * rangeE
+                                         select minion).ToList();
                     if (minionTargets.Count > 0)
                     {
                         // Sort table by health DEC
@@ -313,7 +342,7 @@ namespace ARAMDetFull.Champions
 
         private void CastE(Vector3 source, Vector3 destination)
         {
-            E.Cast(source, destination);
+            Spell.E.Cast()
         }
 
         private void CastE(Vector2 source, Vector2 destination)

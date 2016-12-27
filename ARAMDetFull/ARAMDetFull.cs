@@ -148,7 +148,7 @@ namespace ARAMDetFull
         
         private static void ARAMDetFull_OnGameEnd(bool win)
         {
-            Chat.Print("/all GG");
+            Chat.Say("/all GG");
             var rnd = new Random().Next(15000, 30000) + Game.Ping;
             Core.DelayAction(() => { Game.QuitGame(); }, rnd);
         }

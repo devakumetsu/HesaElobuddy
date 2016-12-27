@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LeagueSharp;using DetuksSharp;
-using LeagueSharp.Common;
+using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
 
 namespace ARAMDetFull.Champions
 {
     class Tahmkench : Champion
     {
-
-        private Spell W2;
+        private Spell.Skillshot W2;
         private SwallowedTarget current = SwallowedTarget.None;
 
         enum SwallowedTarget
@@ -21,28 +19,26 @@ namespace ARAMDetFull.Champions
             Minion,
             None
         }
-
-
+        
         public Tahmkench()
         {
-            Game.PrintChat("Tahm in ");
             Obj_AI_Base.OnProcessSpellCast += OnProcessSpell;
 
             ARAMSimulator.champBuild = new Build
             {
                 coreItems = new List<ConditionalItem>
-                        {
-                            new ConditionalItem(ItemId.Sunfire_Cape),
-                            new ConditionalItem(ItemId.Mercurys_Treads,ItemId.Ninja_Tabi,ItemCondition.ENEMY_AP),
-                            new ConditionalItem((ItemId)3748),
-                            new ConditionalItem(ItemId.Frozen_Heart),
-                            new ConditionalItem((ItemId)3742),
-                            new ConditionalItem(ItemId.Banshees_Veil),
-                        },
+                {
+                    new ConditionalItem(ItemId.Sunfire_Cape),
+                    new ConditionalItem(ItemId.Mercurys_Treads,ItemId.Ninja_Tabi,ItemCondition.ENEMY_AP),
+                    new ConditionalItem((ItemId)3748),
+                    new ConditionalItem(ItemId.Frozen_Heart),
+                    new ConditionalItem((ItemId)3742),
+                    new ConditionalItem(ItemId.Banshees_Veil),
+                },
                 startingItems = new List<ItemId>
-                        {
-                            ItemId.Giants_Belt
-                        }
+                {
+                    ItemId.Giants_Belt
+                }
             };
         }
 
@@ -74,7 +70,7 @@ namespace ARAMDetFull.Champions
         {
             if (!E.IsReady() || target == null)
                 return;
-           // E.Cast();
+            // E.Cast();
         }
 
 
@@ -82,7 +78,6 @@ namespace ARAMDetFull.Champions
         {
             if (!R.IsReady() || target == null)
                 return;
-            
         }
 
         public override void useSpells()
@@ -95,29 +90,32 @@ namespace ARAMDetFull.Champions
             if (tar != null) useE(tar);
             tar = ARAMTargetSelector.getBestTarget(R.Range);
             if (tar != null) useR(tar);
-           
-           
         }
 
         public override void setUpSpells()
         {
+            Q = new Spell.Skillshot(SpellSlot.Q, 800, SkillShotType.Linear, 100, 2000, 70);
+            //WGRAB = new Spell.Active(SpellSlot.W);
+            W = new Spell.Targeted(SpellSlot.W, 330);
+            W2 = new Spell.Skillshot(SpellSlot.W, 650, SkillShotType.Linear, 100, 900, 75);
+            E = new Spell.Active(SpellSlot.E);
+            R = new Spell.Active(SpellSlot.R, 4000);
             //Create the spells
-            Q = new Spell(SpellSlot.Q, 800);
+            /*Q = new Spell(SpellSlot.Q, 800);
             Q.SetSkillshot(.1f, 75, 2000, true, SkillshotType.SkillshotLine);
             W = new Spell(SpellSlot.W, 250);
             W2 = new Spell(SpellSlot.W, 900); //Not too sure on this value
             W2.SetSkillshot(.1f, 75, 1500, false, SkillshotType.SkillshotLine); //Not sure on these values either.
             E = new Spell(SpellSlot.E);
-            R = new Spell(SpellSlot.R, 4000);
+            R = new Spell(SpellSlot.R, 4000);*/
         }
-
-
+        
         public override void farm()
         {
             if (player.ManaPercent < 55)
                 return;
 
-            foreach (var minion in MinionManager.GetMinions(Q.Range))
+            foreach (var minion in EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, player.Position, Q.Range))
             {
                 if (minion.Health > ObjectManager.Player.GetAutoAttackDamage(minion) && minion.Health < Q.GetDamage(minion))
                 {
@@ -126,20 +124,18 @@ namespace ARAMDetFull.Champions
                 }
             }
         }
-
-
+        
         void OnProcessSpell(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             //Modified Kalista Soulbound code from Corey
             //Need to check in fountain otherwise recalls could make you swallow
-
             try
             {
                 var hero = sender as AIHeroClient;
-                if (hero != null && hero.IsEnemy && !player.InFountain())
+                if (hero != null && hero.IsEnemy && !player.IsInFountainRange())
                 {
                     var swallowAlly =
-                        HeroManager.Allies.FirstOrDefault(
+                        EntityManager.Heroes.Allies.FirstOrDefault(
                             x => x.HealthPercent < 25
                                 && ARAMSimulator.inDanger
                                 && x.IsAlly && player.Distance(x) <= 500
@@ -175,19 +171,14 @@ namespace ARAMDetFull.Champions
                             current = (args.Target.IsAlly) ? SwallowedTarget.Ally : SwallowedTarget.Enemy;
                         else
                             current = SwallowedTarget.Minion;
-
                     }
                     else if (s.ToString().Equals("46"))
                         current = SwallowedTarget.None;
-
                 }
             }
             catch (Exception)
             {
-                
             }
-
-            
         }
     }
 }

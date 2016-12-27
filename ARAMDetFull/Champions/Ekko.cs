@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
-using static EloBuddy.SDK.Spell;
+using EloBuddy.SDK.Enumerations;
 
 namespace ARAMDetFull.Champions
 {
     class Ekko : Champion
     {
+
         private static GameObject RMissile, WMissile;
-        private SpellBase Q1;
+        public static Spell.Skillshot Q;
+        public static Spell.Skillshot W;
+        public static Spell.Active E;
+        public static Spell.Active R;
 
         private float QMANA, WMANA, EMANA, RMANA;
         public Ekko()
         {
 
-            Obj_AI_Base.OnCreate += Obj_AI_Base_OnCreate;
+            GameObject.OnCreate += Obj_AI_Base_OnCreate;
 
             ARAMSimulator.champBuild = new Build
             {
@@ -54,13 +58,18 @@ namespace ARAMDetFull.Champions
                 return;
             var qDmg = GetQdmg(t);
             if (qDmg > t.Health)
-                Q.Cast(t, true);
-            else if (ObjectManager.Player.Mana > RMANA + QMANA)
+            {
                 Q.Cast(t);
+            }
+            else if (ObjectManager.Player.Mana > RMANA + QMANA)
+            {
+                Q.Cast(t);
+            }
+            var icantstandthisanymore = EntityManager.Heroes.Enemies.Where(enemy => enemy.IsValidTarget(Q.Range));
             if (player.Mana > RMANA + QMANA + WMANA)
             {
-                foreach (var enemy in DeathWalker.AllEnemys.Where(enemy => enemy.IsValidTarget(Q.Range)))
-                    Q.Cast(enemy, true);
+                foreach (var enemy in icantstandthisanymore)
+                    Q.Cast(enemy);
             }
         }
 
@@ -75,13 +84,20 @@ namespace ARAMDetFull.Champions
 
             }
             if (ObjectManager.Player.Mana > RMANA + WMANA + EMANA + QMANA)
+            {
                 W.Cast(t);
-            else if (!ObjectManager.Player.UnderTurret(true) && ObjectManager.Player.Mana > ObjectManager.Player.MaxMana * 0.8 && ObjectManager.Player.Mana > RMANA + WMANA + EMANA + QMANA + WMANA)
+            }
+            else if (!ObjectManager.Player.IsUnderTurret() && ObjectManager.Player.Mana > ObjectManager.Player.MaxMana * 0.8 &&
+                     ObjectManager.Player.Mana > RMANA + WMANA + EMANA + QMANA + WMANA)
+            {
                 W.Cast(t);
+            }
             else if (ObjectManager.Player.Mana > RMANA + WMANA + EMANA)
             {
-                foreach (var enemy in DeathWalker.AllEnemys.Where(enemy => enemy.IsValidTarget(W.Range)))
-                    W.Cast(enemy, true);
+                foreach (var enemy in EntityManager.Heroes.Enemies.Where(enemy => enemy.IsValidTarget(W.Range)))
+                {
+                    W.Cast(enemy);
+                }
             }
         }
 
@@ -89,6 +105,7 @@ namespace ARAMDetFull.Champions
         {
             if (!E.IsReady() || t == null)
                 return;
+
             if (WMissile != null && WMissile.IsValid)
             {
                 if (WMissile.Position.CountEnemiesInRange(200) > 0 && WMissile.Position.Distance(player.ServerPosition) < 100)
@@ -96,7 +113,6 @@ namespace ARAMDetFull.Champions
                     E.Cast(player.Position.Extend(WMissile.Position, E.Range).To3D());
                 }
             }
-
 
             if (E.IsReady() && ObjectManager.Player.Mana > RMANA + EMANA
                  && ObjectManager.Player.CountEnemiesInRange(260) > 0
@@ -120,15 +136,14 @@ namespace ARAMDetFull.Champions
                 E.Cast(player.Position.Extend(t.Position, E.Range).To3D());
             }
         }
-
-
+        
         public override void useR(Obj_AI_Base target)
         {
             if (!R.IsReady() || target == null)
                 return;
-            foreach (var t in DeathWalker.AllEnemys.Where(t => RMissile != null && RMissile.IsValid && t.IsValidTarget() && RMissile.Position.Distance(Prediction.GetPrediction(t, R.Delay).CastPosition) < 350 && RMissile.Position.Distance(t.ServerPosition) < 350))
+            
+            foreach (var t in EntityManager.Heroes.Enemies.Where(t => RMissile != null && RMissile.IsValid && t.IsValidTarget() && RMissile.Position.Distance(R.GetPrediction(t).CastPosition) < 350 && RMissile.Position.Distance(t.ServerPosition) < 350))
             {
-
                 var comboDmg = GetRdmg(t) + GetWdmg(t);
                 if (Q.IsReady())
                     comboDmg += GetQdmg(t);
@@ -136,9 +151,6 @@ namespace ARAMDetFull.Champions
                     comboDmg += GetEdmg(t);
                 if (t.Health < comboDmg)
                     R.Cast();
-
-
-
             }
 
             if (player.Health < player.CountEnemiesInRange(600) * player.Level * 15)
@@ -149,14 +161,14 @@ namespace ARAMDetFull.Champions
 
         private void SetMana()
         {
-            QMANA = Q.Instance.ManaCost;
-            WMANA = W.Instance.ManaCost;
-            EMANA = E.Instance.ManaCost;
+            QMANA = Q.ManaCost;
+            WMANA = W.ManaCost;
+            EMANA = E.ManaCost;
 
             if (!R.IsReady())
                 RMANA = QMANA - ObjectManager.Player.Level * 2;
             else
-                RMANA = R.Instance.ManaCost; ;
+                RMANA = R.ManaCost; ;
 
             if (ObjectManager.Player.Health < ObjectManager.Player.MaxHealth * 0.2)
             {
@@ -183,36 +195,32 @@ namespace ARAMDetFull.Champions
         public override void setUpSpells()
         {
             //Create the spells
-            Q = new Spell(SpellSlot.Q, 700);
-            Q1 = new Spell(SpellSlot.Q, 1000);
-            W = new Spell(SpellSlot.W, 700);
-            E = new Spell(SpellSlot.E, 330f);
-            R = new Spell(SpellSlot.R, 1200f);
-
-            Q.SetSkillshot(0.25f, 50f, 2000f, false, SkillshotType.SkillshotLine);
-            Q1.SetSkillshot(0.5f, 150f, 1000f, false, SkillshotType.SkillshotCircle);
-            W.SetSkillshot(2.5f, 200f, float.MaxValue, false, SkillshotType.SkillshotCircle);
-            R.SetSkillshot(0.6f, 375f, float.MaxValue, false, SkillshotType.SkillshotCircle);
+            Q = new Spell.Skillshot(SpellSlot.Q, 850, SkillShotType.Linear, 250, 2200, 60);
+            Q.AllowedCollisionCount = int.MaxValue;
+            W = new Spell.Skillshot(SpellSlot.W, 1600, SkillShotType.Circular, 1500, 500, 650);
+            W.AllowedCollisionCount = int.MaxValue;
+            E = new Spell.Active(SpellSlot.E, 450);
+            R = new Spell.Active(SpellSlot.R, 375);
         }
 
         private double GetQdmg(Obj_AI_Base t)
         {
-            double dmg = 90 + (30 * Q.Level) + player.FlatMagicDamageMod * 0.8;
-            return player.CalcDamage(t, Damage.DamageType.Magical, dmg);
+            float dmg = 90 + (30 * Q.Level) + player.FlatMagicDamageMod * 0.8f;
+            return player.CalculateDamageOnUnit(t, DamageType.Magical, dmg);
         }
         private double GetEdmg(Obj_AI_Base t)
         {
-            double dmg = 20 + (30 * E.Level) + (player.FlatMagicDamageMod * 0.2);
-            return player.CalcDamage(t, Damage.DamageType.Magical, dmg);
+            float dmg = 20 + (30 * E.Level) + (player.FlatMagicDamageMod * 0.2f);
+            return player.CalculateDamageOnUnit(t, DamageType.Magical, dmg);
         }
         private double GetWdmg(Obj_AI_Base t)
         {
             if (t.Health < t.MaxHealth * 0.3)
             {
-                double hp = t.MaxHealth - t.Health;
-                double dmg = ((player.FlatMagicDamageMod / 45) + 5) * 0.01;
-                double dmg2 = hp * dmg;
-                return player.CalcDamage(t, Damage.DamageType.Magical, dmg2);
+                float hp = t.MaxHealth - t.Health;
+                float dmg = ((player.FlatMagicDamageMod / 45) + 5) * 0.01f;
+                float dmg2 = hp * dmg;
+                return player.CalculateDamageOnUnit(t, DamageType.Magical, dmg2);
 
             }
             else
@@ -222,18 +230,18 @@ namespace ARAMDetFull.Champions
 
         private double GetRdmg(Obj_AI_Base t)
         {
-            double dmg = 50 + (150 * R.Level) + player.FlatMagicDamageMod * 1.3;
-            return player.CalcDamage(t, Damage.DamageType.Magical, dmg);
+            float dmg = 50 + (150 * R.Level) + player.FlatMagicDamageMod * 1.3f;
+            return player.CalculateDamageOnUnit(t, DamageType.Magical, dmg);
         }
 
         public override void farm()
         {
             if (Q.IsReady())
             {
-                var allMinionsQ = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q1.Range, MinionTypes.All);
-                var Qfarm = Q.GetLineFarmLocation(allMinionsQ, 100);
-                if (Qfarm.MinionsHit > 5 && Q1.IsReady())
-                    Q.Cast(Qfarm.Position);
+                var allMinionsQ = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, ObjectManager.Player.ServerPosition, Q.Range);
+                var Qfarm = Q.GetBestLinearCastPosition(allMinionsQ, 100);
+                if (Qfarm.HitNumber > 5)
+                    Q.Cast(Qfarm.CastPosition);
             }
         }
     }

@@ -44,7 +44,6 @@ namespace ARAMDetFull.Champions
 
         void DeathWalker_AfterAttack(AttackableUnit unit, AttackableUnit target)
         {
-            //Game.PrintChat("Registered");
             if (!(target is AIHeroClient)) return;
             if (unit.IsMe && target.IsValidTarget())
             {
@@ -95,25 +94,23 @@ namespace ARAMDetFull.Champions
 
         public override void setUpSpells()
         {
-            Q = new Spell(SpellSlot.Q);
-            W = new Spell(SpellSlot.W);
-            E = new Spell(SpellSlot.E, 1100);
-            R = new Spell(SpellSlot.R, 4000);
-            E.SetSkillshot(250f, 130f, 1400f, false, SkillshotType.SkillshotLine);
-            R.SetSkillshot(400f, 160f, 2000f, false, SkillshotType.SkillshotLine);
+            Q = new Spell.Active(SpellSlot.Q);
+            W = new Spell.Active(SpellSlot.W);
+            E = new Spell.Skillshot(SpellSlot.E, 1100, SkillShotType.Linear, 250, 1400, 130);
+            R = new Spell.Skillshot(SpellSlot.R, 4000, SkillShotType.Linear, 400, 2000, 160);
         }
 
         public override void alwaysCheck()
         {
             if (Axes.Count == 0)
             {
-                DeathWalker.CustomOrbwalkMode = false;
+                Orbwalker.DisableMovement = false;
             }
         }
 
         public override void useSpells()
         {
-            var target = ARAMTargetSelector.getBestTarget(DeathWalker.getTargetSearchDist());
+            var target = ARAMTargetSelector.getBestTarget(Player.Instance.GetAutoAttackRange());
             var Etarget = ARAMTargetSelector.getBestTarget(E.Range);
             var RTarget = ARAMTargetSelector.getBestTarget(2000f);
             CatchAxes();
@@ -133,7 +130,7 @@ namespace ARAMDetFull.Champions
 
         void AntiGapcloser_OnEnemyGapcloser(Obj_AI_Base unit, EventArgs gapcloser)
         {
-            var GPSender = (AIHeroClient) unit;
+            var GPSender = (AIHeroClient)unit;
             if (GPSender == null) return;
             if (!E.IsReady() || !GPSender.IsValidTarget()) return;
             CastEHitchance(GPSender);
@@ -200,10 +197,9 @@ namespace ARAMDetFull.Champions
         public void CatchAxes()
         {
             bool shouldUseWForIt;
-            //Game.PrintChat("I'm Combo");
             if (Axes.Count == 0)
             {
-                DeathWalker.CustomOrbwalkMode = false;
+                Orbwalker.DisableAttacking = false;
                 return;
             }
             if (ARAMSimulator.inDanger)
@@ -212,7 +208,7 @@ namespace ARAMDetFull.Champions
 
             if (Axe == null)
             {
-                DeathWalker.CustomOrbwalkMode = false;
+                Orbwalker.DisableAttacking = false;
                 return;
             }
             //  if (shouldUseWForIt) { DeathWalker.setAttack(false); } else { DeathWalker.setAttack(true);}
@@ -231,8 +227,7 @@ namespace ARAMDetFull.Champions
         public void Catch(bool shouldUseWForIt, PossibleReticle Axe)
         {
             if (shouldUseWForIt && W.IsReady() && !Axe.isCatchingNow()) W.Cast();
-            DeathWalker.CustomOrbwalkMode = true;
-            DeathWalker.deathWalkTarget(Axe.Position.Extend(player.Position, player.BoundingRadius - 100), DeathWalker.getBestTarget());
+            Orbwalker.OrbwalkTo(Axe.Position);
         }
         public void CastQ()
         {
@@ -311,14 +306,14 @@ namespace ARAMDetFull.Champions
             return player.HasBuff("DravenFury") || player.HasBuff("dravenfurybuff");
         }
         public bool minionThere()
-        {
+        {//TODO hi hesa
             var List = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, player.Position/*, DeathWalker.getTargetSearchDist()*/)
-                .Where(m => HealthPrediction.GetHealthPrediction(m,
-                    (int)(player.Distance(m) / Orbwalking.GetMyProjectileSpeed()) * 1000) <=
+                .Where(m => Prediction.Health.GetPrediction(m,
+                    (int)(player.Distance(m) / Orbwalker.GetMyProjectileSpeed()) * 1000) <=
                             Q.GetDamage(m) + player.GetAutoAttackDamage(m)
                         ).ToList();
             // Game.PrintChat("QDmg "+Q.GetDamage(List.FirstOrDefault()));
-            return List.Count > 0;
+            return List.Count() >= 0;
         }
         public Vector3 PosAfterRange(Vector3 p1, Vector3 finalp2, float range)
         {
@@ -343,10 +338,10 @@ namespace ARAMDetFull.Champions
         }
         public void UseItem(int id, AIHeroClient target = null)
         {
-            /*if (EloBuddy.Items.HasItem(id) && LeagueSharp.Common.Items.CanUseItem(id))
+            if (Item.HasItem(id) && Item.CanUseItem(id))
             {
-                LeagueSharp.Common.Items.UseItem(id, target);
-            }*/
+                Item.UseItem(id, target);
+            }
         }
         public static bool isUnderEnTurret(Vector3 Position)
         {
@@ -359,23 +354,22 @@ namespace ARAMDetFull.Champions
         private bool getUnitsInPath(AIHeroClient player, AIHeroClient target, SpellBase spell)
         {
             float distance = player.Distance(target);
-            List<Obj_AI_Base> minionList = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, spell.Range,
-                MinionTypes.All, MinionTeam.NotAlly);
+            var minionList = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, ObjectManager.Player.ServerPosition, spell.Range);
             int numberOfMinions = (from Obj_AI_Minion minion in minionList
                                    let skillshotPosition =
                                        V2E(player.Position,
                                            V2E(player.Position, target.Position,
-                                               Vector3.Distance(player.Position, target.Position) - spell.Width + 1).To3D(),
+                                               Vector3.Distance(player.Position, target.Position) - spell.Width() + 1).To3D(),
                                            Vector3.Distance(player.Position, minion.Position))
-                                   where skillshotPosition.Distance(minion) < spell.Width
+                                   where skillshotPosition.Distance(minion) <= spell.Width()
                                    select minion).Count();
             int numberOfChamps = (from minion in ObjectManager.Get<AIHeroClient>()
                                   let skillshotPosition =
                                       V2E(player.Position,
                                           V2E(player.Position, target.Position,
-                                              Vector3.Distance(player.Position, target.Position) - spell.Width + 1).To3D(),
+                                              Vector3.Distance(player.Position, target.Position) - spell.Width() + 1).To3D(),
                                           Vector3.Distance(player.Position, minion.Position))
-                                  where skillshotPosition.Distance(minion) < spell.Width && minion.IsEnemy
+                                  where skillshotPosition.Distance(minion) < spell.Width() && minion.IsEnemy
                                   select minion).Count();
             int totalUnits = numberOfChamps + numberOfMinions - 1;
             // total number of champions and minions the projectile will pass through.
@@ -404,8 +398,8 @@ namespace ARAMDetFull.Champions
                 AxeGameObject = Axe;
                 networkID = Axe.NetworkId;
                 Position = Axe.Position;
-                CreationTime = DeathWalker.now;
-                EndTime = DeathWalker.now + 2000;
+                CreationTime = ARAMDetFull.now;
+                EndTime = ARAMDetFull.now + 2000;
             }
 
             public bool canCatch(bool UseW, out bool ShouldUseW)
@@ -417,12 +411,12 @@ namespace ARAMDetFull.Champions
                 {
                     ShouldUseW = false;
                     return false;
-                }
-                Spell W = new Spell(SpellSlot.W);
+                }//TODO
+                W = new Spell(SpellSlot.W);
                 var distance = player.GetPath(Position).ToList().To2D().PathLength() - 50;
-                var catchNormal = (distance * 1000) / player.MoveSpeed + DeathWalker.now < EndTime; // Not buffed with W, Normal
+                var catchNormal = (distance * 1000) / player.MoveSpeed + ARAMDetFull.now < EndTime; // Not buffed with W, Normal
                 var AdditionalSpeed = (5 * W.Level + 35) * 0.01 * player.MoveSpeed;
-                var catchBuff = distance / (player.MoveSpeed + AdditionalSpeed) + DeathWalker.now < EndTime; //Buffed with W
+                var catchBuff = distance / (player.MoveSpeed + AdditionalSpeed) + ARAMDetFull.now < EndTime; //Buffed with W
                 if (catchNormal)
                 {
                     ShouldUseW = false;

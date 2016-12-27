@@ -1,34 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LeagueSharp;using DetuksSharp;
-using LeagueSharp.Common;
-using SharpDX;
+using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
 
 namespace ARAMDetFull.Champions
 {
     class Twitch : Champion
     {
-
         public Twitch()
         {
             ARAMSimulator.champBuild = new Build
             {
                 coreItems = new List<ConditionalItem>
-                    {
-                        new ConditionalItem(ItemId.Infinity_Edge),
-                        new ConditionalItem(ItemId.Berserkers_Greaves),
-                        new ConditionalItem(ItemId.The_Bloodthirster),
-                        new ConditionalItem(ItemId.Phantom_Dancer),
-                        new ConditionalItem(ItemId.Runaans_Hurricane_Ranged_Only),
-                        new ConditionalItem(ItemId.Last_Whisper),
-                    },
+                {
+                    new ConditionalItem(ItemId.Infinity_Edge),
+                    new ConditionalItem(ItemId.Berserkers_Greaves),
+                    new ConditionalItem(ItemId.The_Bloodthirster),
+                    new ConditionalItem(ItemId.Phantom_Dancer),
+                    new ConditionalItem(ItemId.Runaans_Hurricane_Ranged_Only),
+                    new ConditionalItem(ItemId.Last_Whisper),
+                },
                 startingItems = new List<ItemId>
-                    {
-                        ItemId.Vampiric_Scepter,ItemId.Boots_of_Speed
-                    }
+                {
+                    ItemId.Vampiric_Scepter,
+                    ItemId.Boots_of_Speed
+                }
             };
         }
 
@@ -67,7 +64,7 @@ namespace ARAMDetFull.Champions
                             hero =>
                                 hero.IsValidTarget(E.Range) &&
                                 (player.GetSpellDamage(hero, SpellSlot.E) - 10 > hero.Health)))
-            {
+            {//maybe "hero" is wrong
                 E.Cast();
             }
 
@@ -77,19 +74,21 @@ namespace ARAMDetFull.Champions
         {
             if (!R.IsReady())
                 return;
-            if (player.CountEnemysInRange(700)>1)
-                if(R.Cast())
+            if (player.CountEnemiesInRange(700) > 1)
+                if (R.Cast())
                     Aggresivity.addAgresiveMove(new AgresiveMove(35, 5000, true));
         }
 
         public override void setUpSpells()
         {
-            Q = new Spell(SpellSlot.Q, 800);
-            R = new Spell(SpellSlot.R, 800);
-
-            W = new Spell(SpellSlot.W, 950);
-            W.SetSkillshot(0.25f, 120f, 1400f, false, SkillshotType.SkillshotCircle);
-            E = new Spell(SpellSlot.E, 1200);
+            Q = new Spell.Active(SpellSlot.Q);
+            W = new Spell.Skillshot(SpellSlot.W, 950, SkillShotType.Circular, 250, 1400, 280)
+            {
+                AllowedCollisionCount = -1,
+                MinimumHitChance = HitChance.Medium
+            };
+            E = new Spell.Active(SpellSlot.E, 1200);
+            R = new Spell.Active(SpellSlot.R);
         }
 
         public override void useSpells()

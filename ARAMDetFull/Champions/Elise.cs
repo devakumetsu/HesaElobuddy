@@ -1,10 +1,10 @@
-﻿using System;
+﻿using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
+using EloBuddy.SDK.Events;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LeagueSharp;using DetuksSharp;
-using LeagueSharp.Common;
+using static EloBuddy.SDK.Spell;
 
 namespace ARAMDetFull.Champions
 {
@@ -14,7 +14,8 @@ namespace ARAMDetFull.Champions
 
         private static bool _spider;
 
-        private static Spell _humanQ, _humanW, _humanE, _r, _spiderQ, _spiderW, _spiderE;
+        private static SpellBase _humanQ, _humanW, _humanE, _r, _spiderQ, _spiderW, _spiderE;
+        public static Spell.Targeted Ignite { get; private set; }
 
         private readonly float[] HumanQcd = { 6, 6, 6, 6, 6 };
 
@@ -38,27 +39,47 @@ namespace ARAMDetFull.Champions
 
         public Elise()
         {
-            AntiGapcloser.OnEnemyGapcloser += AntiGapcloser_OnEnemyGapcloser;
-            Interrupter.OnPossibleToInterrupt += Interrupter_OnPosibleToInterrupt;
+            Gapcloser.OnGapcloser += Gapcloser_OnGapcloser;
+            Interrupter.OnInterruptableSpell += Interrupter_OnInterruptableSpell; ;
             Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
 
             ARAMSimulator.champBuild = new Build
             {
                 coreItems = new List<ConditionalItem>
-                    {
-                        new ConditionalItem(ItemId.Sorcerers_Shoes),
-                        new ConditionalItem(ItemId.Rabadons_Deathcap),
-                        new ConditionalItem(ItemId.Banshees_Veil,ItemId.Randuins_Omen,ItemCondition.ENEMY_AP),
-                        new ConditionalItem(ItemId.Void_Staff,ItemId.Zhonyas_Hourglass,ItemCondition.ENEMY_AP),
-                        new ConditionalItem(ItemId.Rylais_Crystal_Scepter),
-                        new ConditionalItem(ItemId.Liandrys_Torment),
-                    },
+                {
+                    new ConditionalItem(ItemId.Sorcerers_Shoes),
+                    new ConditionalItem(ItemId.Rabadons_Deathcap),
+                    new ConditionalItem(ItemId.Banshees_Veil,ItemId.Randuins_Omen,ItemCondition.ENEMY_AP),
+                    new ConditionalItem(ItemId.Void_Staff,ItemId.Zhonyas_Hourglass,ItemCondition.ENEMY_AP),
+                    new ConditionalItem(ItemId.Rylais_Crystal_Scepter),
+                    new ConditionalItem(ItemId.Liandrys_Torment),
+                },
                 startingItems = new List<ItemId>
-                    {
-                        ItemId.Needlessly_Large_Rod
-                    }
+                {
+                    ItemId.Needlessly_Large_Rod
+                }
             };
 
+        }
+
+        private void Interrupter_OnInterruptableSpell(Obj_AI_Base target, Interrupter.InterruptableSpellEventArgs e)
+        {
+            if (target != null && player.Distance(target) < _humanE.Range && _humanE.GetPrediction(target).HitChance >= HitChance.Low)
+            {
+                _humanE.Cast(target);
+            }
+        }
+
+        private void Gapcloser_OnGapcloser(AIHeroClient sender, Gapcloser.GapcloserEventArgs e)
+        {
+            if (_spiderE.IsReady() && _spider && sender.IsValidTarget(_spiderE.Range))
+            {
+                _spiderE.Cast(sender);
+            }
+            if (_humanE.IsReady() && _human && sender.IsValidTarget(_humanE.Range))
+            {
+                _humanE.Cast(sender);
+            }
         }
 
         private static void CheckSpells()
@@ -93,12 +114,12 @@ namespace ARAMDetFull.Champions
         {
             return time + (time * player.PercentCooldownMod);
         }
-         private void GetCDs(GameObjectProcessSpellCastEventArgs spell)
+        private void GetCDs(GameObjectProcessSpellCastEventArgs spell)
         {
             if (_human)
             {
                 if (spell.SData.Name == "EliseHumanQ")
-                    _humQcd = Game.Time + CalculateCd(HumanQcd[_humanQ.Level-1]);
+                    _humQcd = Game.Time + CalculateCd(HumanQcd[_humanQ.Level - 1]);
                 if (spell.SData.Name == "EliseHumanW")
                     _humWcd = Game.Time + CalculateCd(HumanWcd[_humanW.Level - 1]);
                 if (spell.SData.Name == "EliseHumanE")
@@ -115,36 +136,16 @@ namespace ARAMDetFull.Champions
             }
         }
 
-         private void Cooldowns()
-         {
-             _humaQcd = ((_humQcd - Game.Time) > 0) ? (_humQcd - Game.Time) : 0;
-             _humaWcd = ((_humWcd - Game.Time) > 0) ? (_humWcd - Game.Time) : 0;
-             _humaEcd = ((_humEcd - Game.Time) > 0) ? (_humEcd - Game.Time) : 0;
-             _spideQcd = ((_spidQcd - Game.Time) > 0) ? (_spidQcd - Game.Time) : 0;
-             _spideWcd = ((_spidWcd - Game.Time) > 0) ? (_spidWcd - Game.Time) : 0;
-             _spideEcd = ((_spidEcd - Game.Time) > 0) ? (_spidEcd - Game.Time) : 0;
-         }
-
-        private void Interrupter_OnPosibleToInterrupt(Obj_AI_Base target, InterruptableSpell spell)
+        private void Cooldowns()
         {
-            if (player.Distance(target) < _humanE.Range && target != null && _humanE.GetPrediction(target).Hitchance >= HitChance.Low)
-            {
-                _humanE.Cast(target);
-            }
+            _humaQcd = ((_humQcd - Game.Time) > 0) ? (_humQcd - Game.Time) : 0;
+            _humaWcd = ((_humWcd - Game.Time) > 0) ? (_humWcd - Game.Time) : 0;
+            _humaEcd = ((_humEcd - Game.Time) > 0) ? (_humEcd - Game.Time) : 0;
+            _spideQcd = ((_spidQcd - Game.Time) > 0) ? (_spidQcd - Game.Time) : 0;
+            _spideWcd = ((_spidWcd - Game.Time) > 0) ? (_spidWcd - Game.Time) : 0;
+            _spideEcd = ((_spidEcd - Game.Time) > 0) ? (_spidEcd - Game.Time) : 0;
         }
-
-        private void AntiGapcloser_OnEnemyGapcloser(ActiveGapcloser gapcloser)
-        {
-            if (_spiderE.IsReady() && _spider && gapcloser.Sender.IsValidTarget(_spiderE.Range))
-            {
-                _spiderE.Cast(gapcloser.Sender);
-            }
-            if (_humanE.IsReady() && _human && gapcloser.Sender.IsValidTarget(_humanE.Range))
-            {
-                _humanE.Cast(gapcloser.Sender);
-            }
-        }
-
+        
         public override void useQ(Obj_AI_Base target)
         {
         }
@@ -171,15 +172,15 @@ namespace ARAMDetFull.Champions
             var wdmg = player.GetSpellDamage(target, SpellSlot.W);
             if (_human)
             {
-                if (target.Distance(player.Position) < _humanE.Range  && _humanE.IsReady())
+                if (target.Distance(player.Position) < _humanE.Range && _humanE.IsReady())
                 {
-                    if (_humanE.GetPrediction(target).Hitchance >= HitChance.High)
+                    if (_humanE.GetPrediction(target).HitChance >= HitChance.High)
                     {
                         _humanE.Cast(target);
                     }
                 }
 
-                if (player.Distance(target) <= _humanQ.Range  && _humanQ.IsReady())
+                if (player.Distance(target) <= _humanQ.Range && _humanQ.IsReady())
                 {
                     _humanQ.Cast(target);
                 }
@@ -201,7 +202,7 @@ namespace ARAMDetFull.Champions
             {
                 _spiderQ.Cast(target);
             }
-            if (player.Distance(target) <= 200&& _spiderW.IsReady())
+            if (player.Distance(target) <= 200 && _spiderW.IsReady())
             {
                 _spiderW.Cast();
             }
@@ -210,7 +211,7 @@ namespace ARAMDetFull.Champions
                 if ((safeGap(target)) || target.Distance(ARAMSimulator.fromNex.Position, true) < player.Distance(ARAMSimulator.fromNex.Position, true))
                     _spiderE.Cast(target);
             }
-            if (player.Distance(target) > _spiderQ.Range && !_spiderE.IsReady() && _r.IsReady() && !_spiderQ.IsReady() )
+            if (player.Distance(target) > _spiderQ.Range && !_spiderE.IsReady() && _r.IsReady() && !_spiderQ.IsReady())
             {
                 _r.Cast();
             }
@@ -218,26 +219,29 @@ namespace ARAMDetFull.Champions
             {
                 _r.Cast();
             }
-            if (_humanQ.IsReady() && _humanW.IsReady() && _r.IsReady() )
+            if (_humanQ.IsReady() && _humanW.IsReady() && _r.IsReady())
             {
                 _r.Cast();
             }
-            if ((_humanQ.IsReady() && qdmg >= target.Health || _humanW.IsReady() && wdmg >= target.Health) )
+            if ((_humanQ.IsReady() && qdmg >= target.Health || _humanW.IsReady() && wdmg >= target.Health))
             {
                 _r.Cast();
             }
+
+            Core.DelayAction(() => Player.IssueOrder(GameObjectOrder.AttackUnit, target), 100);
         }
 
         public override void farm()
         {
-            if(player.ManaPercent<40)
+            if (player.ManaPercent < 40)
                 return;
             CheckSpells();
             Cooldowns();
-            foreach (var minion in MinionManager.GetMinions(player.ServerPosition, _humanQ.Range, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.Health))
+            
+            foreach (var minion in EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, ObjectManager.Player.ServerPosition, _humanQ.Range).Where(x => !x.IsDead).OrderBy(x => x.Health))
                 if (_human)
                 {
-                    if ( _humanQ.IsReady() && minion.IsValidTarget() &&
+                    if (_humanQ.IsReady() && minion.IsValidTarget() &&
                         player.Distance(minion) <= _humanQ.Range)
                     {
                         _humanQ.Cast(minion);
@@ -251,7 +255,8 @@ namespace ARAMDetFull.Champions
                     {
                         _r.Cast();
                     }
-                }else if (_spider)
+                }
+                else if (_spider)
                 {
                     if (_spiderQ.IsReady() && minion.IsValidTarget() &&
                         player.Distance(minion) <= _spiderQ.Range)
@@ -272,8 +277,8 @@ namespace ARAMDetFull.Champions
             Cooldowns();
             CheckSpells();
             var target = ARAMTargetSelector.getBestTarget(_humanQ.Range);
-            if(target == null) return;
-            var igniteDmg = player.GetSummonerSpellDamage(target, Damage.SummonerSpell.Ignite);
+            if (target == null) return;
+            var igniteDmg = player.GetSummonerSpellDamage(target, DamageLibrary.SummonerSpells.Ignite);
             var qhDmg = player.GetSpellDamage(target, SpellSlot.Q);
             var wDmg = player.GetSpellDamage(target, SpellSlot.W);
 
@@ -305,17 +310,14 @@ namespace ARAMDetFull.Champions
 
         public override void setUpSpells()
         {
-            //Create the spells
-            _humanQ = new Spell(SpellSlot.Q, 625f);
-            _humanW = new Spell(SpellSlot.W, 1150f);
-            _humanE = new Spell(SpellSlot.E, 1075f);
-            _spiderQ = new Spell(SpellSlot.Q, 475f);
-            _spiderW = new Spell(SpellSlot.W, 0);
-            _spiderE = new Spell(SpellSlot.E, 750f);
-            _r = new Spell(SpellSlot.R, 0);
-
-            _humanW.SetSkillshot(0.25f, 100f, 1000, true, SkillshotType.SkillshotLine);
-            _humanE.SetSkillshot(0.25f, 55f, 1300, true, SkillshotType.SkillshotLine);
+            //Initialize Spells.
+            _humanQ = new Spell.Targeted(SpellSlot.Q, 625);
+            _humanW = new Spell.Skillshot(SpellSlot.W, 950, SkillShotType.Linear, 250, 1000, 100);
+            _humanE = new Spell.Skillshot(SpellSlot.E, 1075, SkillShotType.Linear, 250, 1300, 55) { AllowedCollisionCount = 0 };
+            _r = new Spell.Active(SpellSlot.R);
+            _spiderQ = new Spell.Targeted(SpellSlot.Q, 950);
+            _spiderW = new Spell.Active(SpellSlot.W);
+            _spiderE = new Spell.Targeted(SpellSlot.E, 750);
         }
     }
 }

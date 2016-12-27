@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LeagueSharp;using DetuksSharp;
-using LeagueSharp.Common;
+﻿using System.Collections.Generic;
+using EloBuddy;
+using EloBuddy.SDK;
 
 namespace ARAMDetFull.Champions
 {
@@ -18,7 +14,7 @@ namespace ARAMDetFull.Champions
                 {
                     new ConditionalItem(ItemId.Trinity_Force),
                     new ConditionalItem(ItemId.Mercurys_Treads, ItemId.Ninja_Tabi, ItemCondition.ENEMY_AP),
-                    new ConditionalItem(ItemId.Spirit_Stone, ItemId.Frozen_Heart, ItemCondition.ENEMY_AP),
+                    new ConditionalItem(ItemId.Spirit_Visage, ItemId.Frozen_Heart, ItemCondition.ENEMY_AP),
                     new ConditionalItem(ItemId.Wits_End, ItemId.Blade_of_the_Ruined_King, ItemCondition.ENEMY_AP),
                     new ConditionalItem(ItemId.Randuins_Omen),
                     new ConditionalItem(ItemId.Banshees_Veil),
@@ -65,7 +61,7 @@ namespace ARAMDetFull.Champions
         public override void useSpells()
         {
             var tar = ARAMTargetSelector.getBestTarget(500);
-            if(tar == null)
+            if (tar == null)
                 return;
             useQ(tar);
             useW(tar);
@@ -75,10 +71,10 @@ namespace ARAMDetFull.Champions
 
         public override void setUpSpells()
         {
-            Q = new Spell(SpellSlot.Q, 0);
-            W = new Spell(SpellSlot.W, 0);
-            E = new Spell(SpellSlot.E, 0);
-            R = new Spell(SpellSlot.R, 0);
+            Q = new Spell.Active(SpellSlot.Q, 0);
+            W = new Spell.Active(SpellSlot.W, 0);
+            E = new Spell.Active(SpellSlot.E, 0);
+            R = new Spell.Active(SpellSlot.R, 0);
         }
     }
 }

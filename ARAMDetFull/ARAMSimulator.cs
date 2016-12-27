@@ -407,7 +407,12 @@ namespace ARAMDetFull
                 case "DrMundo":
                     champ = new DrMundo();
                 break;
-                //TODO: Ekko & Elise Here
+                case "Ekko":
+                    champ = new Ekko();
+                break;
+                case "Elise":
+                    champ = new Elise();
+                break;
                 case "Evelynn":
                     champ = new Evelynn();
                 break;
@@ -423,7 +428,9 @@ namespace ARAMDetFull
                 case "Fizz":
                     champ = new Fizz();
                 break;
-                //TODO: Gangplank Here
+                case "Gangplank":
+                    champ = new Gangplank();
+                break;
                 case "Galio":
                     champ = new Galio();
                 break;
@@ -564,10 +571,19 @@ namespace ARAMDetFull
                 case "Singed":
                     champ = new Singed();
                 break;
-
-
-
-
+                case "Sion":
+                    champ = new Sion();
+                break;
+                case "Soraka":
+                    champ = new Soraka();
+                break;
+                //TODO: Syndra Here
+                case "TahmKench":
+                    champ = new Tahmkench();
+                break;
+                case "Taliyah":
+                    champ = new Taliyah();
+                break;
                 case "Talon":
                     champ = new Talon();
                 break;
@@ -577,22 +593,55 @@ namespace ARAMDetFull
                 case "Teemo":
                     champ = new Teemo();
                 break;
-
-
-
+                case "Thresh":
+                    champ = new Thresh();
+                break;
+                case "Tristana":
+                    champ = new Tristana();
+                break;
+                case "Tryndamere":
+                    champ = new Tryndamere();
+                break;
                 case "TwistedFate":
                     champ = new TwistedFate();
                 break;
-
-
+                case "Twitch":
+                    champ = new Twitch();
+                break;
+                case "Udyr":
+                    champ = new Udyr();
+                break;
+                case "Urgot":
+                    champ = new Urgot();
+                break;
+                case "Varus":
+                    champ = new Varus();
+                break;
+                case "Vayne":
+                    champ = new Vayne();
+                break;
+                case "Veigar":
+                    champ = new Veigar();
+                break;
+                case "Vi":
+                    champ = new Vi();
+                break;
+                //TODO: Viktor Here
                 case "Vladimir":
                     champ = new Vladimir();
                 break;
-
+                case "Volibear":
+                    champ = new Volibear();
+                break;
                 case "Warwick":
                     champ = new Warwick();
                 break;
-
+                case "Wukong":
+                    champ = new Wukong();
+                break;
+                case "Xerath":
+                    champ = new Xerath();
+                break;
                 case "XinZhao":
                     champ = new XinZhao();
                 break;
@@ -615,35 +664,14 @@ namespace ARAMDetFull
                     champ = new Zyra();
                 break;
                 /*
-                case "Udyr":
-                    champ = new Udyr();
-                    break;
-                case "Urgot":
-                    champ = new Urgot();
-                    break;
-                case "Thresh":
-                    champ = new Thresh();
-                    break;
-                case "Vayne":
-                    champ = new Vayne();
-                    break;
-                case "Varus":
-                    champ = new Varus();
-                    break;
                 case "Draven":
                     champ = new Draven();
                     break;
                 case "Shaco":
                     champ = new Shaco();
                     break;
-                case "Twitch":
-                    champ = new Twitch();
-                    break;
                 case "Viktor":
                     champ = new Viktor();
-                    break;
-                case "Wukong":
-                    champ = new Wukong();
                     break;
                 case "Syndra"://TODO put back
                     champ = new Syndra();
@@ -651,47 +679,8 @@ namespace ARAMDetFull
                 case "Jayce":
                     champ = new Jayce();
                     break;
-                case "Xerath":
-                    champ = new Xerath();
-                    break;
-                case "Vi":
-                    champ = new Vi();
-                    break;
-                case "Veigar":
-                    champ = new Veigar();
-                    break;
-                case "Tristana":
-                    champ = new Tristana();
-                    break;
                 case "Orianna":
                     champ = new Orianna();
-                    break;
-                case "Elise":
-                    champ = new Elise();
-                    break;
-                case "Soraka":
-                    champ = new Soraka();
-                    break;
-                case "Ekko":
-                    champ = new Ekko();
-                    break;
-                case "TahmKench":
-                    champ = new Tahmkench();
-                    break;
-                case "Sion":
-                    champ = new Sion();
-                    break;
-                case "Gangplank":
-                    champ = new Gangplank();
-                    break;
-                case "Volibear":
-                    champ = new Volibear();
-                    break;
-                case "Taliyah":
-                    champ = new Taliyah();
-                    break;
-                case "Tryndamere":
-                    champ = new Tryndamere();
                     break;
                  */
             }
@@ -699,7 +688,6 @@ namespace ARAMDetFull
 
         public static void checkItems()
         {
-
             for (int i = defBuyThings.Count - 1; i >= 0; i--)
             {
                 if (hasAllItems(defBuyThings[i]))

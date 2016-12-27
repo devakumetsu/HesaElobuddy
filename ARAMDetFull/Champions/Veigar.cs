@@ -1,34 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LeagueSharp;using DetuksSharp;
-using LeagueSharp.Common;
+using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
 using SharpDX;
 
 namespace ARAMDetFull.Champions
 {
     class Veigar : Champion
     {
-
         public Veigar()
         {
             ARAMSimulator.champBuild = new Build
             {
                 coreItems = new List<ConditionalItem>
-                        {
-                            new ConditionalItem(ItemId.Rabadons_Deathcap),
-                            new ConditionalItem(ItemId.Sorcerers_Shoes),
-                            new ConditionalItem(ItemId.Ludens_Echo),
-                            new ConditionalItem(ItemId.Void_Staff),
-                            new ConditionalItem(ItemId.Zhonyas_Hourglass),
-                            new ConditionalItem(ItemId.Banshees_Veil,ItemId.Zhonyas_Hourglass,ItemCondition.ENEMY_AP),
-                        },
+                {
+                    new ConditionalItem(ItemId.Rabadons_Deathcap),
+                    new ConditionalItem(ItemId.Sorcerers_Shoes),
+                    new ConditionalItem(ItemId.Ludens_Echo),
+                    new ConditionalItem(ItemId.Void_Staff),
+                    new ConditionalItem(ItemId.Zhonyas_Hourglass),
+                    new ConditionalItem(ItemId.Banshees_Veil,ItemId.Zhonyas_Hourglass,ItemCondition.ENEMY_AP),
+                },
                 startingItems = new List<ItemId>
-                        {
-                            ItemId.Blasting_Wand,ItemId.Boots_of_Speed
-                        }
+                {
+                    ItemId.Blasting_Wand,
+                    ItemId.Boots_of_Speed
+                }
             };
         }
 
@@ -53,15 +52,13 @@ namespace ARAMDetFull.Champions
             Vector3? cagePos = GetCageCastPosition(target);
             if (cagePos != null)
                 E.Cast((Vector3)cagePos);
-
         }
-
-
+        
         public override void useR(Obj_AI_Base target)
         {
             if (!R.IsReady() || target == null)
                 return;
-            if (target.Health > 50 && target.Health < R.GetDamage(target)+100)
+            if (target.Health > 50 && target.Health < R.GetDamage(target) + 100)
                 R.CastOnUnit(target);
         }
 
@@ -71,8 +68,8 @@ namespace ARAMDetFull.Champions
             {
                 var target =
                     ObjectManager.Get<AIHeroClient>()
-                        .FirstOrDefault(h => h.IsValidTarget(W.Range) && h.GetStunDuration() >= W.Delay - 0.5f);
-                if (target != null)
+                        .FirstOrDefault(h => h.IsValidTarget(W.Range) /*&& h.IsStunned() >= W.CastDelay - 0.5f*/);
+                if (target != null && target.IsStunned)
                     W.Cast(target);
             }
 
@@ -81,7 +78,7 @@ namespace ARAMDetFull.Champions
             else LastHitQ(true);
             tar = ARAMTargetSelector.getBestTarget(W.Range);
             if (tar != null) useW(tar);
-            tar = ARAMTargetSelector.getBestTarget(E.Range+300);
+            tar = ARAMTargetSelector.getBestTarget(E.Range + 300);
             if (tar != null) useE(tar);
             tar = ARAMTargetSelector.getBestTarget(R.Range);
             if (tar != null) useR(tar);
@@ -94,30 +91,23 @@ namespace ARAMDetFull.Champions
         public override void setUpSpells()
         {
             //Create the spells
-            Q = new Spell(SpellSlot.Q, 950);
-            W = new Spell(SpellSlot.W, 900);
-            E = new Spell(SpellSlot.E, 650);
-            R = new Spell(SpellSlot.R, 650);
-
-            // Finetune spells
-            //Q.SetTargetted(0.25f, 1500);
-            Q.SetSkillshot(0.25f, 70f, 2000f, false, SkillshotType.SkillshotLine);
-            W.SetSkillshot(1.25f, 125, float.MaxValue, false, SkillshotType.SkillshotCircle);
-            E.Width = 700;
-            _widthSqr = E.Width * E.Width;
-            _radius = E.Width / 2;
+            Q = new Spell.Skillshot(SpellSlot.Q, 950, SkillShotType.Linear, 250, 2000, 70);
+            W = new Spell.Skillshot(SpellSlot.W, 900, SkillShotType.Circular, 1250, 0, 125);
+            E = new Spell.Targeted(SpellSlot.E, 650);
+            R = new Spell.Targeted(SpellSlot.R, 650);
+            var EWidth = 700;
+            _widthSqr = EWidth * EWidth;
+            _radius = 450;
             _radiusSqr = _radius * _radius;
-            R.SetTargetted(0.25f, 1400);
         }
-
-
+        
         public Vector3? GetCageCastPosition(Obj_AI_Base target)
         {
             // Get target position after 0.2 seconds
-            var prediction = Prediction.GetPrediction(target, 0.2f);
+            var prediction = E.GetPrediction(target);
 
             // Validate single cast position
-            if (prediction.Hitchance < HitChance.High)
+            if (prediction.HitChance < HitChance.High)
                 return null;
 
             // Check if there are other targets around that could be stunned
@@ -130,10 +120,10 @@ namespace ARAMDetFull.Champions
             foreach (var target2 in nearTargets)
             {
                 // Get target2 position after 0.2 seconds
-                var prediction2 = Prediction.GetPrediction(target2, 0.5f);
+                var prediction2 = E.GetPrediction(target2);
 
                 // Validate second cast position
-                if (prediction2.Hitchance < HitChance.High ||
+                if (prediction2.HitChance < HitChance.High ||
                     prediction.UnitPosition.Distance(prediction2.UnitPosition, true) > _widthSqr)
                     continue;
 
@@ -159,22 +149,22 @@ namespace ARAMDetFull.Champions
             }
 
             // Returning single cast position
-            return prediction.UnitPosition.Extend(player.Position, _radius);
+            return prediction.UnitPosition.Extend(player.Position, _radius).To3D();
         }
 
         public void farmQ()
         {
-            if(player.ManaPercent < 35 || !Q.IsReady())
+            if (player.ManaPercent < 35 || !Q.IsReady())
                 return;
 
-            var mins = MinionManager.GetMinions(Q.Range).Where(min => min.Health< Q.GetDamage(min)).ToList();
-            var positions = MinionManager.GetMinionsPredictedPositions(mins, Q.Delay, Q.Width, Q.Speed, Q.From, Q.Range, true, SkillshotType.SkillshotLine);
+            var mins = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, ObjectManager.Player.Position, Q.Range).Where(min => min.Health < Q.GetDamage(min)).ToList();
 
-
-            var minsQ = MinionManager.GetBestLineFarmLocation(positions, Q.Width,Q.Range);
-            if (minsQ.MinionsHit != 0)
-                Q.Cast(minsQ.Position);
-
+            var minsQ = Q.GetCircularFarmLocation(mins, Q.Width());
+            if(minsQ.HitNumber > 0)
+            {
+                Q.Cast(minsQ.CastPosition);
+            }
+            //var positions = MinionManager.GetMinionsPredictedPositions(mins, Q.Delay, Q.Width, Q.Speed, Q.From, Q.Range, true, SkillshotType.SkillshotLine);
         }
 
         private void LastHitQ(bool auto = false)
@@ -183,53 +173,44 @@ namespace ARAMDetFull.Champions
             {
                 return;
             }
-                var minions =
-                    MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.NotAlly)
-                        .Where(
-                            m =>
-                                m.Distance(player) < Q.Range);
-                var objAiBases = minions as Obj_AI_Base[] ?? minions.ToArray();
-                if (objAiBases.Any())
+            var minions = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, ObjectManager.Player.ServerPosition, Q.Range).Where(m => m.Distance(player) < Q.Range);
+            var objAiBases = minions as Obj_AI_Base[] ?? minions.ToArray();
+            if (objAiBases.Any())
+            {
+                Obj_AI_Base target = null;
+                foreach (var minion in objAiBases)
                 {
-                    Obj_AI_Base target = null;
-                    foreach (var minion in objAiBases)
+                    float minPHP = Prediction.Health.GetPrediction(minion, (int)(player.Distance(minion) / Q.Speed()));
+                    if (minPHP <= 0 || minPHP > Q.GetDamage(minion))
+                        continue;
+
+                    Q.CastIfHitchanceEquals(minion, HitChance.High, true);
+                    /*
+                    var collision = Q.GetCollision(player.Position.To2D(), new List<Vector2>() { player.Position.Extend(minion.Position, Q.Range).To2D() }, 70f);
+                    if (collision.Count <= 2 || collision[0].NetworkId == minion.NetworkId || collision[1].NetworkId == minion.NetworkId)
                     {
-                        float minPHP = HealthPrediction.GetHealthPrediction(minion,
-                            (int) (player.Distance(minion)/Q.Speed));
-                        if(minPHP<=0 || minPHP>Q.GetDamage(minion))
-                            continue;
-                        var collision = Q.GetCollision(
-                            player.Position.To2D(), new List<Vector2>() { player.Position.Extend(minion.Position, Q.Range).To2D() }, 70f);
-                        if (collision.Count <= 2 || collision[0].NetworkId == minion.NetworkId || collision[1].NetworkId == minion.NetworkId)
+                        if (collision.Count == 1)
                         {
-                            if (collision.Count == 1)
+                            Q.Cast(minion);
+                        }
+                        else
+                        {
+                            var other = collision.FirstOrDefault(c => c.NetworkId != minion.NetworkId);
+                            if (other != null && (player.GetAutoAttackDamage(other) * 2 > other.Health - Q.GetDamage(other)) && Prediction.Health.GetPrediction(minion, 1500) > 0 && Q.GetDamage(other) < other.Health)
                             {
-                                Q.Cast(minion);
+                                if (Orbwalker.CanAutoAttack)
+                                {
+                                    Player.IssueOrder(GameObjectOrder.AutoAttack, other);
+                                }
                             }
                             else
                             {
-                                var other = collision.FirstOrDefault(c => c.NetworkId != minion.NetworkId);
-                                if (other != null &&
-                                    (player.GetAutoAttackDamage(other) * 2 > other.Health - Q.GetDamage(other)) &&
-                                    HealthPrediction.GetHealthPrediction(minion, 1500) > 0 &&
-                                    Q.GetDamage(other) < other.Health)
-                                {
-                                    if (Orbwalking.CanAttack())
-                                    {
-                                        player.IssueOrder(GameObjectOrder.AutoAttack, other);
-                                    }
-                                }
-                                else
-                                {
-                                    Q.Cast(minion);
-                                }
+                                Q.Cast(minion);
                             }
                         }
-                    }
+                    }*/
                 }
+            }
         }
-
-
-
     }
 }

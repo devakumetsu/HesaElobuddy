@@ -1,39 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LeagueSharp;using DetuksSharp;
-using LeagueSharp.Common;
+﻿using System.Collections.Generic;
+using EloBuddy;
+using EloBuddy.SDK;
 
 namespace ARAMDetFull.Champions
 {
     class Vi : Champion
     {
-        public Spell E2;
+        public static Spell.Chargeable Q;
 
         public Vi()
         {
-            DeathWalker.BeforeAttack += DeathWalkerOnBeforeAttack;
+            Orbwalker.OnPreAttack += DeathWalkerOnBeforeAttack;
             ARAMSimulator.champBuild = new Build
             {
                 coreItems = new List<ConditionalItem>
-                        {
-                            new ConditionalItem(ItemId.Trinity_Force),
-                            new ConditionalItem(ItemId.Mercurys_Treads),
-                            new ConditionalItem((ItemId)3053),
-                            new ConditionalItem(ItemId.Locket_of_the_Iron_Solari,(ItemId)3742,ItemCondition.ENEMY_AP),
-                            new ConditionalItem(ItemId.Banshees_Veil,ItemId.Randuins_Omen,ItemCondition.ENEMY_AP),
-                            new ConditionalItem(ItemId.Warmogs_Armor),
-                        },
+                {
+                    new ConditionalItem(ItemId.Trinity_Force),
+                    new ConditionalItem(ItemId.Mercurys_Treads),
+                    new ConditionalItem((ItemId)3053),
+                    new ConditionalItem(ItemId.Locket_of_the_Iron_Solari,(ItemId)3742,ItemCondition.ENEMY_AP),
+                    new ConditionalItem(ItemId.Banshees_Veil,ItemId.Randuins_Omen,ItemCondition.ENEMY_AP),
+                    new ConditionalItem(ItemId.Warmogs_Armor),
+                },
                 startingItems = new List<ItemId>
-                        {
-                            ItemId.Phage
-                        }
+                {
+                    ItemId.Phage
+                }
             };
         }
 
-        private void DeathWalkerOnBeforeAttack(DeathWalker.BeforeAttackEventArgs args)
+        private void DeathWalkerOnBeforeAttack(AttackableUnit unit, Orbwalker.PreAttackArgs args)
         {
             if (E.IsReady() && args.Target is AIHeroClient)
                 E.Cast();
@@ -67,7 +63,7 @@ namespace ARAMDetFull.Champions
         {
             if (!E.IsReady() || target == null)
                 return;
-            if (target.IsValidTarget(Orbwalking.GetRealAutoAttackRange(target)))
+            if (target.IsValidTarget(Player.Instance.GetAutoAttackRange(target)))
             {
                 E.Cast();
             }
@@ -81,13 +77,13 @@ namespace ARAMDetFull.Champions
             if (t.HealthPercent < 60 && safeGap(t))
                 R.CastOnUnit(t);
             var qDamage = player.GetSpellDamage(t, SpellSlot.Q);
-            var eDamage = player.GetSpellDamage(t, SpellSlot.E) * E.Instance.Ammo;
+            var eDamage = player.GetSpellDamage(t, SpellSlot.E);
             var rDamage = player.GetSpellDamage(t, SpellSlot.R);
 
             if (Q.IsReady() && t.Health < qDamage)
                 return;
 
-            if (E.IsReady() && Orbwalking.InAutoAttackRange(t) && t.Health < eDamage)
+            if (E.IsReady() && Player.Instance.IsInAutoAttackRange(t) && t.Health < eDamage)
                 return;
 
             if (Q.IsReady() && E.IsReady() && t.Health < qDamage + eDamage)
@@ -104,7 +100,7 @@ namespace ARAMDetFull.Champions
             }
             else
             {
-                if (!Orbwalking.InAutoAttackRange(t))
+                if (!Player.Instance.IsInAutoAttackRange(t))
                     R.CastOnUnit(t);
             }
         }
@@ -119,16 +115,13 @@ namespace ARAMDetFull.Champions
 
         public override void setUpSpells()
         {
-            Q = new Spell(SpellSlot.Q, 860f);
-            E = new Spell(SpellSlot.E);
-            E2 = new Spell(SpellSlot.E, 600f);
-            R = new Spell(SpellSlot.R, 800f);
-
-            Q.SetSkillshot(0.5f, 75f, float.MaxValue, false, SkillshotType.SkillshotLine);
-            Q.SetCharged("ViQ", "ViQ", 100, 860, 1f);
-
-            E.SetSkillshot(0.15f, 150f, float.MaxValue, false, SkillshotType.SkillshotLine);
-            R.SetTargetted(0.15f, 1500f);
+            Q = new Spell.Chargeable(SpellSlot.Q, 250, 725, 4, 250, 1250, 55, DamageType.Physical)
+            {
+                AllowedCollisionCount = int.MaxValue,
+            };
+            W = new Spell.Active(SpellSlot.W, 0);
+            E = new Spell.Active(SpellSlot.E, 175, DamageType.Physical);
+            R = new Spell.Targeted(SpellSlot.R, 800, DamageType.Physical);
         }
     }
 }
