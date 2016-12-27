@@ -57,10 +57,10 @@ namespace ARAMDetFull.Champions
                 {
                     if (args.Animation == "Spell3" && R.IsReady())
                     {
-                        useRSmart(targ, true);
+                        UseRSmart(targ, true);
                         Core.DelayAction(() =>
                         {
-                            useRSmart(targ, true);
+                            UseRSmart(targ, true);
                         }, 10);
                     }
 
@@ -199,9 +199,9 @@ namespace ARAMDetFull.Champions
             RushDownQ = RushDmgBasedOnDist(target) * 0.7f > target.Health;
             RushDown = RushDmgBasedOnDist(target) * 1.1f > target.Health;
             if (RushDown || player.CountEnemiesInRange(600) > 2)
-                useRSmart(target);
+                UseRSmart(target);
             if (RushDown || safeGap(target))
-                useESmart(target);
+                UseESmart(target);
             useWSmart(target);
             
             if (Orbwalker.CanMove && (target.Distance(player) < 700 || RushDown))
@@ -263,7 +263,7 @@ namespace ARAMDetFull.Champions
             }
         }
 
-        public void useESmart(Obj_AI_Base target)
+        public void UseESmart(Obj_AI_Base target)
         {
             if (!E.IsReady())
                 return;
@@ -290,11 +290,11 @@ namespace ARAMDetFull.Champions
             }
         }
 
-        public void useRSmart(Obj_AI_Base target, bool rrAA = false)
+        public void UseRSmart(Obj_AI_Base target, bool rrAA = false)
         {
             if (!R.IsReady())
                 return;
-            if (!ultIsOn() && !E.IsReady() && target.Distance(player.ServerPosition) < (Q.Range + target.BoundingRadius))
+            if (!UltIsOn() && !E.IsReady() && target.Distance(player.ServerPosition) < (Q.Range + target.BoundingRadius))
             {
                 R.Cast();
                 Aggresivity.addAgresiveMove(new AgresiveMove(150, 8000));
@@ -326,12 +326,12 @@ namespace ARAMDetFull.Champions
         public float RushDmgBasedOnDist(Obj_AI_Base target)
         {
             float multi = 1.0f;
-            if (!ultIsOn() && R.IsReady())
+            if (!UltIsOn() && R.IsReady())
                 multi = 1.2f;
             float Qdmg = GetTrueQDmOn(target);
             float Wdmg = (E.IsReady()) ? (float)player.GetSpellDamage(target, SpellSlot.W) : 0;
             float ADdmg = (float)player.GetAutoAttackDamage(target);
-            float Rdmg = (R.IsReady() && (canUseWindSlash() || !ultIsOn())) ? GetTrueQDmOn(target) : 0;
+            float Rdmg = (R.IsReady() && (canUseWindSlash() || !UltIsOn())) ? GetTrueQDmOn(target) : 0;
 
             float trueAARange = player.AttackRange + target.BoundingRadius - 15;
             float dist = player.Distance(target.ServerPosition);
@@ -364,7 +364,7 @@ namespace ARAMDetFull.Champions
             return (float)player.CalculateDamageOnUnit(target, DamageType.Physical, baseDmg * multiplier);
         }
 
-        public bool ultIsOn()
+        public bool UltIsOn()
         {
             foreach (var buf in player.Buffs)
             {
