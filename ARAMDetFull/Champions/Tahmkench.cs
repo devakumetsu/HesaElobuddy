@@ -70,7 +70,7 @@ namespace ARAMDetFull.Champions
         {
             if (!E.IsReady() || target == null)
                 return;
-            // E.Cast();
+            //E.Cast();
         }
 
 
@@ -129,6 +129,9 @@ namespace ARAMDetFull.Champions
         {
             //Modified Kalista Soulbound code from Corey
             //Need to check in fountain otherwise recalls could make you swallow
+            if (player.IsInFountainRange())
+                return;
+
             try
             {
                 var hero = sender as AIHeroClient;
