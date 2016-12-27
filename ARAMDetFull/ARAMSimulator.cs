@@ -410,6 +410,9 @@ namespace ARAMDetFull
                 case "Ekko":
                     champ = new Ekko();
                 break;
+                case "Sivir":
+                    champ = new Sivir();
+                    break;
                 case "Elise":
                     champ = new Elise();
                 break;
