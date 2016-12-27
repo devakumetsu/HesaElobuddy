@@ -305,16 +305,16 @@ namespace ARAMDetFull.Champions
             //DravenFury
             return player.HasBuff("DravenFury") || player.HasBuff("dravenfurybuff");
         }
-        public bool minionThere()
-        {//TODO hi hesa
-            var List = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, player.Position/*, DeathWalker.getTargetSearchDist()*/)
-                .Where(m => Prediction.Health.GetPrediction(m,
-                    (int)(player.Distance(m) / Orbwalker.GetMyProjectileSpeed()) * 1000) <=
-                            Q.GetDamage(m) + player.GetAutoAttackDamage(m)
-                        ).ToList();
-            // Game.PrintChat("QDmg "+Q.GetDamage(List.FirstOrDefault()));
-            return List.Count() >= 0;
-        }
+        //public bool minionThere()
+        //{
+          //  var List = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, player.Position/*, DeathWalker.getTargetSearchDist()*/)
+                //.Where(m => Prediction.Health.GetPrediction(m,
+                  //  (int)(player.Distance(m) /*/Orbwalker.GetMyProjectileSpeed()) * 1000) <=
+                    //        Q.GetDamage(m) + player.GetAutoAttackDamage(m)
+                      //  ).ToList();
+          //   Game.PrintChat("QDmg "+Q.GetDamage(List.FirstOrDefault()));
+          //  return List.Count() >= 0;
+        //}
         public Vector3 PosAfterRange(Vector3 p1, Vector3 finalp2, float range)
         {
             var Pos2 = Vector3.Normalize(finalp2 - p1);
@@ -412,10 +412,10 @@ namespace ARAMDetFull.Champions
                     ShouldUseW = false;
                     return false;
                 }//TODO
-                W = new Spell(SpellSlot.W);
+                //W = new Spell(SpellSlot.W);
                 var distance = player.GetPath(Position).ToList().To2D().PathLength() - 50;
                 var catchNormal = (distance * 1000) / player.MoveSpeed + ARAMDetFull.now < EndTime; // Not buffed with W, Normal
-                var AdditionalSpeed = (5 * W.Level + 35) * 0.01 * player.MoveSpeed;
+                var AdditionalSpeed = (5 * /*Temorary fix -> (W.Level)*/0 + 35) * 0.01 * player.MoveSpeed;
                 var catchBuff = distance / (player.MoveSpeed + AdditionalSpeed) + ARAMDetFull.now < EndTime; //Buffed with W
                 if (catchNormal)
                 {
