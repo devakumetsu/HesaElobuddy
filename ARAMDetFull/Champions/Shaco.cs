@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LeagueSharp;using DetuksSharp;
-using LeagueSharp.Common;
+using EloBuddy;
+using EloBuddy.SDK;
 using SharpDX;
 
 namespace ARAMDetFull.Champions
@@ -37,7 +37,7 @@ namespace ARAMDetFull.Champions
             if (!Q.IsReady())
                 return;
             if (EnemyInRange(2, 500) && player.HealthPercent < 65)
-                Q.Cast(player.Position.To2D().Extend(ARAMSimulator.fromNex.Position.To2D(), 400));
+                Q.Cast(player.Position.Extend(ARAMSimulator.fromNex.Position,400).To3D());
         }
 
         public override void useW(Obj_AI_Base target)
@@ -64,10 +64,10 @@ namespace ARAMDetFull.Champions
 
         public override void setUpSpells()
         {
-            Q = new Spell(SpellSlot.Q, 400);
-            W = new Spell(SpellSlot.W, 525);
-            E = new Spell(SpellSlot.E, 625);
-            R = new Spell(SpellSlot.R, 0);
+            Q = new Spell.Active(SpellSlot.Q, 400);
+            W = new Spell.Active(SpellSlot.W, 500);
+            E = new Spell.Targeted(SpellSlot.E, 625);
+            R = new Spell.Active(SpellSlot.R, 0);
         }
 
         public override void useSpells()
@@ -84,7 +84,7 @@ namespace ARAMDetFull.Champions
 
         public static bool EnemyInRange(int numOfEnemy, float range)
         {
-            return Utility.CountEnemysInRange(ObjectManager.Player, (int)range) >= numOfEnemy;
+            return player.CountEnemiesInRange((int)range) >= numOfEnemy;
         }
 
     }

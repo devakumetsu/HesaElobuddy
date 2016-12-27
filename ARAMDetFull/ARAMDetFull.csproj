@@ -155,6 +155,7 @@
     <Compile Include="Champions\Riven.cs" />
     <Compile Include="Champions\Ryze.cs" />
     <Compile Include="Champions\Sejuani.cs" />
+    <Compile Include="Champions\Shaco.cs" />
     <Compile Include="Champions\Shen.cs" />
     <Compile Include="Champions\Shyvana.cs" />
     <Compile Include="Champions\Singed.cs" />

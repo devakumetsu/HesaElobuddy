@@ -564,6 +564,9 @@ namespace ARAMDetFull
                 case "Sejuani":
                     champ = new Sejuani();
                 break;
+                case "Shaco":
+                    champ = new Shaco();
+                break;
                 case "Shen":
                     champ = new Shen();
                 break;
