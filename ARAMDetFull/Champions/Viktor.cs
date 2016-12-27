@@ -40,8 +40,10 @@ namespace ARAMDetFull.Champions
         private readonly int lengthE = 750;
         private readonly int speedE = 1200;
         private readonly int rangeE = 525;
+        private readonly int widthE = 100;
 
         private static int evolveTimes = 0;
+        private PredictionResult eprediction;
 
         public override void useQ(Obj_AI_Base target)
         {
@@ -129,15 +131,15 @@ namespace ARAMDetFull.Champions
                 var farmLocation =
                     ((from mnion in
                         EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, minion.Position,
-                            lengthE)
-                      select mnion.Position.To2D()).ToList<Vector2>(), E.Width, lengthE);
-                if (farmLocation.MinionsHit > hitNum)
+                            750)
+                      select mnion.Position.To2D()).ToList<Vector2>());
+                if (farmLocation.Count > hitNum)
                 {
-                    hitNum = farmLocation.MinionsHit;
+                    hitNum = farmLocation.Count;
                     startPos = minion.Position.To2D();
                 }
-                hitNum =
-                    startPos = minion.Position.To2D;
+                //hitNum =
+                  //  startPos = minion.Position.To2D;
             }
 
             if (startPos.X != 0 && startPos.Y != 0)
@@ -148,15 +150,18 @@ namespace ARAMDetFull.Champions
         //TODO hi hesa
         private bool PredictCastMinionE(Vector2 fromPosition, int requiredHitNumber = 1)
         {
+            var ewidt = 100;
+            var lenthee = 0;
             var farmLocation =
                 E.GetBestLinearCastPosition(
-                    EntityManager.GetMinionsPredictedPositions(MinionManager.GetMinions(fromPosition.To3D(), lengthE),
-                        E.CastDelay, E.Width, speedE, fromPosition.To3D(), lengthE, false, SkillShotType.Linear),
-                    E.Width, lengthE);
+                (EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, fromPosition.To3D(),
+                    lengthE)));
+                    //E.CastDelay, 100, speedE, fromPosition.To3D(), lengthE, false, SkillShotType.Linear,100, 750);
 
-            if (farmLocation.MinionsHit >= requiredHitNumber)
+            if (farmLocation.HitNumber >= requiredHitNumber)
             {
-                CastE(fromPosition, farmLocation.Position);
+                //CastE(fromPosition, farmLocation.Position);
+                //CastE(farmLocation.CastPosition,fromPosition);
                 return true;
             }
 
@@ -168,7 +173,7 @@ namespace ARAMDetFull.Champions
             // Helpers
             bool inRange = Vector2.DistanceSquared(target.ServerPosition.To2D(), player.Position.To2D()) <
                            E.Range * E.Range;
-            Prediction.Manager.PredictionOutput prediction;
+            //Prediction.Manager.PredictionOutput prediction;
             bool spellCasted = false;
 
             // Positions
@@ -205,42 +210,47 @@ namespace ARAMDetFull.Champions
             // Main target in close range
             if (inRange)
             {
+                //var target = TargetSelector.GetTarget(E.Range, DamageType.Magical);
                 // Get prediction reduced speed, adjusted sourcePosition
-                E.Speed = speedE * 0.9f;
-                E.From = target.ServerPosition +
-                         (Vector3.Normalize(player.Position - target.ServerPosition) * (lengthE * 0.1f));
-                prediction = E.GetPrediction(target);
-                E.From = player.Position;
+                //E.Speed = speedE * 0.9f;
+                //E.From = target.ServerPosition +
+                  //       (Vector3.Normalize(player.Position - target.ServerPosition) * (lengthE * 0.1f));
+                //prediction = E.GetPrediction(enemy);
+                //E.From = player.Position;
+                eprediction = E.GetPrediction(target);
 
                 // Prediction in range, go on
-                if (prediction.CastPosition.Distance(player.Position) < E.Range)
-                    pos1 = prediction.CastPosition;
+                //if (prediction.CastPosition.Distance(player.Position) < E.Range)
+                  //  pos1 = prediction.CastPosition;
                 // Prediction not in range, use exact position
-                else
+                /*else
                 {
                     pos1 = target.ServerPosition;
                     E.Speed = speedE;
-                }
+                }*/
 
                 // Set new sourcePosition
-                E.From = pos1;
-                E.RangeCheckFrom = pos1;
+                //E.From = pos1;
+                //E.RangeCheckFrom = pos1;
 
                 // Set new range
-                E.Range = lengthE;
+                //E.Range = lengthE;
 
                 // Get next target
                 if (nearChamps.Count > 0)
                 {
                     // Get best champion around
                     var closeToPrediction = new List<AIHeroClient>();
+                    //var enemy2 = TargetSelector.GetTarget(E.Range,DamageType.Magical);
                     foreach (var enemy in nearChamps)
                     {
+                        pos1 = eprediction.CastPosition;
                         // Get prediction
-                        prediction = E.GetPrediction(enemy);
+                        //prediction = E.GetPrediction(enemy2);
+                        //prediction = E.GetPrediction(enemy);
                         // Validate target
-                        if (prediction.HitChance >= HitChance.High &&
-                            Vector2.DistanceSquared(pos1.To2D(), prediction.CastPosition.To2D()) < (E.Range * E.Range) * 0.8)
+                        if (eprediction.HitChance >= HitChance.High &&
+                            Vector2.DistanceSquared(pos1.To2D(), eprediction.CastPosition.To2D()) < (E.Range * E.Range) * 0.8)
                             closeToPrediction.Add(enemy);
                     }
 
@@ -252,8 +262,9 @@ namespace ARAMDetFull.Champions
                             closeToPrediction.Sort((enemy1, enemy2) => enemy2.Health.CompareTo(enemy1.Health));
 
                         // Set destination
-                        prediction = E.GetPrediction(closeToPrediction[0]);
-                        pos2 = prediction.CastPosition;
+                        //prediction = E.GetPrediction(closeToPrediction[0]);
+                        pos2 = eprediction.CastPosition;
+                        pos1 = eprediction.CastPosition;
 
                         // Cast spell
                         CastE(pos1, pos2);
@@ -264,15 +275,15 @@ namespace ARAMDetFull.Champions
                 // Spell not casted
                 if (!spellCasted)
                     // Try casting on minion
-                    if (!PredictCastMinionE(pos1.To2D()))
+                    if (!PredictCastMinionE(2))
                         // Cast it directly
-                        CastE(pos1, E.GetPrediction(target).CastPosition);
+                        E.Cast(target);
 
                 // Reset spell
                 E.Speed = speedE;
-                E.Range = rangeE;
-                E.From = player.Position;
-                E.RangeCheckFrom = player.Position;
+                //E.Range = rangeE;
+                //E.From = player.Position;
+                //E.RangeCheckFrom = player.Position;
             }
 
             // Main target in extended range
@@ -323,31 +334,31 @@ namespace ARAMDetFull.Champions
                 }
 
                 // Predict target position
-                E.From = pos1;
-                E.Range = lengthE;
-                E.RangeCheckFrom = pos1;
-                prediction = E.GetPrediction(target);
+                //E.From = pos1;
+                //E.Range = lengthE;
+                //E.RangeCheckFrom = pos1;
+                //prediction = E.GetPrediction(target);
 
                 // Cast the E
-                if (prediction.Hitchance == HitChance.High)
-                    CastE(pos1, prediction.CastPosition);
+                if (eprediction.HitChance == HitChance.High)
+                    CastE(pos1, eprediction.CastPosition);
 
                 // Reset spell
-                E.Range = rangeE;
+                /*E.Range = rangeE;
                 E.From = player.Position;
-                E.RangeCheckFrom = player.Position;
+                E.RangeCheckFrom = player.Position;*/
             }
 
         }
 
         private void CastE(Vector3 source, Vector3 destination)
         {
-            Spell.E.Cast()
+            E.Cast(source);
         }
 
-        private void CastE(Vector2 source, Vector2 destination)
+        /*private void CastE(Vector2 source, Vector2 destination)
         {
-            E.Cast(source, destination);
-        }
+            E.Cast(source);
+        }*/
     }
 }
