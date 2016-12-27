@@ -119,7 +119,7 @@ namespace ARAMDetFull.Champions
             {
                 W.Range = 1000;
                 _wevolved = true;
-                //TODO shouldn't be a problem since the code above already tells that it's this spell and doesnt change anything, but take a look.
+                //should be fixed
                 //W.IsSkillShot(250, 20, int.MaxValue, SkillShotType.Linear);
             }
 
@@ -143,7 +143,7 @@ namespace ARAMDetFull.Champions
                 if (!_wevolved)
                 {
                     player.Spellbook.EvolveSpell(SpellSlot.W);
-                    return;
+                    //return;
                 }
             }
         }
