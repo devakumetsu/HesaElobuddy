@@ -22,3 +22,6 @@ Just an edited version of AutoBuddyTreeline to prevent conflict with buying item
 
 #AutoBuddyPlus
 Just an edited version of AutoBuddyPlus to prevent conflict with buying items ( Which actually was not working properly. )
+
+#ARAMDetFull
+Ported version for EloBuddy, Ported by Hesa & Ouija
