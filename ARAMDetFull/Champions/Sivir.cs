@@ -84,7 +84,7 @@ namespace ARAMDetFull.Champions
             {
                 AllowedCollisionCount = int.MaxValue
             };
-            W = new Spell.Active(SpellSlot.W,20);
+            W = new Spell.Active(SpellSlot.W);
             E = new Spell.Active(SpellSlot.E,20);
             R = new Spell.Active(SpellSlot.R, 1000);
         }
