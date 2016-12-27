@@ -162,16 +162,21 @@ namespace ARAMDetFull.Champions
 
         public override void useR(Obj_AI_Base target)
         {
-            if (!R.IsReady() || target == null)
-                return;
+            if (!R.IsReady() || target == null) return;
         }
 
         public override void useSpells()
         {
             if (E.IsReady() && player.CountEnemiesInRange(650) > 0)
                 E.Cast();
-            var tar = ARAMTargetSelector.getBestTarget(Q.Range);
-            if (tar != null) useQ(tar);
+            var tarq = ARAMTargetSelector.getBestTarget(Q.Range);
+            if (tarq != null) useQ(tarq);
+            var tarw = ARAMTargetSelector.getBestTarget(W.Range);
+            if (tarw != null) useW(tarw);
+            //var tare = ARAMTargetSelector.getBestTarget(E.Range);
+            //if (tare != null) useE(tare);
+            var tarr = ARAMTargetSelector.getBestTarget(R.Range);
+            if (tarr != null) useR(tarr);
 
 
         }
