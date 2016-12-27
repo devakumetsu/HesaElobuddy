@@ -403,7 +403,9 @@ namespace ARAMDetFull
                 case "Diana":
                     champ = new Diana();
                 break;
-                //TODO:Draven here
+                case "Draven":
+                    champ = new Draven();
+                break;
                 case "DrMundo":
                     champ = new DrMundo();
                 break;
