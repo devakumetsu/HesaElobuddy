@@ -158,6 +158,7 @@
     <Compile Include="Champions\Shyvana.cs" />
     <Compile Include="Champions\Singed.cs" />
     <Compile Include="Champions\Sion.cs" />
+    <Compile Include="Champions\Sivir.cs" />
     <Compile Include="Champions\Soraka.cs" />
     <Compile Include="Champions\Tahmkench.cs" />
     <Compile Include="Champions\Taliyah.cs" />
