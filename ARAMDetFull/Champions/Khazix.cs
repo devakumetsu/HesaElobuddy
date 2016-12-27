@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
@@ -8,7 +7,7 @@ namespace ARAMDetFull.Champions
 {
     class Khazix : Champion
     {
-        private static bool Qevolved = false, Wevolved = false, Eevolved = false;
+        private static bool _qevolved = false, _wevolved = false, _eevolved = false;
         
         public Khazix()
         {
@@ -111,37 +110,37 @@ namespace ARAMDetFull.Champions
         {
 
             //check for evolutions
-            if (ObjectManager.Player.HasBuff("khazixqevo") && !Qevolved)
+            if (ObjectManager.Player.HasBuff("khazixqevo") && !_qevolved)
             {
                 Q.Range = 375;
-                Qevolved = true;
+                _qevolved = true;
             }
-            if (ObjectManager.Player.HasBuff("khazixwevo") && !Wevolved)
+            if (ObjectManager.Player.HasBuff("khazixwevo") && !_wevolved)
             {
                 W.Range = 1000;
-                Wevolved = true;
+                _wevolved = true;
                 //TODO shouldn't be a problem since the code above already tells that it's this spell and doesnt change anything, but take a look.
                 //W.IsSkillShot(250, 20, int.MaxValue, SkillShotType.Linear);
             }
 
-            if (ObjectManager.Player.HasBuff("khazixeevo") && !Eevolved)
+            if (ObjectManager.Player.HasBuff("khazixeevo") && !_eevolved)
             {
                 E.Range = 900;
-                Eevolved = true;
+                _eevolved = true;
             }
             if (player.EvolvePoints > 0)
             {
-                if (!Eevolved)
+                if (!_eevolved)
                 {
                     player.Spellbook.EvolveSpell(SpellSlot.E);
                     return;
                 }
-                if (!Qevolved)
+                if (!_qevolved)
                 {
                     player.Spellbook.EvolveSpell(SpellSlot.Q);
                     return;
                 }
-                if (!Wevolved)
+                if (!_wevolved)
                 {
                     player.Spellbook.EvolveSpell(SpellSlot.W);
                     return;
