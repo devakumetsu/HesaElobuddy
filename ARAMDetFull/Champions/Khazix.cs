@@ -123,18 +123,18 @@ namespace ARAMDetFull.Champions
                 //W.IsSkillShot(250, 20, int.MaxValue, SkillShotType.Linear);
             }
 
-            if (ObjectManager.Player.HasBuff("khazixeevo") && !_eevolved)
-            {
-                E.Range = 900;
-                _eevolved = true;
-            }
+            //if (ObjectManager.Player.HasBuff("khazixeevo") && !_eevolved)
+            //{
+                //E.Range = 900;
+                //_eevolved = true;
+            //}
             if (player.EvolvePoints > 0)
             {
-                if (!_eevolved)
-                {
-                    player.Spellbook.EvolveSpell(SpellSlot.E);
-                    return;
-                }
+                //if (!_eevolved)
+                //{                     DISABLE Jumpl until crash fixed.
+                   // player.Spellbook.EvolveSpell(SpellSlot.E);
+                    //return;
+                //}
                 if (!_qevolved)
                 {
                     player.Spellbook.EvolveSpell(SpellSlot.Q);
