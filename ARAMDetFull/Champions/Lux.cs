@@ -88,18 +88,9 @@ namespace ARAMDetFull.Champions
             {
                 AllowedCollisionCount = 1
             };
-            W = new Spell.Skillshot(SpellSlot.W, 1075, SkillShotType.Linear, 350, 1500, 130)
-            {
-                AllowedCollisionCount = int.MaxValue
-            };
-            E = new Spell.Skillshot(SpellSlot.E, 1100, SkillShotType.Circular, 250, 1300, 335)
-            {
-                AllowedCollisionCount = int.MaxValue
-            };
-            R = new Spell.Skillshot(SpellSlot.R, 3000, SkillShotType.Linear, 1000, int.MaxValue, 110)
-            {
-                AllowedCollisionCount = int.MaxValue
-            };
+            W = new Spell.Skillshot(SpellSlot.W, 1075, SkillShotType.Linear, 350, 1500, 130);
+            E = new Spell.Skillshot(SpellSlot.E, 1100, SkillShotType.Circular, 250, 1300, 335);
+            R = new Spell.Skillshot(SpellSlot.R, 3000, SkillShotType.Linear, 1000, int.MaxValue, 110);
         }
     }
 }
