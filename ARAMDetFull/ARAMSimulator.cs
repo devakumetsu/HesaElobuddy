@@ -394,6 +394,9 @@ namespace ARAMDetFull
                 case "Brand":
                     champ = new Brand();
                 break;
+                case "Camille":
+                    champ = new Camille();
+                break;
                 case "Cassiopeia":
                     champ = new Cassiopeia();
                 break;
