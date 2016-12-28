@@ -136,6 +136,7 @@
     <Compile Include="Champions\Lissandra.cs" />
     <Compile Include="Champions\Lucian.cs" />
     <Compile Include="Champions\Lulu.cs" />
+    <Compile Include="Champions\Lux.cs" />
     <Compile Include="Champions\Malphite.cs" />
     <Compile Include="Champions\Malzahar.cs" />
     <Compile Include="Champions\Maokai.cs" />

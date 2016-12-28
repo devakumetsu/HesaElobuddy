@@ -506,6 +506,9 @@ namespace ARAMDetFull
                 case "Lulu":
                     champ = new Lulu();
                 break;
+                case "Lux":
+                    champ = new Lux();
+                break;
                 case "Malphite":
                     champ = new Malphite();
                 break;
