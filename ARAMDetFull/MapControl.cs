@@ -172,9 +172,11 @@ namespace ARAMDetFull
                     {
                         Orbwalker.ForcedTarget = bTarg;
                         Player.IssueOrder(GameObjectOrder.AttackUnit, bTarg);
+
                     }
+                    return;
                 }
-                return;
+                //return;
                 
                 if (lastMinionSpellUse + 277 > ARAMDetFull.now)
                     return;

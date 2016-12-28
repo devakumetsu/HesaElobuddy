@@ -549,6 +549,9 @@ namespace ARAMDetFull
                 case "Quinn":
                     champ = new Quinn();
                 break;
+                //case "RekSai":
+                    //champ = new RekSai();
+                //break;
                 case "RekSai":
                     champ = new RekSai2();
                 break;
@@ -634,7 +637,9 @@ namespace ARAMDetFull
                 case "Vi":
                     champ = new Vi();
                 break;
-                //TODO: Viktor Here
+                case "Viktor":
+                    champ = new Viktor();
+                break;
                 case "Vladimir":
                     champ = new Vladimir();
                 break;
