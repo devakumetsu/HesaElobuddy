@@ -561,6 +561,9 @@ namespace ARAMDetFull
                 case "Renekton":
                     champ = new Renekton();
                 break;
+                case "Rengar":
+                    champ = new Rengar();
+                break;
                 case "Riven":
                     champ = new Riven();
                 break;
