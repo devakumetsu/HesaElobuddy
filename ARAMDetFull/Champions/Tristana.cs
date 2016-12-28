@@ -33,7 +33,7 @@ namespace ARAMDetFull.Champions
                 return;
             Q.Cast();
             Aggresivity.addAgresiveMove(new AgresiveMove(90));
-            Player.IssueOrder(GameObjectOrder.AutoAttack, target);
+            Player.IssueOrder(GameObjectOrder.AttackUnit, target);
         }
 
         public override void useW(Obj_AI_Base target)
@@ -52,7 +52,7 @@ namespace ARAMDetFull.Champions
             E.Cast(target);
             if (target.HasBuff("TristanaECharge"))
             {
-                Player.IssueOrder(GameObjectOrder.AutoAttack, target);
+                Player.IssueOrder(GameObjectOrder.AttackUnit, target);
             }
         }
 
