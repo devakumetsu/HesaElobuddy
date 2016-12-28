@@ -174,9 +174,9 @@ namespace ARAMDetFull
                         Player.IssueOrder(GameObjectOrder.AttackUnit, bTarg);
 
                     }
-                    return;
+                    //return;
                 }
-                //return;
+                return; //code was unreachable
                 
                 if (lastMinionSpellUse + 277 > ARAMDetFull.now)
                     return;
