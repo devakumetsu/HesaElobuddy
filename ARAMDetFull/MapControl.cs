@@ -174,7 +174,6 @@ namespace ARAMDetFull
                         Player.IssueOrder(GameObjectOrder.AttackUnit, bTarg);
 
                     }
-                    //return;
                 }
                 return; //code was unreachable
                 
@@ -263,7 +262,7 @@ namespace ARAMDetFull
                     if (!Orbwalker.IsAutoAttacking || Orbwalker.GetTarget() != bTarg)
                         Player.IssueOrder(GameObjectOrder.AttackUnit, bTarg);
                 }
-                return;
+                //return:
                 
                 if (lastSpellUse + 277 > ARAMDetFull.now)
                     return;
