@@ -42,9 +42,9 @@ namespace ARAMDetFull.Champions
         {
             if (W.IsReady())
             {
-                if (Player.Instance.HealthPercent > 35)
+                if (Player.Instance.HealthPercent <= 35)
                 {
-                    if (Player.Instance.CountEnemiesInRange(500)>1)
+                    if (Player.Instance.CountEnemiesInRange(500)>=1)
                     {
                         W.Cast(target);
                     }
