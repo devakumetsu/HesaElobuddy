@@ -33,7 +33,7 @@ namespace ARAMDetFull.Champions
         {
             if (!Q.IsReady() || target == null)
                 return;
-            Q.CastOnUnit(target);
+            Q.Cast(target);
         }
 
         public override void useW(Obj_AI_Base target)
@@ -59,7 +59,7 @@ namespace ARAMDetFull.Champions
         {
             if (!R.IsReady() || target == null)
                 return;
-            R.Cast();
+            //R.Cast();
         }
 
         public override void useSpells()
@@ -74,7 +74,7 @@ namespace ARAMDetFull.Champions
             tar = ARAMTargetSelector.getBestTarget(E.Range);
             if (tar != null) useE(tar);
             tar = ARAMTargetSelector.getBestTarget(R.Range);
-            if (tar != null) useR(tar);
+            //if (tar != null) useR(tar);
 
         }
 
@@ -123,18 +123,18 @@ namespace ARAMDetFull.Champions
                 //W.IsSkillShot(250, 20, int.MaxValue, SkillShotType.Linear);
             }
 
-            //if (ObjectManager.Player.HasBuff("khazixeevo") && !_eevolved)
-            //{
-                //E.Range = 900;
-                //_eevolved = true;
-            //}
+            if (ObjectManager.Player.HasBuff("khazixeevo") && !_eevolved)
+            {
+               E.Range = 900;
+                _eevolved = true;
+            }
             if (player.EvolvePoints > 0)
             {
-                //if (!_eevolved)
-                //{                     DISABLE Jumpl until crash fixed.
-                   // player.Spellbook.EvolveSpell(SpellSlot.E);
-                    //return;
-                //}
+                if (!_eevolved)
+                {                     //DISABLE Jumpl until crash fixed.
+                   //player.Spellbook.EvolveSpell(SpellSlot.E);
+                   //return;
+                }
                 if (!_qevolved)
                 {
                     player.Spellbook.EvolveSpell(SpellSlot.Q);
