@@ -16,12 +16,12 @@ namespace ARAMDetFull.Champions
             {
                 coreItems = new List<ConditionalItem>
                 {
-                    new ConditionalItem(ItemId.Morellonomicon),
-                    new ConditionalItem(ItemId.Sorcerers_Shoes),
-                    new ConditionalItem(ItemId.Ludens_Echo),
-                    new ConditionalItem(ItemId.Rabadons_Deathcap),
-                    new ConditionalItem(ItemId.Void_Staff),
-                    new ConditionalItem(ItemId.Zhonyas_Hourglass),
+                    new ConditionalItem(ItemId.The_Black_Cleaver),
+                    new ConditionalItem(ItemId.Ninja_Tabi),
+                    new ConditionalItem(ItemId.Youmuus_Ghostblade),
+                    new ConditionalItem(ItemId.Maw_of_Malmortius),
+                    new ConditionalItem(ItemId.Lord_Dominiks_Regards),
+                    new ConditionalItem(ItemId.Duskblade_of_Draktharr),
                 },
                 startingItems = new List<ItemId>
                 {
