@@ -19,11 +19,11 @@ namespace ARAMDetFull.Champions
                     new ConditionalItem(ItemId.Lich_Bane),
                     new ConditionalItem(ItemId.Rylais_Crystal_Scepter),
                     new ConditionalItem(ItemId.Abyssal_Scepter,ItemId.Zhonyas_Hourglass,ItemCondition.ENEMY_AP),
-                    new ConditionalItem(ItemId.Rabadons_Deathcap),
+                    new ConditionalItem(ItemId.Spirit_Visage),
                 },
                 startingItems = new List<ItemId>
                 {
-                    ItemId.Hextech_Revolver,ItemId.Boots_of_Speed
+                    ItemId.Hextech_Revolver,ItemId.Dorans_Shield
                 }
             };
         }
