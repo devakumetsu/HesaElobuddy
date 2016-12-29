@@ -14,16 +14,23 @@ namespace ARAMDetFull.Champions
             {
                 coreItems = new List<ConditionalItem>
                 {
-                    new ConditionalItem(ItemId.Rylais_Crystal_Scepter),
-                    new ConditionalItem(ItemId.Mercurys_Treads, ItemId.Ninja_Tabi, ItemCondition.ENEMY_AP),
-                    new ConditionalItem(ItemId.Liandrys_Torment),
-                    new ConditionalItem(ItemId.Spirit_Visage, ItemId.Randuins_Omen, ItemCondition.ENEMY_AP),
+                    /*Abyssal Scepter
+Ionian Boots of Lucidity
+Liandry's Torment
+Righteous Glory
+Sunfire Cape
+Thornmail
+Negatron Cloak,Amplifying Tome*/
                     new ConditionalItem(ItemId.Abyssal_Scepter),
-                    new ConditionalItem(ItemId.Banshees_Veil),
+                    new ConditionalItem(ItemId.Ionian_Boots_of_Lucidity),
+                    new ConditionalItem(ItemId.Liandrys_Torment),
+                    new ConditionalItem(ItemId.Righteous_Glory),
+                    new ConditionalItem(ItemId.Sunfire_Cape),
+                    new ConditionalItem(ItemId.Thornmail),
                 },
                 startingItems = new List<ItemId>
                 {
-                    ItemId.Giants_Belt
+                    ItemId.Negatron_Cloak,ItemId.Amplifying_Tome
                 }
             };
         }
