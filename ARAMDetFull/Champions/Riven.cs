@@ -57,10 +57,10 @@ namespace ARAMDetFull.Champions
                 {
                     if (args.Animation == "Spell3" && R.IsReady())
                     {
-                        UseRSmart(targ, true);
+                        UseRSmart(targ);
                         Core.DelayAction(() =>
                         {
-                            UseRSmart(targ, true);
+                            UseRSmart(targ);
                         }, 10);
                     }
 
@@ -70,7 +70,7 @@ namespace ARAMDetFull.Champions
                         Console.WriteLine("force W");
                         Core.DelayAction(() =>
                         {
-                            useWSmart(targ, false, true);
+                            useWSmart(targ);
                         }, 30);
                         //Q.Cast(targ.Position);
                         //forceQ = true;
@@ -145,19 +145,54 @@ namespace ARAMDetFull.Champions
 
         public override void useQ(Obj_AI_Base target)
         {
+            if (Q.IsReady())
+                Q.Cast();
         }
 
         public override void useW(Obj_AI_Base target)
         {
+            if (W.IsReady())
+                W.Cast();
         }
 
         public override void useE(Obj_AI_Base target)
         {
+            if (!E.IsReady())
+                return;
+
+
+
+            float trueAARange = player.AttackRange + target.BoundingRadius;
+            float trueERange = target.BoundingRadius + E.Range;
+
+
+
+            float dist = player.Distance(target);
+
+            var path = player.GetPath(target.Position);
+            if (!target.IsMoving && dist < trueERange)
+            {
+                Player.IssueOrder(GameObjectOrder.MoveTo, target.Position);
+                E.Cast(path.Count() > 1 ? path[1] : target.ServerPosition);
+            }
+            if ((dist > trueAARange && dist < trueERange) || RushDown)
+            {
+
+                E.Cast(path.Count() > 1 ? path[1] : target.ServerPosition);
+            }
         }
 
 
         public override void useR(Obj_AI_Base target)
         {
+            if (R.IsReady())
+            {
+                if (player.CountEnemiesInRange(R2.Range) <= 2)
+                {
+                    R.Cast();
+                    R2.Cast(target);
+                }
+            }
         }
 
         public override void farm()
@@ -171,8 +206,16 @@ namespace ARAMDetFull.Champions
 
         public override void useSpells()
         {
-            var tar = ARAMTargetSelector.getBestTarget(getRivenReach() + 430);
-            doCombo(tar);
+            //var tar = ARAMTargetSelector.getBestTarget(getRivenReach() + 430);
+            //doCombo(tar);
+            var tar = ARAMTargetSelector.getBestTarget(Q.Range);
+            useQ(tar);
+            tar = ARAMTargetSelector.getBestTarget(W.Range);
+            useWSmart(tar);
+            tar = ARAMTargetSelector.getBestTarget(E.Range);
+            UseESmart(tar);
+            tar = ARAMTargetSelector.getBestTarget(R2.Range);
+            UseRSmart(tar);
         }
 
         public override void setUpSpells()
@@ -203,9 +246,9 @@ namespace ARAMDetFull.Champions
             if (RushDown || safeGap(target))
                 UseESmart(target);
             useWSmart(target);
-            
-            if (Orbwalker.CanMove && (target.Distance(player) < 700 || RushDown))
-                gapWithQ(target);
+
+            if (Orbwalker.CanMove && (target.Distance(player) < 700 || RushDown)) ;
+            gapWithQ(target);
         }
 
         public void gapWithQ(Obj_AI_Base target)
