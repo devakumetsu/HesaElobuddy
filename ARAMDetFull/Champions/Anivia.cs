@@ -25,9 +25,9 @@ namespace ARAMDetFull.Champions
                 {
                     new ConditionalItem(ItemId.Rod_of_Ages),
                     new ConditionalItem(ItemId.Sorcerers_Shoes),
-                    new ConditionalItem(ItemId.Athenes_Unholy_Grail),
+                    new ConditionalItem(ItemId.Morellonomicon),
+                    new ConditionalItem(ItemId.Liandrys_Torment),
                     new ConditionalItem(ItemId.Zhonyas_Hourglass),
-                    new ConditionalItem(ItemId.Rabadons_Deathcap),
                     new ConditionalItem(ItemId.Void_Staff),
                 },
                 startingItems = new List<ItemId>
