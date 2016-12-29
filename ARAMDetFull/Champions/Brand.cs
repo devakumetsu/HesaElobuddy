@@ -20,17 +20,16 @@ namespace ARAMDetFull.Champions
             {
                 coreItems = new List<ConditionalItem>
                 {
-                    new ConditionalItem(ItemId.Morellonomicon),
+                    new ConditionalItem(ItemId.Liandrys_Torment),
                     new ConditionalItem(ItemId.Sorcerers_Shoes),
                     new ConditionalItem(ItemId.Rylais_Crystal_Scepter),
-                    new ConditionalItem(ItemId.Liandrys_Torment),
-                    new ConditionalItem(ItemId.Rabadons_Deathcap),
                     new ConditionalItem(ItemId.Void_Staff),
+                    new ConditionalItem(ItemId.Abyssal_Scepter),
+                    new ConditionalItem(ItemId.Banshees_Veil),
                 },
                 startingItems = new List<ItemId>
                 {
-                    ItemId.Boots_of_Speed,
-                    ItemId.Lost_Chapter
+                    ItemId.Guardians_Orb
                 }
             };
         }

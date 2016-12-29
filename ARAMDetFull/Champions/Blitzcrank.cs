@@ -15,17 +15,16 @@ namespace ARAMDetFull.Champions
             {
                 coreItems = new List<ConditionalItem>
                 {
-                    new ConditionalItem(ItemId.Rod_of_Ages),
-					new ConditionalItem(ItemId.Ionian_Boots_of_Lucidity),
-					new ConditionalItem(ItemId.Lich_Bane),
-					new ConditionalItem(ItemId.Abyssal_Scepter, ItemId.Iceborn_Gauntlet, ItemCondition.ENEMY_AP),
-                    new ConditionalItem(ItemId.Banner_of_Command,ItemId.Locket_of_the_Iron_Solari,ItemCondition.ENEMY_AP),
-                    new ConditionalItem(ItemId.Rabadons_Deathcap),
+                    new ConditionalItem(ItemId.Face_of_the_Mountain),
+                    new ConditionalItem(ItemId.Boots_of_Mobility),
+                    new ConditionalItem(ItemId.Locket_of_the_Iron_Solari),
+                    new ConditionalItem(ItemId.Banshees_Veil),
+                    new ConditionalItem(ItemId.Mikaels_Crucible),
+                    new ConditionalItem(ItemId.Righteous_Glory),
                 },
                 startingItems = new List<ItemId>
                 {
-                    ItemId.Catalyst_of_Aeons,
-                    ItemId.Boots_of_Speed
+                    ItemId.Relic_Shield
                 }
             };
             Interrupter.OnInterruptableSpell += Interrupter_OnInterruptableSpell;
