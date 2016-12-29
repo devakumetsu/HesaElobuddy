@@ -175,9 +175,9 @@ namespace ARAMDetFull
 
                     }
                 }
-                return; //code was unreachable
+                //return; //code below is unreachable
                 
-                if (lastMinionSpellUse + 277 > ARAMDetFull.now)
+                /*if (lastMinionSpellUse + 277 > ARAMDetFull.now)
                     return;
                 lastMinionSpellUse = ARAMDetFull.now;
                 if (hero.MaxMana > 300 && hero.ManaPercent < 78)
@@ -250,21 +250,29 @@ namespace ARAMDetFull
                         }
 
                     }
-                }
+                }*/
             }
 
             private float lastSpellUse = ARAMDetFull.now;
             public void useSpells()
             {
                 var bTarg = ARAMTargetSelector.getBestTarget(Player.Instance.GetAutoAttackRange(), true);
+                //var bTarg = ARAMTargetSelector.getBestTarget(Player.Instance.GetAutoAttackRange());
                 if (bTarg != null && !bTarg.IsUnderHisturret())
                 {
                     if (!Orbwalker.IsAutoAttacking || Orbwalker.GetTarget() != bTarg)
+                    {
+                        //Orbwalker.ForcedTarget = bTarg;
                         Player.IssueOrder(GameObjectOrder.AttackUnit, bTarg);
+                        Player.IssueOrder(GameObjectOrder.AutoAttack, bTarg);
+                        //Console.WriteLine("i have found an enemy, attacking!");
+                        //Player.IssueOrder(GameObjectOrder.AttackTo, bTarg);
+
+                    }
                 }
                 return;
-                
-                if (lastSpellUse + 277 > ARAMDetFull.now)
+
+                /*if (lastSpellUse + 277 > ARAMDetFull.now)
                     return;
                 lastSpellUse = ARAMDetFull.now;
                 foreach (var spell in spells)
@@ -358,7 +366,7 @@ namespace ARAMDetFull
                             }
                         }
                     }
-                }
+                }*/
             }
             
             public float canDoDmgTo(Obj_AI_Base target, bool ignoreRange = false)
