@@ -689,15 +689,6 @@ namespace ARAMDetFull
                     champ = new Zyra();
                 break;
                 /*
-                case "Draven":
-                    champ = new Draven();
-                    break;
-                case "Shaco":
-                    champ = new Shaco();
-                    break;
-                case "Viktor":
-                    champ = new Viktor();
-                    break;
                 case "Syndra"://TODO put back
                     champ = new Syndra();
                     break;
@@ -1024,7 +1015,6 @@ namespace ARAMDetFull
                     if (champ != null)
                         champ.kiteBack(awayTo);
                     Orbwalker.OrbwalkTo(awayTo.To3D());
-                    return;
                 }
                 else
                 {

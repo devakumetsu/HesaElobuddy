@@ -39,7 +39,7 @@ namespace ARAMDetFull
 
         public ARAMDetFull()
         {
-            Console.WriteLine("Aram det full started!");
+            Console.WriteLine("AramDetFull Started!");
             Loading.OnLoadingComplete += onLoad;
         }
         
