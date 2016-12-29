@@ -16,16 +16,16 @@ namespace ARAMDetFull.Champions
             {
                 coreItems = new List<ConditionalItem>
                 {
-                    new ConditionalItem(ItemId.Athenes_Unholy_Grail),
-                    new ConditionalItem(ItemId.Ionian_Boots_of_Lucidity),
-                    new ConditionalItem(ItemId.Lich_Bane),
-                    new ConditionalItem(ItemId.Rabadons_Deathcap),
-                    new ConditionalItem(ItemId.Void_Staff),
+                    new ConditionalItem(ItemId.Face_of_the_Mountain),
+                    new ConditionalItem(ItemId.Boots_of_Mobility),
                     new ConditionalItem(ItemId.Banshees_Veil),
+                    new ConditionalItem(ItemId.Locket_of_the_Iron_Solari),
+                    new ConditionalItem(ItemId.Mikaels_Crucible),
+                    new ConditionalItem(ItemId.Righteous_Glory),
                 },
                 startingItems = new List<ItemId>
                 {
-                    ItemId.Boots_of_Speed,ItemId.Chalice_of_Harmony
+                    ItemId.Aegis_of_the_Legion
                 }
             };
         }

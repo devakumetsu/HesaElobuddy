@@ -13,16 +13,16 @@ namespace ARAMDetFull.Champions
             {
                 coreItems = new List<ConditionalItem>
                 {
+                    new ConditionalItem(ItemId.Hextech_GLP_800),
+                    new ConditionalItem(ItemId.Boots_of_Swiftness),
                     new ConditionalItem(ItemId.Rylais_Crystal_Scepter),
-                    new ConditionalItem(ItemId.Mercurys_Treads, ItemId.Ninja_Tabi, ItemCondition.ENEMY_AP),
-                    new ConditionalItem(ItemId.Rod_of_Ages),
-                    new ConditionalItem(ItemId.Abyssal_Scepter, ItemId.Zhonyas_Hourglass, ItemCondition.ENEMY_AP),
+                    new ConditionalItem(ItemId.Liandrys_Torment),
+                    new ConditionalItem(ItemId.Void_Staff),
                     new ConditionalItem(ItemId.Rabadons_Deathcap),
-                    new ConditionalItem(ItemId.Ludens_Echo),
                 },
                 startingItems = new List<ItemId>
                 {
-                    ItemId.Giants_Belt
+                    ItemId.Catalyst_of_Aeons
                 }
             };
         }
