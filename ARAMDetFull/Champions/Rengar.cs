@@ -32,7 +32,7 @@ namespace ARAMDetFull.Champions
 
         public override void useQ(Obj_AI_Base target)
         {
-            if (Q.IsReady() && target != null)
+            if (Q.IsReady() && Q.IsInRange(target))
             {
                 Q.Cast(target);
             }
@@ -54,7 +54,7 @@ namespace ARAMDetFull.Champions
 
         public override void useE(Obj_AI_Base target)
         {
-            if (E.IsReady() && target != null)
+            if (E.IsReady() && E.IsInRange(target))
                 E.Cast(target);
         }
 
@@ -63,7 +63,7 @@ namespace ARAMDetFull.Champions
         {
             if (R.IsReady())
             {
-                if (player.CountEnemiesInRange(500) <= 2 && player.CountAlliesInRange(500) <= 2)
+                if (player.CountEnemiesInRange(500) >= 2 && player.CountAlliesInRange(500) <= 2)
                 { 
                     R.Cast(target);
                 }
