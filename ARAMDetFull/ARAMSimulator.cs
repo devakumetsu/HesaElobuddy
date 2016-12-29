@@ -367,6 +367,9 @@ namespace ARAMDetFull
                 case "Akali":
                     champ = new Akali();
                 break;
+                case "Alistar":
+                    champ = new Alistar();
+                break;
                 case "Amumu":
                     champ = new Amumu();
                 break;

@@ -89,6 +89,7 @@
     <Compile Include="Champions\Aatrox.cs" />
     <Compile Include="Champions\Ahri.cs" />
     <Compile Include="Champions\Akali.cs" />
+    <Compile Include="Champions\Alistar.cs" />
     <Compile Include="Champions\Amumu.cs" />
     <Compile Include="Champions\Anivia.cs" />
     <Compile Include="Champions\Annie.cs" />
