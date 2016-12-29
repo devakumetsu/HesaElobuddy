@@ -38,16 +38,16 @@ namespace ARAMDetFull.Champions
             {
                 coreItems = new List<ConditionalItem>
                         {
-                            new ConditionalItem(ItemId.Rabadons_Deathcap),
-                            new ConditionalItem(ItemId.Sorcerers_Shoes),
-                            new ConditionalItem(ItemId.Rylais_Crystal_Scepter),
+                            new ConditionalItem(ItemId.Abyssal_Scepter),
+                            new ConditionalItem(ItemId.Ionian_Boots_of_Lucidity),
+                            new ConditionalItem(ItemId.Zhonyas_Hourglass),
                             new ConditionalItem(ItemId.Void_Staff),
                             new ConditionalItem(ItemId.Ludens_Echo),
-                            new ConditionalItem(ItemId.Zhonyas_Hourglass),
+                            new ConditionalItem(ItemId.Rabadons_Deathcap),
                         },
                 startingItems = new List<ItemId>
                         {
-                            ItemId.Boots_of_Speed,ItemId.Blasting_Wand
+                            ItemId.Fiendish_Codex
                         }
             };
             Chat.Print("Annie loaded.");
