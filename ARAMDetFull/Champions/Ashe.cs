@@ -19,12 +19,12 @@ namespace ARAMDetFull.Champions
             {
                 coreItems = new List<ConditionalItem>
                 {
-                    new ConditionalItem(ItemId.Infinity_Edge),
+                    new ConditionalItem(ItemId.Runaans_Hurricane),
                     new ConditionalItem(ItemId.Berserkers_Greaves),
+                    new ConditionalItem(ItemId.Infinity_Edge),
                     new ConditionalItem(ItemId.Phantom_Dancer),
                     new ConditionalItem(ItemId.The_Bloodthirster),
-                    new ConditionalItem(ItemId.Last_Whisper),
-                    new ConditionalItem(ItemId.Banshees_Veil),
+                    new ConditionalItem(ItemId.Maw_of_Malmortius),
                 },
                 startingItems = new List<ItemId>
                 {
