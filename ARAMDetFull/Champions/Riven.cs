@@ -145,14 +145,14 @@ namespace ARAMDetFull.Champions
 
         public override void useQ(Obj_AI_Base target)
         {
-            if (Q.IsReady())
-                Q.Cast();
+            if (Q.IsReady()) return;
+            //Q.Cast();
         }
 
         public override void useW(Obj_AI_Base target)
         {
-            if (W.IsReady())
-                W.Cast();
+            if (W.IsReady()) return;
+            //W.Cast();
         }
 
         public override void useE(Obj_AI_Base target)
@@ -211,11 +211,11 @@ namespace ARAMDetFull.Champions
             var tar = ARAMTargetSelector.getBestTarget(Q.Range);
             useQ(tar);
             tar = ARAMTargetSelector.getBestTarget(W.Range);
-            useWSmart(tar);
+            //useW(tar);
             tar = ARAMTargetSelector.getBestTarget(E.Range);
-            UseESmart(tar);
+            useE(tar);
             tar = ARAMTargetSelector.getBestTarget(R2.Range);
-            UseRSmart(tar);
+            useR(tar);
         }
 
         public override void setUpSpells()
