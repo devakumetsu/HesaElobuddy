@@ -35,6 +35,7 @@ namespace ARAMDetFull.Champions
         {
             if (!Q.IsReady() || target == null)
                 return;
+            if (Q.IsReady())
             Q.Cast(target);
         }
 
@@ -42,6 +43,7 @@ namespace ARAMDetFull.Champions
         {
             if (!W.IsReady() || target == null)
                 return;
+            if (W.IsReady())
             W.Cast(target);
         }
 
@@ -49,17 +51,16 @@ namespace ARAMDetFull.Champions
         {
             if (!E.IsReady() || target == null)
                 return;
-            Vector3? cagePos = GetCageCastPosition(target);
-            if (cagePos != null)
-                E.Cast((Vector3)cagePos);
+            if (E.IsReady())
+                E.Cast(target);
         }
         
         public override void useR(Obj_AI_Base target)
         {
             if (!R.IsReady() || target == null)
                 return;
-            if (target.Health > 50 && target.Health < R.GetDamage(target) + 100)
-                R.CastOnUnit(target);
+            if (target.Health > 50 && target.Health < R.GetDamage(target) + 100 && R.IsReady())
+                R.Cast(target);
         }
 
         public override void useSpells()
@@ -75,7 +76,7 @@ namespace ARAMDetFull.Champions
 
             var tar = ARAMTargetSelector.getBestTarget(Q.Range);
             if (tar != null) useQ(tar);
-            else LastHitQ(true);
+            else LastHitQ();
             tar = ARAMTargetSelector.getBestTarget(W.Range);
             if (tar != null) useW(tar);
             tar = ARAMTargetSelector.getBestTarget(E.Range + 300);
@@ -91,7 +92,10 @@ namespace ARAMDetFull.Champions
         public override void setUpSpells()
         {
             //Create the spells
-            Q = new Spell.Skillshot(SpellSlot.Q, 950, SkillShotType.Linear, 250, 2000, 70);
+            Q = new Spell.Skillshot(SpellSlot.Q, 950, SkillShotType.Linear, 250, 2000, 70)
+            {
+                AllowedCollisionCount = 1
+            };
             W = new Spell.Skillshot(SpellSlot.W, 900, SkillShotType.Circular, 1250, 0, 125);
             E = new Spell.Targeted(SpellSlot.E, 650);
             R = new Spell.Targeted(SpellSlot.R, 650);
@@ -174,7 +178,7 @@ namespace ARAMDetFull.Champions
                 return;
             }
             var minions = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, ObjectManager.Player.ServerPosition, Q.Range).Where(m => m.Distance(player) < Q.Range);
-            var objAiBases = minions as Obj_AI_Base[] ?? minions.ToArray();
+            var objAiBases = minions as Obj_AI_Minion[] ?? minions.ToArray();
             if (objAiBases.Any())
             {
                 Obj_AI_Base target = null;
