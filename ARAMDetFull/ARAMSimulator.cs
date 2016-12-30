@@ -403,6 +403,9 @@ namespace ARAMDetFull
                 case "Cassiopeia":
                     champ = new Cassiopeia();
                 break;
+                case "ChoGath":
+                    champ = new ChoGath();
+                break;
                 case "Darius":
                     champ = new Darius();
                 break;

@@ -102,6 +102,7 @@
     <Compile Include="Champions\Camille.cs" />
     <Compile Include="Champions\Cassiopeia.cs" />
     <Compile Include="Champions\Champion.cs" />
+    <Compile Include="Champions\ChoGath.cs" />
     <Compile Include="Champions\Darius.cs" />
     <Compile Include="Champions\Diana.cs" />
     <Compile Include="Champions\Draven.cs" />
