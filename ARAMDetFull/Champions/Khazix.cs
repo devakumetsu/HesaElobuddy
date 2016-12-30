@@ -40,6 +40,7 @@ namespace ARAMDetFull.Champions
         {
             if (!W.IsReady())
                 return;
+            if (W.IsReady())
             W.Cast(target);
         }
 
@@ -49,7 +50,6 @@ namespace ARAMDetFull.Champions
                 return;
             if (target.Health > E.GetDamage(target) && target.Distance(player, true) > 350 * 350)
                 return;
-
             if (safeGap(target))
                 E.Cast(target);
         }
@@ -66,13 +66,13 @@ namespace ARAMDetFull.Champions
         {
             if (E.IsReady() && player.HealthPercent < 35 && Player.Instance.CountEnemiesInRange(600) > 1/*.Count(ene => !ene.IsDead) > 1*/)
                 E.Cast(ARAMSimulator.fromNex.Position);
-            CheckSpells();
+            //CheckSpells();
             var tar = ARAMTargetSelector.getBestTarget(Q.Range);
             if (tar != null) useQ(tar);
             tar = ARAMTargetSelector.getBestTarget(W.Range);
             if (tar != null) useW(tar);
-            tar = ARAMTargetSelector.getBestTarget(E.Range);
-            if (tar != null) useE(tar);
+            //tar = ARAMTargetSelector.getBestTarget(E.Range);
+            //if (tar != null) useE(tar);
             tar = ARAMTargetSelector.getBestTarget(R.Range);
             //if (tar != null) useR(tar);
 
