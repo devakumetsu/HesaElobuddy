@@ -170,8 +170,8 @@ namespace ARAMDetFull
                 {
                     if (!Orbwalker.IsAutoAttacking || Orbwalker.GetTarget() != bTarg)
                     {
-                        Orbwalker.ForcedTarget = bTarg;
-                        Player.IssueOrder(GameObjectOrder.AttackUnit, bTarg);
+                        //Orbwalker.ForcedTarget = bTarg;
+                        //Player.IssueOrder(GameObjectOrder.AttackUnit, bTarg);
 
                     }
                 }
@@ -263,10 +263,7 @@ namespace ARAMDetFull
                     if (!Orbwalker.IsAutoAttacking || Orbwalker.GetTarget() != bTarg)
                     {
                         //Orbwalker.ForcedTarget = bTarg;
-                        Player.IssueOrder(GameObjectOrder.AttackUnit, bTarg);
-                        Player.IssueOrder(GameObjectOrder.AutoAttack, bTarg);
-                        //Console.WriteLine("i have found an enemy, attacking!");
-                        //Player.IssueOrder(GameObjectOrder.AttackTo, bTarg);
+                        //Player.IssueOrder(GameObjectOrder.AttackUnit, bTarg);
 
                     }
                 }
