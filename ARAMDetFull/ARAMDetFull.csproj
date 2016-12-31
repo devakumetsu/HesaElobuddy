@@ -83,6 +83,7 @@
     <Compile Include="ARAMDetFull.cs" />
     <Compile Include="ARAMSimulator.cs" />
     <Compile Include="ARAMTargetSelector.cs" />
+    <Compile Include="AutoAttackingEnemies.cs" />
     <Compile Include="AutoLevel.cs" />
     <Compile Include="AutoShopper.cs" />
     <Compile Include="CastType.cs" />

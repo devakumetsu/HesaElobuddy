@@ -18,7 +18,7 @@ namespace ARAMDetFull
                 {
                     return target;
                 }
-                
+
                 return null;
             }
             catch (Exception e)
@@ -33,7 +33,7 @@ namespace ARAMDetFull
             return getBestTarget(range, true, new Vector3(), EntityManager.Heroes.Enemies.Where(ene => ene != null && MapControl.safeGap(ene)).ToList());
         }
 
-        public static AIHeroClient getBestTargetAly(float range, bool calcInRadius = false, Vector3 fromPlus = new Vector3())
+        public static AIHeroClient getBestTargetAlly(float range, bool calcInRadius = false, Vector3 fromPlus = new Vector3())
         {
             try
             {
