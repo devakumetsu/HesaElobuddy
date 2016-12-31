@@ -145,14 +145,14 @@ namespace ARAMDetFull.Champions
 
         public override void useQ(Obj_AI_Base target)
         {
-            if (Q.IsReady()) return;
-            //Q.Cast();
+            if (Q.IsReady()) ;
+            Q.Cast(target);
         }
 
         public override void useW(Obj_AI_Base target)
         {
-            if (W.IsReady()) return;
-            //W.Cast();
+            if (W.IsReady())
+            W.Cast(target);
         }
 
         public override void useE(Obj_AI_Base target)
@@ -187,10 +187,14 @@ namespace ARAMDetFull.Champions
         {
             if (R.IsReady())
             {
-                if (player.CountEnemiesInRange(R2.Range) <= 2)
+                //if (player.CountEnemiesInRange(R2.Range) <= 1)
                 {
                     R.Cast();
-                    R2.Cast(target);
+                    //if (target.HealthPercent >= R2.GetDamage(target))
+                    if (target.HealthPercent >= 30)
+                    {
+                        R2.Cast(target);
+                    }
                 }
             }
         }
@@ -209,21 +213,21 @@ namespace ARAMDetFull.Champions
             //var tar = ARAMTargetSelector.getBestTarget(getRivenReach() + 430);
             //doCombo(tar);
             var tar = ARAMTargetSelector.getBestTarget(Q.Range);
-            useQ(tar);
+            if (tar != null) useQ(tar);
             tar = ARAMTargetSelector.getBestTarget(W.Range);
-            //useW(tar);
+            if (tar != null) useWSmart(tar);
             tar = ARAMTargetSelector.getBestTarget(E.Range);
-            useE(tar);
+            if (tar != null) UseESmart(tar);
             tar = ARAMTargetSelector.getBestTarget(R2.Range);
-            useR(tar);
+            if (tar != null) useR(tar);
         }
 
         public override void setUpSpells()
         {
             //Create the spells
-            Q = new Spell.Skillshot(SpellSlot.Q, 275, SkillShotType.Circular, 250, 2200, 100);
+            Q = new Spell.Active(SpellSlot.Q, 275);
             W = new Spell.Active(SpellSlot.W, 250);
-            E = new Spell.Skillshot(SpellSlot.E, 310, SkillShotType.Linear);
+            E = new Spell.Active(SpellSlot.E, 310);
             R = new Spell.Active(SpellSlot.R);
             R2 = new Spell.Skillshot(SpellSlot.R, 900, SkillShotType.Cone, 250, 1600, 125);
         }
@@ -301,7 +305,7 @@ namespace ARAMDetFull.Champions
                 range = W.Range + target.BoundingRadius - 40;
             if (W.IsReady() && target.Distance(player.ServerPosition) < range)
             {
-                W.Cast();
+                W.Cast(target);
                 //Utility.DelayAction.Add(50, delegate { DeathWalker.resetAutoAttackTimer(true); });
             }
         }

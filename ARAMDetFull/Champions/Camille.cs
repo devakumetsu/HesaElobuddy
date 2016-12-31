@@ -45,20 +45,15 @@ namespace ARAMDetFull.Champions
 
         public override void useW(Obj_AI_Base target)
         {
-            if (W.IsReady() && player.CountEnemiesInRange(E.Range) > 0
-                 && !player.HasBuff("camilleedash1") && !player.HasBuff("CamilleEDash2") && !player.HasBuff("camilleedashtoggle") && !player.HasBuff("camilleeonwall")) //Copy from Chaos
-            {
-
-                if (player.CountEnemiesInRange(W.Range) >= 2)
-                W.CastIfWillHit(target,2);
-            }
+            if (W.IsReady())
+                W.Cast(target);
         }
 
         public override void useE(Obj_AI_Base target)
         {
-            if (E.IsReady())
+            if (Player.Instance.HasItem(ItemId.Titanic_Hydra))
             {
-
+                Item.UseItem(ItemId.Titanic_Hydra);
             }
         }
 
@@ -66,7 +61,7 @@ namespace ARAMDetFull.Champions
         {
             if (R.IsReady())
             {
-                if (target.HealthPercent >40 && player.CountEnemiesInRange(500) <1)
+                if (target.HealthPercent >40 && player.CountEnemiesInRange(500) <=1)
                 {
                     R.Cast(target);
                 }
@@ -79,8 +74,8 @@ namespace ARAMDetFull.Champions
             if (tar != null) useQ(tar);
             tar = ARAMTargetSelector.getBestTarget(W.Range);
             if (tar != null) useW(tar);
-            //tar = ARAMTargetSelector.getBestTarget(E.Range);
-            //if (tar != null) useE(tar);
+            tar = ARAMTargetSelector.getBestTarget(Q.Range);
+            if (tar != null) useE(tar);
             tar = ARAMTargetSelector.getBestTarget(R.Range);
             if (tar != null) useR(tar);
 
