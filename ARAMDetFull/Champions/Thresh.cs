@@ -61,7 +61,7 @@ namespace ARAMDetFull.Champions
             }
             if (FollowQ && safeGap(target))
             {
-                Q.Cast();
+                //Q.Cast();
             }
             var qpred = Q.GetPrediction(target);
             if (target.IsValidTarget(Q.Range) && Q.IsReady() && qpred.HitChance >= HitChance.High)
