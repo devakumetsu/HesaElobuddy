@@ -68,12 +68,13 @@ namespace ARAMDetFull.Champions
         public override void useSpells()
         {
             var tar = ARAMTargetSelector.getBestTarget(Q.Range);
-            if (tar != null) useQ(tar);
+            useQ(tar);
             tar = ARAMTargetSelector.getBestTarget(W.Range);
-            if (tar != null) useW(tar);
-            //if (tar != null) useE(tar);
+            useW(tar);
+            tar = ARAMTargetSelector.getBestTarget(E.Range);
+            //useE(tar);
             tar = ARAMTargetSelector.getBestTarget(R.Range);
-            if (tar != null) useR(tar);
+            useR(tar);
 
         }
 
