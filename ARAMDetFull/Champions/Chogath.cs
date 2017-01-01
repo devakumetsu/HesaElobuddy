@@ -16,16 +16,16 @@ namespace ARAMDetFull.Champions
             {
                 coreItems = new List<ConditionalItem>
                 {
-                    new ConditionalItem(ItemId.Hextech_Protobelt_01),
-                    new ConditionalItem(ItemId.Boots_of_Swiftness),
-                    new ConditionalItem(ItemId.Ludens_Echo),
+                    new ConditionalItem(ItemId.Rod_of_Ages),
+                    new ConditionalItem(ItemId.Mercurys_Treads),
+                    new ConditionalItem(ItemId.Rylais_Crystal_Scepter),
                     new ConditionalItem(ItemId.Rabadons_Deathcap),
+                    new ConditionalItem(ItemId.Spirit_Visage),
                     new ConditionalItem(ItemId.Void_Staff),
-                    new ConditionalItem(ItemId.Warmogs_Armor),
                 },
                 startingItems = new List<ItemId>
                 {
-                    ItemId.Chalice_of_Harmony, ItemId.Boots_of_Speed
+                    ItemId.Catalyst_of_Aeons, ItemId.Boots_of_Speed
                 }
             };
         }
