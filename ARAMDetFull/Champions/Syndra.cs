@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EloBuddy;
 using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Events;
 using SharpDX;
 
@@ -13,7 +14,11 @@ namespace ARAMDetFull.Champions
     class Syndra : Champion
     {
 
-        private Spell EQ;
+        public static Spell.Skillshot Q;
+        public static Spell.Skillshot W;
+        public static Spell.Skillshot E;
+        public static Spell.Targeted R;
+        public static Spell.Skillshot EQ;
 
         private static double QEComboT;
         private static double WEComboT;
@@ -58,7 +63,7 @@ namespace ARAMDetFull.Champions
         {
             if (!Q.IsReady() || target == null)
                 return;
-            Q.Cast();
+            Q.Cast(target);
         }
 
         public override void useW(Obj_AI_Base target)
@@ -74,7 +79,7 @@ namespace ARAMDetFull.Champions
             if (!E.IsReady() || target == null)
                 return;
             if (safeGap(target))
-                E.CastOnUnit(target);
+                E.Cast(target);
         }
 
 
@@ -93,24 +98,29 @@ namespace ARAMDetFull.Champions
             var tar = ARAMTargetSelector.getBestTarget(W.Range+250);
             if(tar != null)
                 useSyndraSpells(true, true, true, true, true, true, false);
-            else if(player.ManaPercentage()>40)
+            else if(player.ManaPercent>40)
                 Farm(false);
+            //other
+            /*var tar = ARAMTargetSelector.getBestTarget(Q.Range);
+            if (tar != null) useQ(tar);
+            tar = ARAMTargetSelector.getBestTarget(W.Range);
+            if (tar != null) useW(tar);
+            tar = ARAMTargetSelector.getBestTarget(E.Range);
+            if (tar != null) UseE(tar);
+            tar = ARAMTargetSelector.getBestTarget(R.Range);
+            if (tar != null) useR(tar);*/
 
         }
 
         public override void setUpSpells()
         {
             //Create the spells
-            Q = new Spell(SpellSlot.Q, 790);
-            W = new Spell(SpellSlot.W, 925);
-            E = new Spell(SpellSlot.E, 700);
-            R = new Spell(SpellSlot.R, 675);
-            EQ = new Spell(SpellSlot.Q, Q.Range + 500);
+            Q = new Spell.Skillshot(SpellSlot.Q, 820, SkillShotType.Circular, 550, int.MaxValue, 125);
+            W = new Spell.Skillshot(SpellSlot.W, 950, SkillShotType.Circular, 350, 1500, 130);
+            E = new Spell.Skillshot(SpellSlot.E, 670, SkillShotType.Cone, 250, 2500, 50);
+            R = new Spell.Targeted(SpellSlot.R, 675);
 
-            Q.SetSkillshot(0.6f, 125f, float.MaxValue, false, SkillshotType.SkillshotCircle);
-            W.SetSkillshot(0.25f, 140f, 1600f, false, SkillshotType.SkillshotCircle);
-            E.SetSkillshot(0.25f, (float)(45 * 0.5), 2500f, false, SkillshotType.SkillshotCircle);
-            EQ.SetSkillshot(float.MaxValue, 55f, 2000f, false, SkillshotType.SkillshotCircle);
+            EQ = new Spell.Skillshot(SpellSlot.E, 1150, SkillShotType.Linear, 600, 2400, 18);
         }
 
 
@@ -126,15 +136,15 @@ namespace ARAMDetFull.Champions
                     var startPoint = orb.To2D().Extend(player.ServerPosition.To2D(), 100);
                     var endPoint = player.ServerPosition.To2D()
                         .Extend(orb.To2D(), player.Distance(orb) > 200 ? 1300 : 1000);
-                    EQ.Delay = E.Delay + player.Distance(orb) / E.Speed;
-                    EQ.From = orb;
+                    //EQ.CastDelay = 670 + Player.Instance.Distance(orb) / E.Speed;
+                    //EQ.From = orb;
                     var enemyPred = EQ.GetPrediction(enemy);
-                    if (enemyPred.Hitchance >= HitChance.High &&
+                    if (enemyPred.HitChance >= HitChance.High &&
                         enemyPred.UnitPosition.To2D().Distance(startPoint, endPoint, false) <
                         EQ.Width + enemy.BoundingRadius)
                     {
-                        E.Cast(orb, true);
-                        W.LastCastAttemptT = DeathWalker.now;
+                        E.Cast(orb);
+                        //W.LastCastFailure = ;
                         return;
                     }
                 }
@@ -142,15 +152,16 @@ namespace ARAMDetFull.Champions
 
         private void UseQE(Obj_AI_Base enemy)
         {
-            EQ.Delay = E.Delay + Q.Range / E.Speed;
-            EQ.From = player.ServerPosition.To2D().Extend(enemy.ServerPosition.To2D(), Q.Range).To3D();
+            EQ.CastDelay = 250 + 820 / E.Speed;
+            EQ.SourcePosition = player.ServerPosition.To2D().Extend(enemy.ServerPosition.To2D(), Q.Range).To3D();
 
             var prediction = EQ.GetPrediction(enemy);
-            if (prediction.Hitchance >= HitChance.High)
+            if (prediction.HitChance >= HitChance.High)
             {
-                Q.Cast(player.ServerPosition.To2D().Extend(prediction.CastPosition.To2D(), Q.Range - 100));
-                QEComboT = DeathWalker.now;
-                W.LastCastAttemptT = DeathWalker.now;
+                Q.Cast(enemy.Position);
+                //Q.Cast(player.ServerPosition.To2D().Extend(prediction.CastPosition.To2D(), Q.Range - 100));
+                //QEComboT = DeathWalker.now;
+                // W.LastCastAttemptT = DeathWalker.now;
             }
         }
 
@@ -168,7 +179,7 @@ namespace ARAMDetFull.Champions
         {
             var damage = 0d;
 
-            if (Q.IsReady(420))
+            if (Q.IsReady())
                 damage += player.GetSpellDamage(enemy, SpellSlot.Q);
 
             if (W.IsReady())
@@ -179,7 +190,7 @@ namespace ARAMDetFull.Champions
 
 
             if (R.IsReady())
-                damage += Math.Min(7, player.Spellbook.GetSpell(SpellSlot.R).Ammo) * player.GetSpellDamage(enemy, SpellSlot.R, 1);
+                damage += Math.Min(7, player.Spellbook.GetSpell(SpellSlot.R).Ammo) * player.GetSpellDamage(enemy, SpellSlot.R);
 
             return (float)damage;
         }
@@ -194,14 +205,14 @@ namespace ARAMDetFull.Champions
 
             //Q
             if (qTarget != null && useQ)
-                Q.Cast(qTarget, false, true);
+                Q.Cast(qTarget);
 
             //E
-            if (DeathWalker.now - W.LastCastAttemptT > Game.Ping + 150 && E.IsReady() && useE)
+            if (E.IsReady() && useE)
                 foreach (var enemy in ObjectManager.Get<AIHeroClient>())
                 {
                     if (enemy.IsValidTarget(EQ.Range))
-                        UseE(enemy);
+                        E.Cast(enemy);
                 }
 
             //W
@@ -211,20 +222,18 @@ namespace ARAMDetFull.Champions
                 {
                     var gObjectPos = GetGrabableObjectPos(wTarget == null);
 
-                    if (gObjectPos.To2D().IsValid() && Utils.TickCount - W.LastCastAttemptT > Game.Ping + 300
-                        && Utils.TickCount - E.LastCastAttemptT > Game.Ping + 600)
+                    if (gObjectPos.To2D().IsValid())
                     {
-                        W.Cast(gObjectPos);
-                        W.LastCastAttemptT = Utils.TickCount;
+                        W.Cast(wTarget);
+                        //W.LastCastFailure = Utils.TickCount;
                     }
                 }
-                else if (wTarget != null && player.Spellbook.GetSpell(SpellSlot.W).ToggleState != 1 && W.IsReady()
-                         && Utils.TickCount - W.LastCastAttemptT > Game.Ping + 100)
+                else if (wTarget != null && player.Spellbook.GetSpell(SpellSlot.W).ToggleState != 1 && W.IsReady())
                 {
-                    if (OrbManager.WObject(false) != null)
+                    if (OrbManager.GetOrbs(false) != null)
                     {
-                        W.From = OrbManager.WObject(false).ServerPosition;
-                        W.Cast(wTarget, false, true);
+                        //W.From = OrbManager.WObject(false).ServerPosition;
+                        W.Cast(wTarget);
                     }
                 }
             }
@@ -232,13 +241,6 @@ namespace ARAMDetFull.Champions
             if (rTarget != null)
                 useR = true;//Config.Item("DontUlt" + rTarget.BaseSkinName) != null &&
 
-            if (rTarget != null && useR && comboDamage > rTarget.Health)
-            {
-                if (R.IsReady())
-                {
-                    R.Cast(rTarget);
-                }
-            }
 
             //R
             if (rTarget != null && useR && R.IsReady() && !Q.IsReady())
@@ -255,48 +257,45 @@ namespace ARAMDetFull.Champions
                 UseQE(qeTarget);
 
             //WE
-            if (qeTarget != null && E.IsReady() && useE && OrbManager.WObject(true) != null)
+            if (qeTarget != null && E.IsReady() && useE)
             {
-                EQ.Delay = E.Delay + Q.Range / W.Speed;
-                EQ.From = player.ServerPosition.To2D().Extend(qeTarget.ServerPosition.To2D(), Q.Range).To3D();
+                EQ.CastDelay = 250 + 820 / W.Speed;
+                //EQ.CastDelay = E.Delay + Q.Range / W.Speed;
+                //EQ.From = player.ServerPosition.To2D().Extend(qeTarget.ServerPosition.To2D(), Q.Range).To3D();
                 var prediction = EQ.GetPrediction(qeTarget);
-                if (prediction.Hitchance >= HitChance.High)
+                if (prediction.HitChance >= HitChance.High)
                 {
-                    W.Cast(player.ServerPosition.To2D().Extend(prediction.CastPosition.To2D(), Q.Range - 100));
-                    WEComboT = DeathWalker.now;
+                    W.Cast(qeTarget.Position);
+                    //WEComboT = DeathWalker.now;
                 }
             }
         }
 
         private void AIHeroClient_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (sender.IsMe && DeathWalker.now - QEComboT < 500 &&
+            if (sender.IsMe &&
                 (args.SData.Name == "SyndraQ"))
             {
-                W.LastCastAttemptT = DeathWalker.now + 400;
-                E.Cast(args.End, true);
+                //W.LastCastAttemptT = DeathWalker.now + 400;
+                E.Cast(args.End);
             }
 
-            if (sender.IsMe && DeathWalker.now - WEComboT < 500 &&
+            if (sender.IsMe &&
                 (args.SData.Name == "SyndraW" || args.SData.Name == "syndrawcast"))
             {
-                W.LastCastAttemptT = DeathWalker.now + 400;
-                E.Cast(args.End, true);
+                //W.LastCastAttemptT = DeathWalker.now + 400;
+                E.Cast(args.End);
             }
         }
 
         private void Farm(bool laneClear)
         {
-            if (!DeathWalker.canMove()) return;
+            if (Orbwalker.CanMove) return;
 
-            var rangedMinionsQ = MinionManager.GetMinions(player.ServerPosition, Q.Range + Q.Width + 30,
-                MinionTypes.Ranged);
-            var allMinionsQ = MinionManager.GetMinions(player.ServerPosition, Q.Range + Q.Width + 30,
-                MinionTypes.All);
-            var rangedMinionsW = MinionManager.GetMinions(player.ServerPosition, W.Range + W.Width + 30,
-                MinionTypes.Ranged);
-            var allMinionsW = MinionManager.GetMinions(player.ServerPosition, W.Range + W.Width + 30,
-                MinionTypes.All);
+            var rangedMinionsQ = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy,player.ServerPosition, Q.Range + Q.Width + 30);
+            var allMinionsQ = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, player.ServerPosition, Q.Range + Q.Width + 30);
+            var rangedMinionsW = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy,player.ServerPosition, W.Range + W.Width + 30);
+            var allMinionsW = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy,player.ServerPosition, W.Range + W.Width + 30);
 
 
             if (Q.IsReady())
@@ -305,23 +304,23 @@ namespace ARAMDetFull.Champions
                     var fl1 = Q.GetCircularFarmLocation(rangedMinionsQ, Q.Width);
                     var fl2 = Q.GetCircularFarmLocation(allMinionsQ, Q.Width);
 
-                    if (fl1.MinionsHit >= 3)
+                    if (fl1.HitNumber >= 3)
                     {
-                        Q.Cast(fl1.Position);
+                        Q.Cast(fl1.CastPosition);
                     }
 
-                    else if (fl2.MinionsHit >= 2 || allMinionsQ.Count == 1)
+                    else if (fl2.HitNumber >= 2)
                     {
-                        Q.Cast(fl2.Position);
+                        Q.Cast(fl2.CastPosition);
                     }
                 }
                 else
                     foreach (var minion in allMinionsQ)
-                        if (!Orbwalking.InAutoAttackRange(minion) &&
+                        if (!Player.Instance.IsInAutoAttackRange(minion) &&
                             minion.Health < 0.75 * player.GetSpellDamage(minion, SpellSlot.Q))
                             Q.Cast(minion);
 
-            if (W.IsReady() && allMinionsW.Count > 3)
+            if (W.IsReady() && W.CastIfItWillHit(3))
             {
                 if (laneClear)
                 {
@@ -330,7 +329,7 @@ namespace ARAMDetFull.Champions
                         //WObject
                         var gObjectPos = GetGrabableObjectPos(false);
 
-                        if (gObjectPos.To2D().IsValid() && DeathWalker.now - W.LastCastAttemptT > Game.Ping + 150)
+                        if (gObjectPos.To2D().IsValid())
                         {
                             W.Cast(gObjectPos);
                         }
@@ -340,14 +339,14 @@ namespace ARAMDetFull.Champions
                         var fl1 = Q.GetCircularFarmLocation(rangedMinionsW, W.Width);
                         var fl2 = Q.GetCircularFarmLocation(allMinionsW, W.Width);
 
-                        if (fl1.MinionsHit >= 3 && W.IsInRange(fl1.Position.To3D()))
+                        if (fl1.HitNumber >= 3 && W.IsInRange(fl1.CastPosition))
                         {
-                            W.Cast(fl1.Position);
+                            W.Cast(fl1.CastPosition);
                         }
 
-                        else if (fl2.MinionsHit >= 1 && W.IsInRange(fl2.Position.To3D()) && fl1.MinionsHit <= 2)
+                        else if (fl2.HitNumber >= 1 && W.IsInRange(fl2.CastPosition) && fl1.HitNumber <= 2)
                         {
-                            W.Cast(fl2.Position);
+                            W.Cast(fl2.CastPosition);
                         }
                     }
                 }
@@ -382,40 +381,40 @@ namespace ARAMDetFull.Champions
 
         static OrbManager()
         {
-            Obj_AI_Base.OnPauseAnimation += Obj_AI_Base_OnPauseAnimation;
-            Obj_AI_Base.OnProcessSpellCast += AIHeroClient_OnProcessSpellCast;
+            //Obj_AI_Base.OnPauseAnimation += Obj_AI_Base_OnPauseAnimation;
+            //Obj_AI_Base.OnProcessSpellCast += AIHeroClient_OnProcessSpellCast;
         }
 
-        static void Obj_AI_Base_OnPauseAnimation(Obj_AI_Base sender, Obj_AI_BasePauseAnimationEventArgs args)
+        /*static void Obj_AI_Base_OnPauseAnimation(Obj_AI_Base sender, Obj_AI_BasePauseAnimationEventArgs args)
         {
             if (sender is Obj_AI_Minion && sender.IsAlly)
             {
                 WObjectNetworkId = sender.NetworkId;
             }
-        }
+        }*/
 
-        private static void AIHeroClient_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        /*private static void AIHeroClient_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (sender.IsMe && args.SData.Name == "SyndraQ")
             {
-                tmpQOrbT = Utils.TickCount;
+                //tmpQOrbT = Utils.TickCount;
                 tmpQOrbPos = args.End;
             }
 
             if (sender.IsMe && WObject(true) != null && (args.SData.Name == "SyndraW" || args.SData.Name == "syndraw2"))
             {
-                tmpWOrbT = Utils.TickCount + 250;
+                //tmpWOrbT = GameTick + 250;
                 tmpWOrbPos = args.End;
             }
-        }
+        }*/
 
-        public static Obj_AI_Minion WObject(bool onlyOrb)
-        {
-            if (WObjectNetworkId == -1) return null;
-            var obj = ObjectManager.GetUnitByNetworkId<Obj_AI_Base>(WObjectNetworkId);
-            if (obj != null && obj.IsValid<Obj_AI_Minion>() && (obj.Name == "Seed" && onlyOrb || !onlyOrb)) return (Obj_AI_Minion)obj;
-            return null;
-        }
+        //public static Obj_AI_Minion WObject(bool onlyOrb)
+        
+            //if (WObjectNetworkId == -1) return null;
+            //var obj = ObjectManager.GetUnitByNetworkId<Obj_AI_Base>(WObjectNetworkId);
+            //if (obj != null && obj.IsValid<Obj_AI_Minion>() && (obj.Name == "Seed" && onlyOrb || !onlyOrb)) return (Obj_AI_Minion)obj;
+            //return null;
+        
 
         public static List<Vector3> GetOrbs(bool toGrab = false)
         {
@@ -440,7 +439,7 @@ namespace ARAMDetFull.Champions
                     result.Add(obj.ServerPosition);
             }
 
-            if (Utils.TickCount - tmpQOrbT < 400)
+            /*if (Utils.TickCount - tmpQOrbT < 400)
             {
                 result.Add(tmpQOrbPos);
             }
@@ -448,7 +447,7 @@ namespace ARAMDetFull.Champions
             if (Utils.TickCount - tmpWOrbT < 400 && Utils.TickCount - tmpWOrbT > 0)
             {
                 result.Add(tmpWOrbPos);
-            }
+            }*/
 
             return result;
         }

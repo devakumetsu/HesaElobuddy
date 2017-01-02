@@ -603,7 +603,9 @@ namespace ARAMDetFull
                 case "Soraka":
                     champ = new Soraka();
                 break;
-                //TODO: Syndra Here
+                case "Syndra":
+                    champ = new Syndra();
+                break;
                 case "TahmKench":
                     champ = new Tahmkench();
                 break;
