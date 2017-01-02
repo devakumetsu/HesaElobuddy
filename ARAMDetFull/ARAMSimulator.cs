@@ -984,8 +984,8 @@ namespace ARAMDetFull
                 
                 if (easyKill != null && easyKill.IsValidTarget())
                 {
-                    Aggresivity.addAgresiveMove(new AgresiveMove(45, 1500, true));
-                    Orbwalker.OrbwalkTo(easyKill.Position.To2D().Extend(player.Position.To2D(), player.AttackRange * 0.7f).To3D());
+                    //Aggresivity.addAgresiveMove(new AgresiveMove(45, 1500, true));
+                    //Orbwalker.OrbwalkTo(easyKill.Position.To2D().Extend(player.Position.To2D(), player.AttackRange * 0.7f).To3D());
                     //if (!Orbwalker.IsAutoAttacking || Orbwalker.GetTarget() != easyKill)
                         //Player.IssueOrder(GameObjectOrder.AttackUnit, easyKill);
                 }

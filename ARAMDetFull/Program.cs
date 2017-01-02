@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Events;
 using static ARAMDetFull.ARAMDetFull;
 
