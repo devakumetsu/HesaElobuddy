@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LeagueSharp;using DetuksSharp;
-using LeagueSharp.Common;
+using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Events;
 using SharpDX;
 
 namespace ARAMDetFull.Champions
@@ -20,7 +21,7 @@ namespace ARAMDetFull.Champions
         public Syndra()
         {
             Obj_AI_Base.OnProcessSpellCast += AIHeroClient_OnProcessSpellCast;
-            Interrupter2.OnInterruptableTarget += Interrupter2_OnInterruptableTarget;
+            Interrupter.OnInterruptableSpell += Interrupter2_OnInterruptableTarget;
 
             ARAMSimulator.champBuild = new Build
             {
@@ -35,14 +36,13 @@ namespace ARAMDetFull.Champions
                         },
                 startingItems = new List<ItemId>
                         {
-                            ItemId.Catalyst_the_Protector
+                            ItemId.Catalyst_of_Aeons
                         }
             };
         }
 
-        void Interrupter2_OnInterruptableTarget(AIHeroClient sender, Interrupter2.InterruptableTargetEventArgs args)
+        void Interrupter2_OnInterruptableTarget(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs args)
         {
-
             if (player.Distance(sender) < E.Range && E.IsReady())
             {
                 Q.Cast(sender.ServerPosition);

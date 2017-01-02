@@ -89,7 +89,7 @@ namespace ARAMDetFull.Champions
             tar = ARAMTargetSelector.getBestTarget(E.Range);
             if (tar != null) useE(tar);
             tar = ARAMTargetSelector.getBestTarget(R.Range);
-            if (tar != null) useR(tar);
+            //if (tar != null) useR(tar);
         }
 
         public override void setUpSpells()
