@@ -51,7 +51,7 @@ namespace ARAMDetFull.Champions
         {
             if (!E.IsReady())
                 return;
-            E.CastOnUnit(target);
+            E.Cast(target);
 
         }
 
