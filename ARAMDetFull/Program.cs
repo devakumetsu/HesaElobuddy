@@ -24,8 +24,16 @@ namespace ARAMDetFull
 
         private static void OnLoad(EventArgs args)
         {
-            new ARAMDetFull();
-            Game.OnTick += OnTick;
+            if (Game.MapId == GameMapId.HowlingAbyss)
+            {
+                new ARAMDetFull();
+                Game.OnTick += OnTick;
+                Chat.Print("Happy Botting", Color.Green);
+            }
+            if (Game.MapId != GameMapId.HowlingAbyss)
+            {
+                Chat.Print(Game.MapId + "is not Supported by ARAMDetFull",Color.Red);
+            }
         }
 
         private static void OnTick(EventArgs args)
