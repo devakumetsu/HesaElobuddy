@@ -175,7 +175,7 @@ namespace ARAMDetFull
 
                     }
                 }
-                //return; //code below is unreachable
+                return; //code below is unreachable
                 
                 /*if (lastMinionSpellUse + 277 > ARAMDetFull.now)
                     return;
@@ -231,7 +231,7 @@ namespace ARAMDetFull
                                 if (bTarg2 != null)
                                 {
                                     Console.WriteLine("Cast farm self: " + spell.Slot);
-                                    spell.Cast();
+                                    spell.Cast(Player.Instance);
                                     return;
                                 }
                             }
@@ -254,7 +254,7 @@ namespace ARAMDetFull
             }
 
             private float lastSpellUse = ARAMDetFull.now;
-            public void useSpells()
+            public void useSpells() //TODO
             {
                 var bTarg = ARAMTargetSelector.getBestTarget(Player.Instance.GetAutoAttackRange(), true);
                 //var bTarg = ARAMTargetSelector.getBestTarget(Player.Instance.GetAutoAttackRange());
@@ -306,6 +306,7 @@ namespace ARAMDetFull
                                     if (spell.CastIfWillHitReturn(bTarg2, (int) HitChance.High))
                                     {
                                         Console.WriteLine("Cast attack location gap: " + spell.Slot);
+                                        spell.Cast(bTarg2.Position); //BUG: Experimental
                                         return;
                                     }
                                 }
@@ -319,6 +320,7 @@ namespace ARAMDetFull
                                 if (spell.CastIfWillHitReturn(bTarg2, (int) HitChance.High))//TODO
                                 {
                                     Console.WriteLine("Cast attack location: " + spell.Slot);
+                                    spell.Cast(bTarg2); //BUG: Experimental
                                     return;
                                 }
                             }
@@ -333,13 +335,13 @@ namespace ARAMDetFull
                             if (bTarg2 != null)
                             {
                                 Console.WriteLine("Cast self: " + spell.Slot);
-                                spell.Cast();
+                                spell.Cast(Player.Instance);
                                 return;
                             }
                         }
                         else if(Player.Instance.Spellbook.GetSpell(spell.Slot).SData.CastType == (int) CastType.AllyChampions && Player.Instance.Spellbook.GetSpell(spell.Slot).SData.SpellTags != null && supportSpells.Contains(Player.Instance.Spellbook.GetSpell(spell.Slot).SData.SpellTags))
                         {
-                            var bTarg2 = ARAMTargetSelector.getBestTargetAly(range, false);
+                            var bTarg2 = ARAMTargetSelector.getBestTargetAlly(range, false);
                             if (bTarg2 != null)
                             {
                                 Console.WriteLine("Cast ally: " + spell.Slot);
