@@ -1059,7 +1059,7 @@ namespace ARAMDetFull
                         {
                             return;
                         }
-
+                    
                         if (!inDanger)
                         {
                             Sector orbSector = null;
