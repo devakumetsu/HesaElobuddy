@@ -1088,6 +1088,7 @@ namespace ARAMDetFull
                         else
                         {
                             Orbwalker.OrbwalkTo(player.Position.To2D().Extend(fromNex.Position.To2D(), 333).To3D());
+                            Orbwalker.OrbwalkTo(player.Position.To2D().Extend(fromNex.Position.To2D(), 333).To3D());
                         }
                     }
                 }
