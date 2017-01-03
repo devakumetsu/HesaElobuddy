@@ -11,6 +11,9 @@ namespace ARAMDetFull.Champions
         private Spell.Active Q2;
         private static bool _rCasted;
 
+        public Spell.Active E2 { get; private set; }
+        public Spell.Active W2 { get; private set; }
+
         public LeeSin()
         {
             ARAMSimulator.champBuild = new Build
@@ -37,27 +40,20 @@ namespace ARAMDetFull.Champions
             if (!W.IsReady() || sender == null || args.Target == null || sender.IsAlly || !(sender is AIHeroClient) || !(args.Target is AIHeroClient) || !args.Target.IsAlly || safeGap((AIHeroClient)args.Target))
                 return;
             if (W.IsInRange(sender))
-                W.CastOnUnit((AIHeroClient)args.Target);
+                W.Cast((AIHeroClient)args.Target);
         }
         
-        private AIHeroClient buffQhero()
-        {
-            return EntityManager.Heroes.Enemies.FirstOrDefault(ene => ene.IsDead && ene.HasBuff("BlindMonkQOne"));
-        }
-
-        private bool passive
-        {
-            get { return player.HasBuff("blindmonkpassive_cosmetic"); }
-        }
 
         public override void useQ(Obj_AI_Base target)
         {
             if (!Q.IsReady() || target == null)
                 return;
-            if (Q.Name == "BlindMonkQOne")
+            //if (Q.Name == "BlindMonkQOne" && Q.IsReady())
+            if (Q.IsReady())
                 Q.Cast(target);
-            else if (safeGap(target) || target.Distance(player, true) < 300 * 300)
-                Q.Cast();
+                Q2.Cast();
+            //else if (/*safeGap(target) || */target.Distance(player, true) < 300 * 300)
+            //  Q.Cast();
         }
 
         public override void useW(Obj_AI_Base target)
@@ -65,9 +61,11 @@ namespace ARAMDetFull.Champions
             if (!W.IsReady() || target == null)
                 return;
             if (W.Name == "blindmonkwtwo")
+            //if (W.IsReady())
             {
-                if (!passive || player.HealthPercent < 65)
-                    W.Cast();
+                if (player.HealthPercent < 65) ;
+                W.Cast();
+                W2.Cast();
             }
         }
 
@@ -76,9 +74,9 @@ namespace ARAMDetFull.Champions
             if (!E.IsReady() || target == null)
                 return;
             if (E.Name == "BlindMonkEOne")
-                E.Cast();
-            else if (!passive)
-                E.Cast();
+            //if (E.IsReady())
+            E.Cast();
+            E2.Cast();
         }
 
         public override void useR(Obj_AI_Base target)
@@ -86,54 +84,24 @@ namespace ARAMDetFull.Champions
             if (!R.IsReady() || target == null)
                 return;
             if (R.IsKillable(target) || player.HealthPercent < 25)
-                R.Cast(target);
+            R.Cast(target);
             else
             {
-                castRMultiple(2);
-            }
-        }
-
-        private void castRMultiple(int min)
-        {
-            if (!R.IsReady())
-                return;
-            //TODO fix Aoe,Collision,CollisionObjects
-            foreach (var enemy in from enemy in EntityManager.Heroes.Enemies
-                                  let input = new Prediction.Manager.PredictionInput()
-                                  {
-                                      /*Aoe = false,
-                                      Collision = true,
-                                      CollisionObjects = new[] { CollisionableObjects.Heroes },*/
-                                      CollisionTypes = new HashSet<EloBuddy.SDK.Spells.CollisionType> { EloBuddy.SDK.Spells.CollisionType.AiHeroClient },
-                                      Delay = 0.1f,
-                                      Radius = 100f,
-                                      Range = R.Range,
-                                      Speed = 1500f,
-                                      From = player.ServerPosition,
-                                  }
-                                  let output = Prediction.Position.GetPrediction(input)
-                                  where output.HitChance >= HitChance.Medium && player.Distance(output.CastPosition) < R.Range
-                                  let endPos = (player.ServerPosition + output.CastPosition - player.ServerPosition).Normalized() * 1000
-                                  let colObjs = output.CollisionObjects
-                                  where player.Distance(endPos) < 1200 && colObjs.Any()
-                                  where colObjs.Length >= min
-                                  select enemy)
-            {
-                R.CastOnUnit(enemy);
+            R.CastIfWillHit(target,2);
             }
         }
 
         public override void useSpells()
         {
 
-            var tar = ARAMTargetSelector.getBestTarget(Q.Range);
+            /*var tar = ARAMTargetSelector.getBestTarget(Q.Range);
             if (tar != null) useQ(tar);
             tar = ARAMTargetSelector.getBestTarget(W.Range);
             if (tar != null) useW(tar);
             tar = ARAMTargetSelector.getBestTarget(E.Range);
             if (tar != null) useE(tar);
             tar = ARAMTargetSelector.getBestTarget(R.Range);
-            if (tar != null) useR(tar);
+            if (tar != null) useR(tar);*/
         }
 
 
@@ -146,16 +114,10 @@ namespace ARAMDetFull.Champions
             Q2 = new Spell.Active(SpellSlot.Q, 1300);
 
             W = new Spell.Targeted(SpellSlot.W, 1200);
-            //W2 = new Spell.Active(SpellSlot.W, 700);
+            W2 = new Spell.Active(SpellSlot.W, 700);
 
-            E = new Spell.Skillshot(SpellSlot.E, 350, SkillShotType.Linear, 250, int.MaxValue, 100)
-            {
-                AllowedCollisionCount = int.MaxValue
-            };
-            /*E2 = new Spell.Skillshot(SpellSlot.E, 675, SkillShotType.Linear, 250, int.MaxValue, 100)
-            {
-                AllowedCollisionCount = int.MaxValue
-            };*/
+            E = new Spell.Active(SpellSlot.E, 350);
+            E2 = new Spell.Active(SpellSlot.E, 675);
 
             R = new Spell.Targeted(SpellSlot.R, 375);
 
