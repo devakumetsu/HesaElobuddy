@@ -48,8 +48,8 @@ namespace ARAMDetFull.Champions
 
         public override void useW(Obj_AI_Base target)
         {
-            if (W.IsReady())
-                W.Cast(target.Position);
+            if (W.IsReady()) ;
+            W.Cast(target.Position);
         }
 
         public override void useE(Obj_AI_Base target)
@@ -67,8 +67,8 @@ namespace ARAMDetFull.Champions
         {
             if (!R.IsReady() || target == null)
                 return;
-            if (safeGap(target) || MapControl.fightIsOn(target))
-                 R.Cast();
+            //if (target.IsValid)
+            //R.Cast();
         }
 
         public override void useSpells()
@@ -80,7 +80,7 @@ namespace ARAMDetFull.Champions
             tar = ARAMTargetSelector.getBestTarget(E.Range+600);
             if (tar != null) useE(tar);
             tar = ARAMTargetSelector.getBestTarget(R.Range);
-            if (tar != null) useR(tar);
+            //if (tar != null) useR(tar);
 
         }
 
