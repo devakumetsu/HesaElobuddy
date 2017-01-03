@@ -26,12 +26,14 @@ namespace ARAMDetFull
         {
             if (Game.MapId == GameMapId.HowlingAbyss)
             {
+                Camera.Locked = true;
                 new ARAMDetFull();
                 Game.OnTick += OnTick;
                 Chat.Print("Happy Botting", Color.Green);
             }
             if (Game.MapId != GameMapId.HowlingAbyss)
             {
+                Camera.Locked = false;
                 Chat.Print(Game.MapId + "is not Supported by ARAMDetFull",Color.Red);
             }
         }
