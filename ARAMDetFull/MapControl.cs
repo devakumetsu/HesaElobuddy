@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ARAMDetFull.Champions;
 using SharpDX;
 using ARAMDetFull.SpellsSDK;
 using EloBuddy;
@@ -256,13 +257,18 @@ namespace ARAMDetFull
             private float lastSpellUse = ARAMDetFull.now;
             public void useSpells() //TODO
             {
-                var bTarg = ARAMTargetSelector.getBestTarget(Player.Instance.GetAutoAttackRange(), true);
+                //var bTarg = TargetSelector.GetTarget(Player.Instance.GetAutoAttackRange(),DamageType.Physical, Player.Instance.ServerPosition.Extend(target,Player.Instance.GetAutoAttackRange()));
+
+                //var bTarg = ARAMTargetSelector.getBestTarget(Player.Instance.GetAutoAttackRange(), true);
                 //var bTarg = ARAMTargetSelector.getBestTarget(Player.Instance.GetAutoAttackRange());
-                if (bTarg != null && !bTarg.IsUnderHisturret())
+                var target = TargetSelector.GetTarget(Player.Instance.GetAutoAttackRange(), DamageType.Physical,
+                    Player.Instance.Position);
+                if (target != null && !target.IsUnderHisturret())
                 {
-                    if (!Orbwalker.IsAutoAttacking || Orbwalker.GetTarget() != bTarg)
+                    if (!Orbwalker.IsAutoAttacking || Orbwalker.GetTarget() != target)
                     {
-                        //Player.IssueOrder(GameObjectOrder.AttackUnit, bTarg);
+                        Orbwalker.ForcedTarget = target;
+                        Player.IssueOrder(GameObjectOrder.AttackUnit, target);
                     }
                 }
                 return;
