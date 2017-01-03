@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
+using EloBuddy.SDK.Menu.Values;
 
 namespace ARAMDetFull.Champions
 {
     class TwistedFate : Champion
     {
-
+        private static Spell.Active W;
         public TwistedFate()
         {
             ARAMSimulator.champBuild = new Build
@@ -45,6 +47,8 @@ namespace ARAMDetFull.Champions
 
         public override void useW(Obj_AI_Base target)
         {
+            if (W.IsReady())
+                W.Cast();
         }
 
         public override void useE(Obj_AI_Base target)
