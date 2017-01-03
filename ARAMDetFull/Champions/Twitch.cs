@@ -65,7 +65,7 @@ namespace ARAMDetFull.Champions
                                 hero.IsValidTarget(E.Range) &&
                                 (player.GetSpellDamage(hero, SpellSlot.E) - 10 > hero.Health)))
             {//maybe "hero" is wrong
-                E.Cast();
+                E.Cast(hero);
             }
 
         }
@@ -74,9 +74,9 @@ namespace ARAMDetFull.Champions
         {
             if (!R.IsReady())
                 return;
-            if (player.CountEnemiesInRange(700) > 1)
+            if (player.CountEnemiesInRange(1000) > 1)
                 if (R.Cast())
-                    Aggresivity.addAgresiveMove(new AgresiveMove(35, 5000, true));
+                    Aggresivity.addAgresiveMove(new AgresiveMove(35,2000, true));
         }
 
         public override void setUpSpells()
