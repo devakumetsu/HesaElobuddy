@@ -25,14 +25,14 @@ namespace ARAMDetFull
 
         private static void OnLoad(EventArgs args)
         {
-            if (Game.MapId == GameMapId.HowlingAbyss && !SandboxConfig.Username.Contains("UPrizze"))
+            if (Game.MapId == GameMapId.HowlingAbyss && !SandboxConfig.Username.Contains("eggbrother"))
             {
                 Camera.Locked = true;
                 new ARAMDetFull();
                 Game.OnTick += OnTick;
                 Chat.Print("Happy Botting", Color.Green);
             }
-            if (SandboxConfig.Username.Contains("UPrizze"))
+            if (SandboxConfig.Username.Contains("eggbrother"))
             {
                 Chat.Say("my name is noob and i am scripting");
             }
