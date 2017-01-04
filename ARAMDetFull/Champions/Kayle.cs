@@ -167,7 +167,7 @@ namespace ARAMDetFull.Champions
 
         public override void useSpells()
         {
-            if (E.IsReady() && player.CountEnemiesInRange(650) > 0)
+            if (E.IsReady() && player.CountEnemiesInRange(650) <= 1)
                 E.Cast();
             var tarq = ARAMTargetSelector.getBestTarget(Q.Range);
             if (tarq != null) useQ(tarq);
