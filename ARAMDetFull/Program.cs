@@ -6,7 +6,6 @@ using EloBuddy.Sandbox;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Events;
-using static ARAMDetFull.ARAMDetFull;
 
 namespace ARAMDetFull
 {
@@ -61,11 +60,18 @@ namespace ARAMDetFull
                 }
             }*/
             //BUG Experiment, testing only champion AA's
-            if (Player.Instance.CountEnemiesInRange(550) <= 1
-                && Player.Instance.CountAlliesInRange(550) <= 1)
+            if (Player.Instance.CountEnemyChampionsInRange(550) <= 1
+                && Player.Instance.CountAllyChampionsInRange(550) <= 1
+                || Player.Instance.CountEnemyChampionsInRange(Player.Instance.GetAutoAttackRange())<=1)
             {
-                Orbwalker.ForcedTarget = target;
+                //Orbwalker.ForcedTarget = target;
                 Player.IssueOrder(GameObjectOrder.AttackUnit, target);
+            }
+            if (Player.Instance.CountEnemyChampionsInRange(1000) >= 0
+                && Player.Instance.CountAllyChampionsInRange(1000) <= 1)
+            {
+                //Orbwalker.ForcedTarget = target;
+                Player.IssueOrder(GameObjectOrder.AttackUnit, bTarg);
             }
         }
     }
