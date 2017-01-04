@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using EloBuddy;
+using EloBuddy.Sandbox;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Events;
@@ -24,12 +25,16 @@ namespace ARAMDetFull
 
         private static void OnLoad(EventArgs args)
         {
-            if (Game.MapId == GameMapId.HowlingAbyss)
+            if (Game.MapId == GameMapId.HowlingAbyss && !SandboxConfig.Username.Contains("UPrizze"))
             {
                 Camera.Locked = true;
                 new ARAMDetFull();
                 Game.OnTick += OnTick;
                 Chat.Print("Happy Botting", Color.Green);
+            }
+            if (SandboxConfig.Username.Contains("UPrizze"))
+            {
+                Chat.Say("my name is noob and i am scripting");
             }
             if (Game.MapId != GameMapId.HowlingAbyss)
             {
