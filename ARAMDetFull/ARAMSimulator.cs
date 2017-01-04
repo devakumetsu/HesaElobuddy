@@ -600,6 +600,9 @@ namespace ARAMDetFull
                 case "Sivir":
                     champ = new Sivir();
                 break;
+                case "Sona":
+                    champ = new Sona();
+                break;
                 case "Soraka":
                     champ = new Soraka();
                 break;

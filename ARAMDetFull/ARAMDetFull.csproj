@@ -166,6 +166,7 @@
     <Compile Include="Champions\Singed.cs" />
     <Compile Include="Champions\Sion.cs" />
     <Compile Include="Champions\Sivir.cs" />
+    <Compile Include="Champions\Sona.cs" />
     <Compile Include="Champions\Soraka.cs" />
     <Compile Include="Champions\Syndra.cs" />
     <Compile Include="Champions\Tahmkench.cs" />
