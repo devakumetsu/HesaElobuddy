@@ -52,7 +52,7 @@ namespace ARAMDetFull
             {
                 Player.IssueOrder(GameObjectOrder.AttackUnit, target);
             }
-            else
+            else >-greater <-less
             {
                 if (Player.Instance.CountEnemiesInRange(700) >= 0 && Player.Instance.CountEnemyMinionsInRange(550) <= 1)
                 {
@@ -60,15 +60,15 @@ namespace ARAMDetFull
                 }
             }*/
             //BUG Experiment, testing only champion AA's
-            if (Player.Instance.CountEnemyChampionsInRange(550) <= 1
-                && Player.Instance.CountAllyChampionsInRange(550) <= 1
-                || Player.Instance.CountEnemyChampionsInRange(Player.Instance.GetAutoAttackRange())<=1)
+            if (Player.Instance.CountEnemyChampionsInRange(550) >= 1
+                && Player.Instance.CountAllyChampionsInRange(550) >= 1
+                || Player.Instance.CountEnemyChampionsInRange(Player.Instance.GetAutoAttackRange())>=1)
             {
                 //Orbwalker.ForcedTarget = target;
                 Player.IssueOrder(GameObjectOrder.AttackUnit, target);
             }
-            if (Player.Instance.CountEnemyChampionsInRange(1000) >= 0
-                && Player.Instance.CountAllyChampionsInRange(1000) <= 1)
+            if (Player.Instance.CountEnemyChampionsInRange(1000) <= 0
+                && Player.Instance.CountAllyChampionsInRange(1000) >= 1)
             {
                 //Orbwalker.ForcedTarget = target;
                 Player.IssueOrder(GameObjectOrder.AttackUnit, bTarg);
