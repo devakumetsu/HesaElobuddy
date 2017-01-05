@@ -48,7 +48,7 @@ namespace ARAMDetFull.Champions
 
         public override void useW(Obj_AI_Base target)
         {
-            if (W.IsReady()) ;
+            if (W.IsReady()) 
             W.Cast(target.Position);
         }
 

@@ -63,7 +63,7 @@ namespace ARAMDetFull.Champions
             if (W.Name == "blindmonkwtwo")
             //if (W.IsReady())
             {
-                if (player.HealthPercent < 65) ;
+                if (player.HealthPercent < 65)
                 W.Cast();
                 W2.Cast();
             }

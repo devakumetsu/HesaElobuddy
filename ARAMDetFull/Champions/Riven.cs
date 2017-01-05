@@ -145,7 +145,7 @@ namespace ARAMDetFull.Champions
 
         public override void useQ(Obj_AI_Base target)
         {
-            if (Q.IsReady()) ;
+            if (Q.IsReady()) 
             Q.Cast(target);
         }
 
@@ -245,13 +245,13 @@ namespace ARAMDetFull.Champions
 
             RushDownQ = RushDmgBasedOnDist(target) * 0.7f > target.Health;
             RushDown = RushDmgBasedOnDist(target) * 1.1f > target.Health;
-            if (RushDown || player.CountEnemiesInRange(600) > 2)
+            if (RushDown || player.CountEnemyHeroesInRangeWithPrediction(600) >2)
                 UseRSmart(target);
             if (RushDown || safeGap(target))
                 UseESmart(target);
             useWSmart(target);
 
-            if (Orbwalker.CanMove && (target.Distance(player) < 700 || RushDown)) ;
+            if (Orbwalker.CanMove && (target.Distance(player) < 700 || RushDown)) 
             gapWithQ(target);
         }
 
@@ -448,6 +448,7 @@ namespace ARAMDetFull.Champions
                 if (!Q.IsReady())
                     return 0;
                 return 3;
+                Console.WriteLine(ex);
             }
         }
     }

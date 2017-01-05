@@ -263,7 +263,7 @@ namespace ARAMDetFull.Champions
 
         public bool GoodBounceTarget(Obj_AI_Base target)
         {
-            return target.CountEnemiesInRange(380) > 1;
+            return target.CountEnemyMinionsInRange(380) > 1;
         }
 
         // TODO: DFG handling and so on :P

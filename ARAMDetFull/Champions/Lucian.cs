@@ -84,7 +84,7 @@ namespace ARAMDetFull.Champions
             if (!E.IsReady() || target == null)
                 return;
             if (target.HealthPercent < 50 && /*safeGap(player.Position.Extend(target.Position,400).To2D())*/
-                safeGap(Player.Instance.Position.Extend(target.Position, 400))) ;
+                safeGap(Player.Instance.Position.Extend(target.Position, 400))) 
             E.Cast(target);
         }
 
