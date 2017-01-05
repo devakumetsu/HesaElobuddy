@@ -29,7 +29,7 @@ namespace ARAMDetFull
                 Camera.Locked = true;
                 new ARAMDetFull();
                 Game.OnTick += OnTick;
-                Chat.Print("Happy Botting", Color.Green);
+                Chat.Print("Happy Botting", Color.Orange);
             }
             if (SandboxConfig.Username.Contains("eggbrother"))
             {
