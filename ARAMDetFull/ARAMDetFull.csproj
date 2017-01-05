@@ -99,6 +99,7 @@
     <Compile Include="Champions\Bard.cs" />
     <Compile Include="Champions\Blitzcrank.cs" />
     <Compile Include="Champions\Brand.cs" />
+    <Compile Include="Champions\Braum.cs" />
     <Compile Include="Champions\Camille.cs" />
     <Compile Include="Champions\Cassiopeia.cs" />
     <Compile Include="Champions\Champion.cs" />
