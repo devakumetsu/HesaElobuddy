@@ -14,13 +14,6 @@ namespace ARAMDetFull.Champions
             {
                 coreItems = new List<ConditionalItem>
                 {
-                    /*Abyssal Scepter
-Ionian Boots of Lucidity
-Liandry's Torment
-Righteous Glory
-Sunfire Cape
-Thornmail
-Negatron Cloak,Amplifying Tome*/
                     new ConditionalItem(ItemId.Abyssal_Scepter),
                     new ConditionalItem(ItemId.Ionian_Boots_of_Lucidity),
                     new ConditionalItem(ItemId.Liandrys_Torment),
@@ -37,7 +30,7 @@ Negatron Cloak,Amplifying Tome*/
 
         public override void useQ(Obj_AI_Base target)
         {
-            if (safeGap(target))
+            if (safeGap(target) && Q.IsReady())
             {
                 CastQ(target);
             }
@@ -61,7 +54,8 @@ Negatron Cloak,Amplifying Tome*/
         {
             if (R.CanCast(target))
             {
-                AutoUlt();
+                if (Player.Instance.CountEnemyHeros(R.Range) >=2 && Player.Instance.CountAllyHeros(R.Range) >=2 && Player.Instance.Health / Player.Instance.MaxHealth <= 0.1)
+                    CastR();
             }
         }
 
@@ -75,9 +69,9 @@ Negatron Cloak,Amplifying Tome*/
 
         public override void useSpells()
         {
-            var tar = ARAMTargetSelector.getBestTarget(E.Range);
+            var tar = ARAMTargetSelector.getBestTarget(Q.Range);
             if (tar != null) useQ(tar);
-            if (tar != null) useW(tar);
+            //if (tar != null) useW(tar);
             if (tar != null) useE(tar);
             if (tar != null) useR(tar);
         }
