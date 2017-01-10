@@ -60,7 +60,7 @@ namespace ARAMDetFull.Champions
             
             Obj_AI_Base.OnProcessSpellCast += AIHeroClient_OnProcessSpellCast;
             Orbwalker.OnPreAttack += Orbwalker_OnPreAttack;
-            Player.OnIssueOrder += Player_OnIssueOrder; ;
+            Player.OnIssueOrder += Player_OnIssueOrder;
         }
 
         private void Gapcloser_OnGapcloser(AIHeroClient sender, Gapcloser.GapcloserEventArgs e)
@@ -155,7 +155,6 @@ namespace ARAMDetFull.Champions
                 {
                     Orbwalker.DisableMovement = true;
                     WhileCastingR();
-                    return;
                 }
                 else
                 {
@@ -166,7 +165,7 @@ namespace ARAMDetFull.Champions
                 {
                     foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(h => h.IsValidTarget() && R.IsInRange(h) && (float)player.GetSpellDamage(h, SpellSlot.R) * 3 > h.Health))
                     {
-                        R.Cast();
+                        R.Cast(enemy);
                     }
                 }
 
@@ -190,8 +189,7 @@ namespace ARAMDetFull.Champions
 
         private void Harass()
         {
-            UseSpells(true, true,
-                false);
+            UseSpells(true, true,false);
         }
 
         private void UseSpells(bool useQ, bool useW, bool useE)
