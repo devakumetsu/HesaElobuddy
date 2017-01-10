@@ -43,14 +43,14 @@ namespace ARAMDetFull.Champions
         {
             if (!E.IsReady() || target == null)
                 return;
-            E.CastOnUnit(target);
+            E.Cast(target);
         }
 
         public override void useR(Obj_AI_Base target)
         {
             if (target == null || !R.IsReady())
                 return;
-            if (player.Position.CountEnemiesInRange(500) > 1)
+            if (player.Position.CountEnemyHeros(500) > 1)
             {
                 R.Cast();
             }
