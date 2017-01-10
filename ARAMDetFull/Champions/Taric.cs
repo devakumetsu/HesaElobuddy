@@ -35,14 +35,15 @@ namespace ARAMDetFull.Champions
                 return;
             var ally =
                 ObjectManager.Get<AIHeroClient>().FirstOrDefault(h => h.IsValid && Q.IsInRange(h) && !h.IsDead && h.HealthPercent < 65 && (!h.IsMe || h.HealthPercent < 50));
-            if (ally != null)
-                Q.Cast(ally);
+            if (ally != null && ally.IsInRange(Player.Instance,Q.Range))
+                Q.Cast();
         }
 
         public override void useW(Obj_AI_Base target)
         {
             if (!W.IsReady())
                 return;
+            if (W.IsReady() && W.IsInRange(target))
             W.Cast();
         }
 
@@ -50,6 +51,7 @@ namespace ARAMDetFull.Champions
         {
             if (!E.IsReady() || W.IsReady())
                 return;
+            if (E.IsReady())
             E.Cast(target);
         }
 
@@ -57,6 +59,7 @@ namespace ARAMDetFull.Champions
         {
             if (!R.IsReady())
                 return;
+            if (R.IsReady() && player.CountAllyChampionsInRange(R.Range) >= 1)
             R.Cast();
         }
 
