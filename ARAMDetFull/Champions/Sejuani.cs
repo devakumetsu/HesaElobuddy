@@ -58,7 +58,7 @@ namespace ARAMDetFull.Champions
 
         private void AutoR()
         {
-            foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(enemy => enemy.IsEnemy && !enemy.IsDead && enemy.Position.CountEnemiesInRange(350) >= 2))
+            foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(enemy => enemy.IsEnemy && !enemy.IsDead && enemy.Position.CountEnemyHeros(350) >= 2))
             {
                 R.Cast(enemy);
             }
