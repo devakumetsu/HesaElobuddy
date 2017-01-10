@@ -65,7 +65,7 @@ namespace ARAMDetFull.Champions
         public override void kiteBack(Vector2 pos)
         {
             base.kiteBack(pos);
-            if (Q.IsReady() && player.CountEnemiesInRange(380) != 0)//.Count(ene => !ene.IsDead) != 0)
+            if (Q.IsReady() && player.CountEnemyHeros(380) != 0)//.Count(ene => !ene.IsDead) != 0)
                 Q.Cast(pos.To3D());
         }
 
@@ -101,7 +101,7 @@ namespace ARAMDetFull.Champions
 
         public static bool EnemyInRange(int numOfEnemy, float range)
         {
-            return Player.Instance.CountEnemiesInRange((int)range) >= numOfEnemy;
+            return Player.Instance.CountEnemyHeros((int)range) >= numOfEnemy;
         }
 
         void AntiGapcloser_OnEnemyGapcloser(AIHeroClient target, Gapcloser.GapcloserEventArgs gapcloser)
