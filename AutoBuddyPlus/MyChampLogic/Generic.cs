@@ -6,7 +6,6 @@ namespace AutoBuddy.MyChampLogic
 {
     internal class Generic : IChampLogic
     {
-
         public float MaxDistanceForAA { get { return int.MaxValue; } }
         public float OptimalMaxComboDistance { get { return AutoWalker.myHero.AttackRange; } }
         public float HarassDistance { get { return AutoWalker.myHero.AttackRange; } }

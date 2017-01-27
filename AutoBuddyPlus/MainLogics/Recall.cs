@@ -47,8 +47,7 @@ AutoBuddy won't recall if you have less gold than needed for next item.
             Core.DelayAction(ShouldRecall, 3000);
             Drawing.OnDraw += Drawing_OnDraw;
         }
-
-
+        
         private void ShouldRecall()
         {
             if (active)
@@ -101,27 +100,25 @@ AutoBuddy won't recall if you have less gold than needed for next item.
         {
             AutoWalker.SetMode(Orbwalker.ActiveModes.Combo);
             
-            if (ObjectManager.Player.Distance(spawn) < 400 && ObjectManager.Player.HealthPercent() > 85)// && (ObjectManager.Player.Mana == 0 || ObjectManager.Player.ManaPercent > 80 || ObjectManager.Player.PARRegenRate <= .0001))
+            if (ObjectManager.Player.Distance(spawn) < 400 && ObjectManager.Player.HealthPercent() > 85 && (ObjectManager.Player.ManaPercent == 0 || ObjectManager.Player.ManaPercent == 100 || ObjectManager.Player.ManaPercent > 85))
                 current.SetLogic(LogicSelector.MainLogics.PushLogic);
             else if (ObjectManager.Player.Distance(spawn) < 2000)
                 AutoWalker.WalkTo(spawn.Position);
+
             else if (!ObjectManager.Player.IsRecalling() && Game.Time > lastRecallTime)
             {
-                Obj_AI_Turret nearestTurret =
-                    ObjectManager.Get<Obj_AI_Turret>()
-                        .Where(t => t.Team == ObjectManager.Player.Team && !t.IsDead())
-                        .OrderBy(t => t.Distance(ObjectManager.Player))
-                        .First();
-                Vector3 recallPos = nearestTurret.Position.Extend(spawn, 300).To3DWorld();
+                Obj_AI_Turret nearestTurret = ObjectManager.Get<Obj_AI_Turret>().Where(t => t.Team == ObjectManager.Player.Team && !t.IsDead()).OrderBy(t => t.Distance(ObjectManager.Player)).First();
+
+                Vector3 recallPos = nearestTurret.Position.Extend(spawn, new Random().Next(100, 400)).To3DWorld();
                 if (AutoWalker.myHero.HealthPercent() > 35)
                 {
                     if (g == null)
                     {
 
-                        g = ObjectManager.Get<GrassObject>()
-                            .Where(gr => gr.Distance(AutoWalker.MyNexus) < AutoWalker.myHero.Distance(AutoWalker.MyNexus)&&gr.Distance(AutoWalker.myHero)>Orbwalker.HoldRadius)
-                            .OrderBy(gg => gg.Distance(AutoWalker.myHero)).FirstOrDefault(gr => ObjectManager.Get<GrassObject>().Count(gr2=>gr.Distance(gr2)<65)>=4);
+                        g = ObjectManager.Get<GrassObject>().Where(gr => gr.Distance(AutoWalker.MyNexus) < AutoWalker.myHero.Distance(AutoWalker.MyNexus) && gr.Distance(AutoWalker.myHero) > Orbwalker.HoldRadius)
+                            .OrderBy(gg => gg.Distance(AutoWalker.myHero)).FirstOrDefault(gr => ObjectManager.Get<GrassObject>().Count(gr2 => gr.Distance(gr2) < 65) >= 4);
                     }
+
                     if (g != null && g.Distance(AutoWalker.myHero) < nearestTurret.Position.Distance(AutoWalker.myHero))
                     {
                         AutoWalker.SetMode(Orbwalker.ActiveModes.Flee);

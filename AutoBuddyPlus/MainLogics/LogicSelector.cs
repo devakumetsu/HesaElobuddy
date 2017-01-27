@@ -20,8 +20,7 @@ namespace AutoBuddy.MainLogics
         public readonly Recall recallLogic;
         public readonly MiscEvents GameEvents;
         public readonly Survi surviLogic;
-
-
+        
         public readonly IChampLogic myChamp;
         public bool saveMylife;
 
@@ -115,8 +114,8 @@ namespace AutoBuddy.MainLogics
 
         private void end(object o, EventArgs e)
         {
-
         }
+
         internal enum MainLogics
         {
             PushLogic,

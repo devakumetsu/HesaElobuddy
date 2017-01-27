@@ -78,8 +78,13 @@
     </Compile>
     <Compile Include="Utilities\AutoLvl\SkillGrabber.cs" />
     <Compile Include="Utilities\AutoLvl\DefautSequences.cs" />
+    <Compile Include="Utilities\AutoShop\AutoShop.cs" />
     <Compile Include="Utilities\AutoShop\BrutalItemInfo.cs" />
+    <Compile Include="Utilities\AutoShop\BuildController.cs" />
+    <Compile Include="Utilities\AutoShop\BuildItem.cs" />
+    <Compile Include="Utilities\AutoShop\ItemController.cs" />
     <Compile Include="Utilities\AutoShop\LoLItem.cs" />
+    <Compile Include="Utilities\AutoShop\PotionController.cs" />
     <Compile Include="Utilities\Geometry.cs" />
     <Compile Include="Utilities\Pathfinder\NavGraph.cs" />
     <Compile Include="Utilities\Pathfinder\NavGraphTest.cs" />
@@ -116,6 +121,51 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericADC.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericJungleAD.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericJungleADTank.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericJungleAP.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericJungleAPTank.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericMidAD.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericMidAP.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericSupportADTank.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericSupportAPBurst.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericSupportAPHeal.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericSupportAPTank.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericTopAD.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericTopADTank.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericTopAP.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenericTopAPTank.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\item.txt" />

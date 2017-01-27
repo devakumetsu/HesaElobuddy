@@ -39,6 +39,7 @@ namespace AutoBuddy
         public static EventHandler EndGame;
         private static int Time = 0;
         private static int TimeStuck = 0;
+
         static AutoWalker()
         {
             GameID = DateTime.Now.Ticks + ""+RandomString(10);
@@ -249,9 +250,7 @@ namespace AutoBuddy
         private static float movementDelay = .25f;
 
         private static float nextMove;
-
-
-
+        
         private static void oldOrbwalk()
         {
 
@@ -271,7 +270,7 @@ namespace AutoBuddy
         {
             // fix for stuck at base:
             var turret = ObjectManager.Get<Obj_HQ>().First(tur => tur.IsAlly && tur.Name.Contains("HQ_T"));
-            if(Shop.CanShop)//if (Player.Instance.IsInRange(turret, 2700))
+            if(Shop.CanShop)
             {
                 Time++;
 
@@ -286,7 +285,6 @@ namespace AutoBuddy
                 if (Time%5 == 0){ 
                     Chat.Print("Stuck in Base? Game Will quit at 100: " + TimeStuck / 30);
                 }
-
             }
             else
             {
@@ -298,9 +296,7 @@ namespace AutoBuddy
                 Chat.Print("Closing game because the player is stuck on Base.");
                 Game.QuitGame();
             }
-
-
-
+            
             if (PfNodes.Count != 0)
             {
                 Target = PfNodes[0];
@@ -311,16 +307,12 @@ namespace AutoBuddy
                 }
 
             }
-
-
-
+            
             if (!oldWalk||ObjectManager.Player.Position.Distance(Target) < holdRadius || Game.Time < nextMove) return;
             nextMove = Game.Time + movementDelay;
             Player.IssueOrder(GameObjectOrder.MoveTo, Target, true);
-
-
-
         }
+
         public static string RandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -328,7 +320,6 @@ namespace AutoBuddy
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
-
     }
 
 #endregion
