@@ -23,14 +23,17 @@ namespace AutoBuddy.MyChampLogic
         
         public void Harass(AIHeroClient target)
         {
+            Orbwalker.ActiveModesFlags = Orbwalker.ActiveModes.Harass;
         }
 
         public void Survi()
         {
+            //Orbwalker.ActiveModesFlags = Orbwalker.ActiveModes.Flee;
         }
 
         public void Combo(AIHeroClient target)
         {
+            //Orbwalker.ActiveModesFlags = Orbwalker.ActiveModes.Combo;
         }
     }
 }

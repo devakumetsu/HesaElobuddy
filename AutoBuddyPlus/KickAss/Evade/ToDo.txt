@@ -1,0 +1,6 @@
+﻿Copy Pasta Spells DB (Done)
+Spell Detector ()
+Draw Spells ()
+Dont let the player walk into the spell ()
+Move away from the spell ()
+Menu"BORIING" ()

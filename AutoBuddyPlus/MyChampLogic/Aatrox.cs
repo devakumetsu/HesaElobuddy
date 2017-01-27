@@ -79,6 +79,7 @@ namespace AutoBuddy.MyChampLogic
         {
             var target = TargetSelector.GetTarget(E.Range, DamageType.Physical);
             if (target == null) return;
+
             if (E.IsReady())
             {
                 E.Cast(target);
@@ -93,6 +94,7 @@ namespace AutoBuddy.MyChampLogic
             {
                 QAOE(target);
             }
+
             if (W.IsReady())
             {
                 if (W.Handle.ToggleState == 1 && Player.Instance.PredictHealthPercent() > 50)

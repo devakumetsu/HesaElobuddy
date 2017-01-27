@@ -100,7 +100,7 @@ AutoBuddy won't recall if you have less gold than needed for next item.
         {
             AutoWalker.SetMode(Orbwalker.ActiveModes.Combo);
             
-            if (ObjectManager.Player.Distance(spawn) < 400 && ObjectManager.Player.HealthPercent() > 85 && (ObjectManager.Player.ManaPercent == 0 || ObjectManager.Player.ManaPercent == 100 || ObjectManager.Player.ManaPercent > 85))
+            if (ObjectManager.Player.Distance(spawn) < 400 && ObjectManager.Player.HealthPercent() > 85 && (ObjectManager.Player.ManaPercent == 0 || ObjectManager.Player.ManaPercent == 100 || (ObjectManager.Player.MaxMana == 100 || ObjectManager.Player.ManaPercent > 85)))
                 current.SetLogic(LogicSelector.MainLogics.PushLogic);
             else if (ObjectManager.Player.Distance(spawn) < 2000)
                 AutoWalker.WalkTo(spawn.Position);

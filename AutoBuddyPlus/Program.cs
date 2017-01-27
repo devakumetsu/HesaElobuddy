@@ -37,6 +37,7 @@ namespace AutoBuddy
             }
 
             Loading.OnLoadingComplete += Loading_OnLoadingComplete;
+            Loading.OnLoadingComplete += KickAss.KickAss.Loading_OnLoadingComplete;
         }
 
         private static void Loading_OnLoadingComplete(EventArgs args)
@@ -83,7 +84,6 @@ namespace AutoBuddy
 
             menu.AddSeparator(5);
             menu.AddGroupLabel("Others");
-            menu.Add("lockchat", new CheckBox("Lock my chat", true));
             CheckBox newpf = new CheckBox("Use smart pathfinder", true);
             menu.Add("newPF", newpf);
             newpf.OnValueChange += newpf_OnValueChange;
@@ -95,25 +95,10 @@ namespace AutoBuddy
             menu.Add("oldWalk", new CheckBox("Use old orbwalk. Need Reload (F5)", true));
             menu.Add("debuginfo", new CheckBox("Draw debug info", false));
             menu.Add("l1", new Label("By Christian Brutal Sniper - Updated by Hesa, Tryller and DevAkumetsu"));
-
-            Chat.OnInput += Chat_OnInput;
+            
             Game.OnTick += AutoShop.OnTick;
         }
         
-        private static void Chat_OnInput(ChatInputEventArgs args)
-        {
-            if (MainMenu.GetMenu("AB").Get<CheckBox>("lockchat").CurrentValue)
-            {
-                args.Process = false;
-                if (_allowed.Any(str => args.Input.StartsWith(str)))
-                    args.Process = true;
-            }
-            else 
-            {
-                args.Process = true;
-            }
-        }
-
         static void newpf_OnValueChange(ValueBase<bool> sender, ValueBase<bool>.ValueChangeArgs args)
         {
             AutoWalker.newPF = args.NewValue;

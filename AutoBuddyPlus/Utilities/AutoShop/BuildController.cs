@@ -27,7 +27,7 @@ namespace AutoBuddy.Utilities.AutoShop
             }
             else
             {
-                var specialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EloBuddy\\AutoBuddyPlus\\Builds");
+                var specialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EloBuddy\\AutoBuddyPlus\\Builds\\");
                 var fullpath = Path.Combine(specialPath + buildName);
                 if (!File.Exists(fullpath))
                 {
@@ -56,7 +56,7 @@ namespace AutoBuddy.Utilities.AutoShop
         public static void LoadGenericBuild()
         {
             var genericBuild = GetGenericBuildByChampion();
-            var specialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EloBuddy\\AutoBuddyPlus\\Builds");
+            var specialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EloBuddy\\AutoBuddyPlus\\Builds\\");
             var fullpath = Path.Combine(specialPath + genericBuild);
 
             if (!Directory.Exists(specialPath)) Directory.CreateDirectory(specialPath);
@@ -379,7 +379,7 @@ namespace AutoBuddy.Utilities.AutoShop
             count++;
             if (count < randomNumber) return;
             count = 0;
-            randomNumber = new Random().Next(25, 50);
+            randomNumber = new Random().Next(15, 35);
             //
             if (CurrentBuild.Items.Count != 0)
             {

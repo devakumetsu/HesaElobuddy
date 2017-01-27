@@ -61,11 +61,42 @@ namespace AutoBuddy.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:1,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1055,&quot;Name&quot;:&quot;Doran&apos;s Blade&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:450,&quot;UpgradeCost&quot;:450,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3153,&quot;Name&quot;:&quot;Blade of the Ruined King&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:3400,&quot;UpgradeCost&quot;:900,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3144,&quot;Name&quot;:&quot;Bilgewater Cutlass&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1500,&quot;Upgra [rest of string was truncated]&quot;;.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static string GenericADC {
+        internal static System.Drawing.Bitmap Back {
             get {
-                return ResourceManager.GetString("GenericADC", resourceCulture);
+                object obj = ResourceManager.GetObject("Back", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BottomHUD {
+            get {
+                object obj = ResourceManager.GetObject("BottomHUD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CD_Bar_Black_Empty {
+            get {
+                object obj = ResourceManager.GetObject("CD_Bar_Black_Empty", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ColorPickerSprite {
+            get {
+                object obj = ResourceManager.GetObject("ColorPickerSprite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -196,11 +227,50 @@ namespace AutoBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap hud {
+            get {
+                object obj = ResourceManager.GetObject("hud", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap hud2 {
+            get {
+                object obj = ResourceManager.GetObject("hud2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IsReady {
+            get {
+                object obj = ResourceManager.GetObject("IsReady", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;type&quot;:&quot;item&quot;,&quot;version&quot;:&quot;6.22.1&quot;,&quot;basic&quot;:{&quot;name&quot;:&quot;&quot;,&quot;rune&quot;:{&quot;isrune&quot;:false,&quot;tier&quot;:1,&quot;type&quot;:&quot;red&quot;},&quot;gold&quot;:{&quot;base&quot;:0,&quot;total&quot;:0,&quot;sell&quot;:0,&quot;purchasable&quot;:false},&quot;group&quot;:&quot;&quot;,&quot;description&quot;:&quot;&quot;,&quot;colloq&quot;:&quot;;&quot;,&quot;plaintext&quot;:&quot;&quot;,&quot;consumed&quot;:false,&quot;stacks&quot;:1,&quot;depth&quot;:1,&quot;consumeOnFull&quot;:false,&quot;from&quot;:[],&quot;into&quot;:[],&quot;specialRecipe&quot;:0,&quot;inStore&quot;:true,&quot;hideFromAll&quot;:false,&quot;requiredChampion&quot;:&quot;&quot;,&quot;stats&quot;:{&quot;FlatHPPoolMod&quot;:0,&quot;rFlatHPModPerLevel&quot;:0,&quot;FlatMPPoolMod&quot;:0,&quot;rFlatMPModPerLevel&quot;:0,&quot;PercentHPPoolMod&quot;:0,&quot;PercentMPPoolMod&quot;:0,&quot;FlatHPRegen [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string item {
             get {
                 return ResourceManager.GetString("item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;type&quot;:&quot;item&quot;,&quot;version&quot;:&quot;6.22.1&quot;,&quot;basic&quot;:{&quot;name&quot;:&quot;&quot;,&quot;rune&quot;:{&quot;isrune&quot;:false,&quot;tier&quot;:1,&quot;type&quot;:&quot;red&quot;},&quot;gold&quot;:{&quot;base&quot;:0,&quot;total&quot;:0,&quot;sell&quot;:0,&quot;purchasable&quot;:false},&quot;group&quot;:&quot;&quot;,&quot;description&quot;:&quot;&quot;,&quot;colloq&quot;:&quot;;&quot;,&quot;plaintext&quot;:&quot;&quot;,&quot;consumed&quot;:false,&quot;stacks&quot;:1,&quot;depth&quot;:1,&quot;consumeOnFull&quot;:false,&quot;from&quot;:[],&quot;into&quot;:[],&quot;specialRecipe&quot;:0,&quot;inStore&quot;:true,&quot;hideFromAll&quot;:false,&quot;requiredChampion&quot;:&quot;&quot;,&quot;stats&quot;:{&quot;FlatHPPoolMod&quot;:0,&quot;rFlatHPModPerLevel&quot;:0,&quot;FlatMPPoolMod&quot;:0,&quot;rFlatMPModPerLevel&quot;:0,&quot;PercentHPPoolMod&quot;:0,&quot;PercentMPPoolMod&quot;:0,&quot;FlatHPRegen [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string item1 {
+            get {
+                return ResourceManager.GetString("item1", resourceCulture);
             }
         }
         
@@ -221,6 +291,196 @@ namespace AutoBuddy.Properties {
             get {
                 object obj = ResourceManager.GetObject("NavGraphSummonersRiftOld", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerBarrier {
+            get {
+                object obj = ResourceManager.GetObject("SummonerBarrier", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerBlueSmite {
+            get {
+                object obj = ResourceManager.GetObject("SummonerBlueSmite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerClairvoyance {
+            get {
+                object obj = ResourceManager.GetObject("SummonerClairvoyance", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerClarity {
+            get {
+                object obj = ResourceManager.GetObject("SummonerClarity", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerCleanse {
+            get {
+                object obj = ResourceManager.GetObject("SummonerCleanse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerExhaust {
+            get {
+                object obj = ResourceManager.GetObject("SummonerExhaust", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerFlash {
+            get {
+                object obj = ResourceManager.GetObject("SummonerFlash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerGarrison {
+            get {
+                object obj = ResourceManager.GetObject("SummonerGarrison", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerGhost {
+            get {
+                object obj = ResourceManager.GetObject("SummonerGhost", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerHeal {
+            get {
+                object obj = ResourceManager.GetObject("SummonerHeal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerIgnite {
+            get {
+                object obj = ResourceManager.GetObject("SummonerIgnite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerRedSmite {
+            get {
+                object obj = ResourceManager.GetObject("SummonerRedSmite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap summonersmite {
+            get {
+                object obj = ResourceManager.GetObject("summonersmite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerSmite1 {
+            get {
+                object obj = ResourceManager.GetObject("SummonerSmite1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerSnowBall {
+            get {
+                object obj = ResourceManager.GetObject("SummonerSnowBall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SummonerTeleport {
+            get {
+                object obj = ResourceManager.GetObject("SummonerTeleport", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TempBar {
+            get {
+                object obj = ResourceManager.GetObject("TempBar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap teste {
+            get {
+                object obj = ResourceManager.GetObject("teste", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TopHUD {
+            get {
+                object obj = ResourceManager.GetObject("TopHUD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
