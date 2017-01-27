@@ -94,7 +94,7 @@ namespace AutoBuddy
             menu.Add("autoshop", new CheckBox("Enable AutoShop", true));
             menu.Add("oldWalk", new CheckBox("Use old orbwalk. Need Reload (F5)", true));
             menu.Add("debuginfo", new CheckBox("Draw debug info", false));
-            menu.Add("l1", new Label("By Christian Brutal Sniper - Updated by Tryller, DevAkumetsu And Hesa"));
+            menu.Add("l1", new Label("By Christian Brutal Sniper - Updated by Hesa, Tryller and DevAkumetsu"));
 
             Chat.OnInput += Chat_OnInput;
             Game.OnTick += AutoShop.OnTick;
