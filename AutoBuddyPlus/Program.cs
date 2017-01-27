@@ -43,7 +43,10 @@ namespace AutoBuddy
         {
             createFS();
             var randomTime = new Random().Next(8000, 15000);
-            Chat.Print("Welcome to Auto Buddy Plus by Hesa, starting in " + ((int) randomTime / 1000) +" seconds.");
+            Chat.Print("<font size='30'>AB+</font> <font color='#b756c5'>customized by Hesa</font>");
+            Chat.Print("Starting in " + ((int) randomTime / 1000) +" seconds.");
+            Chat.Print("If you like botting consider to try www.HesaBot.com");
+
             Core.DelayAction(Start, randomTime);
             menu = MainMenu.AddMenu("AB+", "AB");
             menu.AddGroupLabel("Default");
