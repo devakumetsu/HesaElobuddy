@@ -47,11 +47,8 @@ namespace AutoBuddy
             Core.DelayAction(Start, randomTime);
             menu = MainMenu.AddMenu("AB+", "AB");
             menu.AddGroupLabel("Default");
-            CheckBox c = new CheckBox("Call mid, will leave if other player stays on mid (only auto lane)", true);
 
             PropertyInfo property2 = typeof(CheckBox).GetProperty("Size");
-            property2.GetSetMethod(true).Invoke(c, new object[] { new Vector2(500, 20) });
-            menu.Add("mid", c);
 
             Slider sliderLanes = menu.Add("lane", new Slider(" ", 1, 1, 4));
             string[] lanes =
@@ -125,8 +122,8 @@ namespace AutoBuddy
             bool generic = false;
             switch (ObjectManager.Player.Hero)
             {
-                case Champion.Sivir:
-                    myChamp = new Sivir();
+                case Champion.Aatrox:
+                    myChamp = new Aatrox();
                 break;
                 case Champion.Ashe:
                     myChamp = new Ashe();
@@ -134,28 +131,32 @@ namespace AutoBuddy
                 case Champion.Caitlyn:
                     myChamp = new Caitlyn();
                 break;
+                case Champion.Cassiopeia:
+                    myChamp = new Cassiopeia();
+                break;
                 case Champion.Ezreal:
                     myChamp = new Ezreal();
                 break;
                 case Champion.Jinx:
                     myChamp = new Jinx();
                 break;
-                case Champion.Cassiopeia:
-                    myChamp = new Cassiopeia();
-                break;
-                case Champion.Vayne:
-                    myChamp = new Vayne();
+                case Champion.Sivir:
+                    myChamp = new Sivir();
                 break;
                 case Champion.Tristana:
                     myChamp = new Tristana();
                 break;
+                case Champion.Vayne:
+                    myChamp = new Vayne();
+                break;
+
                 default:
                     generic = true;
                     myChamp = new Generic();
                 break;
             }
-            CustomLvlSeq cl = new CustomLvlSeq(menu, AutoWalker.myHero, Path.Combine(Environment.GetFolderPath(
-            Environment.SpecialFolder.ApplicationData), "EloBuddy\\AutoBuddyPlus\\Skills"));
+
+            CustomLvlSeq cl = new CustomLvlSeq(menu, AutoWalker.myHero, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EloBuddy\\AutoBuddyPlus\\Skills"));
             
             Logic = new LogicSelector(myChamp, menu);
         }

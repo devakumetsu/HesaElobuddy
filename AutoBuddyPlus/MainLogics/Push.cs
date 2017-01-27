@@ -31,8 +31,7 @@ namespace AutoBuddy.MainLogics
         private ColorBGRA colorGreen;
         private ColorBGRA colorRed;
         private float lastAtk;
-
-
+        
         public Push(LogicSelector current)
         {
             color=new ColorBGRA(255, 210, 105, 255);

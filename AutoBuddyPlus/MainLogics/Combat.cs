@@ -31,8 +31,7 @@ namespace AutoBuddy.MainLogics
             Drawing.DrawText(250, 25, System.Drawing.Color.Gold,
                 "Combat, active:  " + active + " last mode: " + lastMode);
         }
-
-
+        
         public void Activate()
         {
             if (active) return;
@@ -164,11 +163,9 @@ namespace AutoBuddy.MainLogics
                         harPos =
                             tu.Position.Extend(AutoWalker.MyNexus, 1050 + AutoWalker.myHero.BoundingRadius).To3DWorld();*/
                 }
-
-
+                
                 current.myChamp.Harass(har);
-
-
+                
                 AutoWalker.WalkTo(harPos);
             }
         }

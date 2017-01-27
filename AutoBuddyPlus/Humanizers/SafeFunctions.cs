@@ -15,8 +15,7 @@ namespace AutoBuddy.Humanizers
         {
             lastChat = 0;
         }
-
-
+        
         public static void Ping(PingCategory cat, Vector3 pos)
         {
             if (MainMenu.GetMenu("AB").Get<CheckBox>("disablepings").CurrentValue)

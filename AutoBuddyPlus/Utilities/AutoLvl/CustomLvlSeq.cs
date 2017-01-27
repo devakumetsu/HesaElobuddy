@@ -87,10 +87,6 @@ namespace AutoBuddy.Utilities.AutoLvl
             def = new DefautSequences(dir + "\\" + "Skills-DEFAULT.txt");
             maxLvl = maxlvl;
             Menu menu = m.AddSubMenu("Skill sequence: " + champ.ChampionName);
-
-
-
-
             
             sliders = new LvlSlider[maxlvl];
             skills = new SkillToLvl[maxlvl];

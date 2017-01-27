@@ -18,6 +18,7 @@ namespace AutoBuddy.MyChampLogic
         public Ashe()
         {
             skillSequence = new[] {2, 1, 3, 2, 2, 4, 2, 1, 2, 1, 4, 1, 1, 3, 3, 4, 3, 3};
+
             Q = new Spell.Active(SpellSlot.Q);
             W = new Spell.Skillshot(SpellSlot.W, 1200, SkillShotType.Cone);
             E = new Spell.Skillshot(SpellSlot.E, 2500, SkillShotType.Linear);

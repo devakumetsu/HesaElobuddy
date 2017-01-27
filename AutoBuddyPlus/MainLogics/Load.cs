@@ -29,13 +29,12 @@ namespace AutoBuddy.MainLogics
             startTime = Game.Time + waitTime + RandGen.r.NextFloat(-10, 20);
             
             Drawing.OnDraw += Drawing_OnDraw;
-            if (!AutoWalker.myHero.Name.Equals("Challenjour Ryze"))
-                Chat.OnMessage += Chat_OnMessage;
+            Chat.OnMessage += Chat_OnMessage;
+
             MainMenu.GetMenu("AB").Get<CheckBox>("reselectlane").OnValueChange += Checkbox_OnValueChange;
             MainMenu.GetMenu("AB").Get<Slider>("lane").OnValueChange += Slider_OnValueChange;
         }
-
-
+        
         private void Slider_OnValueChange(ValueBase<int> sender, ValueBase<int>.ValueChangeArgs args)
         {
             lastSliderSwitch = Game.Time + 1;
@@ -52,7 +51,6 @@ namespace AutoBuddy.MainLogics
             }
             else
                 ReselectLane();
-
         }
 
         private void Checkbox_OnValueChange(ValueBase<bool> sender, ValueBase<bool>.ValueChangeArgs args)
@@ -93,28 +91,26 @@ namespace AutoBuddy.MainLogics
                         break;
                     case 4:
                         SelectLane2(Lane.Bot);
-                        break;
+                    break;
                 }
                 return;
             }
 
             if (ObjectManager.Get<Obj_AI_Turret>().Count() == 24)
             {
-                if (AutoWalker.myHero.Gold < 550 && MainMenu.GetMenu("AB").Get<CheckBox>("mid").CurrentValue)
+                /*if (AutoWalker.myHero.Gold < 550 && MainMenu.GetMenu("AB").Get<CheckBox>("mid").CurrentValue)
                 {
                     Vector3 p =
                         ObjectManager.Get<Obj_AI_Turret>()
                             .First(tur => tur.IsAlly && tur.Name.EndsWith("C_05_A"))
                             .Position;
 
-                    Core.DelayAction(() => SafeFunctions.Ping(PingCategory.OnMyWay, p.Randomized()),
-                        RandGen.r.Next(1500, 3000));
-                    Core.DelayAction(() => SafeFunctions.SayChat("mid"), RandGen.r.Next(200, 1000));
+                    Core.DelayAction(() => SafeFunctions.Ping(PingCategory.OnMyWay, p.Randomized()), RandGen.r.Next(1500, 3000));
+                    //Core.DelayAction(() => SafeFunctions.SayChat("mid"), RandGen.r.Next(200, 1000));
                     AutoWalker.SetMode(Orbwalker.ActiveModes.Combo);
                     AutoWalker.WalkTo(p.Extend(AutoWalker.MyNexus, 200 + RandGen.r.NextFloat(0, 100)).To3DWorld().Randomized());
                 }
-
-
+                */
                 CanSelectLane();
             }
             else
@@ -138,42 +134,67 @@ namespace AutoBuddy.MainLogics
                 Core.DelayAction(CanSelectLane, 500);
         }
 
+        bool saidGreating = false;
+        bool saidHello = false;
+
         private void Chat_OnMessage(AIHeroClient sender, ChatMessageEventArgs args)
         {
+            if (args.Sender == null || args.Sender.IsMe) return;
+
+            if(args.Sender.IsEnemy)
+            {
+                if (!saidHello && !saidGreating)
+                {
+                    saidHello = true;
+                    if (args.Message.Contains("hi") || args.Message.Contains("hello") || args.Message.Contains("wasup") || args.Message.Contains("yo"))
+                        Core.DelayAction(() => Chat.Say("/all hi"), RandGen.r.Next(2000, 4000));
+                }
+                
+                if (!saidGreating)
+                {
+                    saidGreating = true;
+                    if (args.Message.Contains("have fun") || args.Message.Contains("gl") || args.Message.Contains("hf") || args.Message.Contains("good luck"))
+                        Core.DelayAction(() => Chat.Say("/all gl hf"), RandGen.r.Next(2000, 4000));
+                }
+            }else
+            {
+                if(args.Message.Contains("go mid") && (args.Message.Contains(ObjectManager.Player.ChampionName) || ObjectManager.Player.Distance(args.Sender) < 1000))
+                {
+                    Core.DelayAction(() => Chat.Say("ok"), RandGen.r.Next(1000, 2000));
+                    Core.DelayAction(() => SelectLane2(Lane.Mid), RandGen.r.Next(2500, 4000));
+                }else if (args.Message.Contains("go top") && (args.Message.Contains(ObjectManager.Player.ChampionName) || ObjectManager.Player.Distance(args.Sender) < 1000))
+                {
+                    Core.DelayAction(() => Chat.Say("ok"), RandGen.r.Next(1000, 2000));
+                    Core.DelayAction(() => SelectLane2(Lane.Top), RandGen.r.Next(2500, 4000));
+                }
+                else if (args.Message.Contains("go bot") && (args.Message.Contains(ObjectManager.Player.ChampionName) || ObjectManager.Player.Distance(args.Sender) < 1000))
+                {
+                    Core.DelayAction(() => Chat.Say("ok"), RandGen.r.Next(1000, 2000));
+                    Core.DelayAction(() => SelectLane2(Lane.Bot), RandGen.r.Next(2500, 4000));
+                }
+                else if (args.Message.Contains("go jg") && (args.Message.Contains(ObjectManager.Player.ChampionName) || ObjectManager.Player.Distance(args.Sender) < 1000))
+                {
+                    Core.DelayAction(() => Chat.Say("ok"), RandGen.r.Next(1000, 2000));
+                    Core.DelayAction(() => SelectLane2(Lane.Jungle), RandGen.r.Next(2500, 4000));
+                }
+                else if (args.Message.Contains("gtfo") && (args.Message.Contains(ObjectManager.Player.ChampionName) || ObjectManager.Player.Distance(args.Sender) < 1000))
+                {
+                    Core.DelayAction(SelectLane, RandGen.r.Next(2500, 4000));
+                }
+                else if (args.Message.Contains("go elsewhere") && (args.Message.Contains(ObjectManager.Player.ChampionName) || ObjectManager.Player.Distance(args.Sender) < 1000))
+                {
+                    Core.DelayAction(() => Chat.Say("np"), RandGen.r.Next(1000, 2000));
+                    Core.DelayAction(SelectLane, RandGen.r.Next(2500, 4000));
+                }
+            }
 
             if (!args.Message.StartsWith("<font color=\"#40c1ff\">Challenjour Ryze")) return;
-            if (args.Message.Contains("have fun"))
-                Core.DelayAction(() => Chat.Say("gl hf"), RandGen.r.Next(2000, 4000));
-            if (args.Message.Contains("hello"))
-                Core.DelayAction(() => Chat.Say("hi Christian"), RandGen.r.Next(2000, 4000));
-            if (args.Message.Contains("Which")||args.Message.Contains("Whats"))
-                Core.DelayAction(() => Chat.Say(Assembly.GetExecutingAssembly().GetName().Version.Revision.ToString()), RandGen.r.Next(2000, 4000));
-            if (args.Message.Contains("go top please."))
-            {
-                Core.DelayAction(() => Chat.Say("kk"), RandGen.r.Next(1000, 2000));
-                Core.DelayAction(() => SelectLane2(Lane.Top), RandGen.r.Next(2500, 4000));
-            }
-            if (args.Message.Contains("go mid please."))
-            {
-                Core.DelayAction(() => Chat.Say("ok"), RandGen.r.Next(1000, 2000));
-                Core.DelayAction(() => SelectLane2(Lane.Mid), RandGen.r.Next(2500, 4000));
-            }
-            if (args.Message.Contains("go bot please."))
-            {
-                Core.DelayAction(() => Chat.Say("k"), RandGen.r.Next(1000, 2000));
-                Core.DelayAction(() => SelectLane2(Lane.Bot), RandGen.r.Next(2500, 4000));
-            }
-            if (args.Message.Contains("go where you want."))
-            {
-                Core.DelayAction(() => Chat.Say("yes sir"), RandGen.r.Next(1000, 2000));
-                Core.DelayAction(SelectLane, RandGen.r.Next(2500, 4000));
-            }
+            
             if (args.Message.Contains("Thank you"))
             {
                 Core.DelayAction(() => Chat.Say("np"), RandGen.r.Next(1000, 2000));
                 Core.DelayAction(SelectLane, RandGen.r.Next(2500, 4000));
             }
-
         }
 
         private void SelectMostPushedLane()

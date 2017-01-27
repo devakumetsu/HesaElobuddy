@@ -28,6 +28,7 @@ namespace AutoBuddy
             }
             return "normal";
         }
+
         public static Lane GetLane(this Obj_AI_Minion min)
         {
             try

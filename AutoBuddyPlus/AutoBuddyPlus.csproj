@@ -61,7 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KappaMisc.cs" />
     <Compile Include="MainLogics\MiscEvents.cs" />
+    <Compile Include="MyChampLogic\Aatrox.cs" />
     <Compile Include="MyChampLogic\Tristana.cs" />
     <Compile Include="MyChampLogic\Vayne.cs" />
     <Compile Include="MyChampLogic\Jinx.cs" />

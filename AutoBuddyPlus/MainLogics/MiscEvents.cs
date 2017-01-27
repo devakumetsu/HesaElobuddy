@@ -26,10 +26,10 @@ namespace AutoBuddy.MainLogics
                 {
                     case 1:
                         Core.DelayAction(() => SafeFunctions.SayChat("/ff"), RandGen.r.Next(2000, 5000));
-                        break;
+                    break;
                     case 2:
                         Core.DelayAction(() => SafeFunctions.SayChat("/noff"), RandGen.r.Next(2000, 5000));
-                        break;
+                    break;
                 }
             }
         }
