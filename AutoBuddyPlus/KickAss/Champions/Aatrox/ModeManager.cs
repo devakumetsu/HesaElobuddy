@@ -33,7 +33,7 @@ namespace KickassSeries.Champions.Aatrox
         {
         }
 
-        private static void OnTick(EventArgs args)
+        public static void OnTick(EventArgs args)
         {
             Modes.ForEach(mode =>
             {

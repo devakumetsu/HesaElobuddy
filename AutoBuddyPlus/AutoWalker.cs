@@ -73,7 +73,6 @@ namespace AutoBuddy
             Core.DelayAction(OnEndGame, 20000);
             updateItems();
             oldOrbwalk();
-            Game.OnTick += OnTick;
         }
 
         public static bool Recalling()
@@ -266,7 +265,7 @@ namespace AutoBuddy
                        (Game.Ping + adjustAnimation + RandGen.r.Next(maxAdditionalTime)) / 1000f;
         }
 
-        private static void OnTick(EventArgs args)
+        public static void OnTick(EventArgs args)
         {
             // fix for stuck at base:
             var turret = ObjectManager.Get<Obj_HQ>().First(tur => tur.IsAlly && tur.Name.Contains("HQ_T"));
@@ -305,9 +304,7 @@ namespace AutoBuddy
                     PfNodes.RemoveAt(0);
                     
                 }
-
             }
-            
             if (!oldWalk||ObjectManager.Player.Position.Distance(Target) < holdRadius || Game.Time < nextMove) return;
             nextMove = Game.Time + movementDelay;
             Player.IssueOrder(GameObjectOrder.MoveTo, Target, true);
