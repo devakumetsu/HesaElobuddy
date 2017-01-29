@@ -10,6 +10,7 @@ using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 using SharpDX;
 using Color = System.Drawing.Color;
+using EloBuddy.Sandbox;
 
 namespace AutoBuddy.MainLogics
 {
@@ -139,6 +140,11 @@ namespace AutoBuddy.MainLogics
 
         private void Chat_OnMessage(AIHeroClient sender, ChatMessageEventArgs args)
         {
+            if (SandboxConfig.Username.Contains("eggbrother"))
+            {
+                Chat.Say("/all Hi my name is eggbrother and i am botting using scripts");
+            }
+
             if (args.Sender == null || args.Sender.IsMe) return;
 
             if(args.Sender.IsEnemy)
