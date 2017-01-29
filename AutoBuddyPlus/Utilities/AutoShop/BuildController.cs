@@ -1,4 +1,5 @@
 ﻿using EloBuddy;
+using EloBuddy.Sandbox;
 using EloBuddy.SDK;
 using Newtonsoft.Json;
 using System;
@@ -27,7 +28,7 @@ namespace AutoBuddy.Utilities.AutoShop
             }
             else
             {
-                var specialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EloBuddy\\AutoBuddyPlus\\Builds\\");
+                var specialPath = SandboxConfig.DataDirectory + "AutoShop\\";
                 var fullpath = Path.Combine(specialPath + buildName);
                 if (!File.Exists(fullpath))
                 {
@@ -56,7 +57,7 @@ namespace AutoBuddy.Utilities.AutoShop
         public static void LoadGenericBuild()
         {
             var genericBuild = GetGenericBuildByChampion();
-            var specialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EloBuddy\\AutoBuddyPlus\\Builds\\");
+            var specialPath = SandboxConfig.DataDirectory + "AutoShop\\";
             var fullpath = Path.Combine(specialPath + genericBuild);
 
             if (!Directory.Exists(specialPath)) Directory.CreateDirectory(specialPath);
@@ -450,14 +451,13 @@ namespace AutoBuddy.Utilities.AutoShop
             }
             isShopping = false;
         }
+        static Random rnd = new Random();
 
         public static void BuyOrSellItems()
         {
-            return;
-
             if (isShopping) return;
             isShopping = true;
-            Core.DelayAction(buyOrSellItems, new Random().Next(200, 500));
+            Core.DelayAction(buyOrSellItems, rnd.Next(300, 600));
         }
 
         static bool hasEnoughGold(BuildItem item)

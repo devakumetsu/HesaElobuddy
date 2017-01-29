@@ -27,7 +27,7 @@ namespace AutoBuddy.Utilities.AutoShop
 
         public static void OnTick(EventArgs args)
         {
-            if (!initialized) return;// || !Enabled) return;
+            if (!initialized || !Enabled) return;
             
             if (IsInShop())
             {
