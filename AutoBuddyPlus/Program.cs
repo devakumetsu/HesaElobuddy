@@ -154,7 +154,7 @@ namespace AutoBuddy
 
         public static void OnTick(EventArgs args)
         {
-            AutoShop.OnTick(args);
+            //AutoShop.OnTick(args);
             AutoWalker.OnTick(args);
         }
 
