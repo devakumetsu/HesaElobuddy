@@ -456,6 +456,7 @@ namespace AutoBuddy.KickAss
                 
                 Console.WriteLine(" ");
                 */
+                /*
                 #region LoadingUltilities
                 try
                 {
@@ -467,6 +468,7 @@ namespace AutoBuddy.KickAss
                     Console.Write(exp);
                 }
                 #endregion LoadingSkinHack
+                */
             }
             catch (Exception exp)
             {

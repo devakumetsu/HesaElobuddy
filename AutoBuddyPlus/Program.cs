@@ -106,6 +106,7 @@ namespace AutoBuddy
         private static void Start()
         {
             RandGen.Start();
+            /*
             bool generic = false;
             switch (ObjectManager.Player.Hero)
             {
@@ -141,8 +142,9 @@ namespace AutoBuddy
                     generic = true;
                     myChamp = new Generic();
                 break;
-            }
-
+            }*/
+            var generic = true;
+            myChamp = new Generic();
             CustomLvlSeq cl = new CustomLvlSeq(menu, AutoWalker.myHero, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EloBuddy\\AutoBuddyPlus\\Skills"));
             
             Logic = new LogicSelector(myChamp, menu);
