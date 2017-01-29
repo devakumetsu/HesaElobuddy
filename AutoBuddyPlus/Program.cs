@@ -37,7 +37,6 @@ namespace AutoBuddy
             }
 
             Loading.OnLoadingComplete += Loading_OnLoadingComplete;
-            Loading.OnLoadingComplete += KickAss.KickAss.Loading_OnLoadingComplete;
         }
 
         private static void Loading_OnLoadingComplete(EventArgs args)
@@ -147,6 +146,7 @@ namespace AutoBuddy
             CustomLvlSeq cl = new CustomLvlSeq(menu, AutoWalker.myHero, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EloBuddy\\AutoBuddyPlus\\Skills"));
             
             Logic = new LogicSelector(myChamp, menu);
+            KickAss.KickAss.Initialize();
         }
 
         private static void createFS()

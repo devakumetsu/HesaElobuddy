@@ -3,13 +3,13 @@ using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK.Events;
 using Champions = KickassSeries.Champions;
+using EloBuddy.SDK;
 
 namespace AutoBuddy.KickAss
 {
     internal static class KickAss
     {
-
-        public static void Loading_OnLoadingComplete(EventArgs args)
+        public static void Initialize()
         {
             try
             {
