@@ -393,13 +393,10 @@ namespace AutoBuddy.Utilities.AutoShop
                         {
                             if (Item.HasItem(buildItem.Id, ObjectManager.Player))
                             {
-                                lock (CurrentBuild.Items)
-                                {
-                                    Chat.Print("Already had item: " + buildItem.Name);
-                                    Chat.Print("Removing item:" + CurrentBuild.Items[0].Name);
-                                    CurrentBuild.Items.RemoveAt(0);
-                                    Chat.Print("Items to buy count: " + CurrentBuild.Items.Count);
-                                }
+                                Chat.Print("Already had item: " + buildItem.Name);
+                                Chat.Print("Removing item:" + CurrentBuild.Items[0].Name);
+                                CurrentBuild.Items.RemoveAt(0);
+                                Chat.Print("Items to buy count: " + CurrentBuild.Items.Count);
                             }
                             else
                             {
@@ -407,12 +404,9 @@ namespace AutoBuddy.Utilities.AutoShop
                                 {
                                     ItemController.BuyItemId(buildItem.Id);
                                     Chat.Print("Bought item: " + buildItem.Name);
-                                    lock (CurrentBuild.Items)
-                                    {
-                                        Chat.Print("Removing item:" + CurrentBuild.Items[0].Name);
-                                        CurrentBuild.Items.RemoveAt(0);
-                                        Chat.Print("Items to buy count: " + CurrentBuild.Items.Count);
-                                    }
+                                    Chat.Print("Removing item:" + CurrentBuild.Items[0].Name);
+                                    CurrentBuild.Items.RemoveAt(0);
+                                    Chat.Print("Items to buy count: " + CurrentBuild.Items.Count);
                                 }
                                 else
                                 {
@@ -424,11 +418,8 @@ namespace AutoBuddy.Utilities.AutoShop
                                             var tmp = itemToBuy.BuildFrom[0];
                                             if (hasEnoughGold(tmp))
                                             {
-                                                lock (itemToBuy.BuildFrom)
-                                                {
-                                                    Chat.Print("Removed sub sub item:: " + tmp.Name);
-                                                    itemToBuy.BuildFrom.RemoveAt(0);
-                                                }
+                                                Chat.Print("Removed sub sub item:: " + tmp.Name);
+                                                itemToBuy.BuildFrom.RemoveAt(0);
                                                 //Buy tmp
                                                 ItemController.BuyItemId(tmp.Id);
                                                 Chat.Print("Bought sub sub item: " + tmp.Name);
@@ -438,14 +429,11 @@ namespace AutoBuddy.Utilities.AutoShop
                                         {
                                             if (hasEnoughGold(itemToBuy))
                                             {
-                                                lock (itemToBuy.BuildFrom)
-                                                {
-                                                    Chat.Print("Removed sub item: " + itemToBuy.Name);
-                                                    buildItem.BuildFrom.RemoveAt(0);
+                                                Chat.Print("Removed sub item: " + itemToBuy.Name);
+                                                buildItem.BuildFrom.RemoveAt(0);
 
-                                                    ItemController.BuyItemId(itemToBuy.Id);
-                                                    Chat.Print("Bought sub item: " + itemToBuy.Name);
-                                                }
+                                                ItemController.BuyItemId(itemToBuy.Id);
+                                                Chat.Print("Bought sub item: " + itemToBuy.Name);
                                             }
                                         }
                                     }
@@ -465,6 +453,8 @@ namespace AutoBuddy.Utilities.AutoShop
 
         public static void BuyOrSellItems()
         {
+            return;
+
             if (isShopping) return;
             isShopping = true;
             Core.DelayAction(buyOrSellItems, new Random().Next(200, 500));
