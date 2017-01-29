@@ -95,7 +95,6 @@ namespace AutoBuddy
             menu.Add("debuginfo", new CheckBox("Draw debug info", false));
             menu.Add("l1", new Label("By Christian Brutal Sniper - Updated by Hesa, Tryller and DevAkumetsu"));
             
-            Game.OnTick += AutoShop.OnTick;
         }
         
         static void newpf_OnValueChange(ValueBase<bool> sender, ValueBase<bool>.ValueChangeArgs args)
@@ -148,6 +147,8 @@ namespace AutoBuddy
             CustomLvlSeq cl = new CustomLvlSeq(menu, AutoWalker.myHero, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EloBuddy\\AutoBuddyPlus\\Skills"));
             
             Logic = new LogicSelector(myChamp, menu);
+
+            //Game.OnTick += AutoShop.OnTick;
             KickAss.KickAss.Initialize();
         }
 

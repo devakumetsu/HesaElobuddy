@@ -60,12 +60,12 @@ namespace AutoBuddy
             Orbwalker.DisableAttacking = false;
             Game.OnUpdate += Game_OnUpdate;
             Orbwalker.OverrideOrbwalkPosition = () => Target;
-            if (Orbwalker.HoldRadius > 130 || Orbwalker.HoldRadius < 80)
+            if (Orbwalker.HoldRadius > 90 || Orbwalker.HoldRadius < 50)
             {
                 Chat.Print("=================WARNING=================", Color.Red);
                 Chat.Print("Your hold radius value in orbwalker isn't optimal for AutoBuddy", Color.Aqua);
                 Chat.Print("Please set hold radius through menu=>Orbwalker");
-                Chat.Print("Recommended values: Hold radius: 80-130, Delay between movements: 100-250");
+                Chat.Print("Recommended values: Hold radius: 50-90, Delay between movements: 100-250");
             }
             
             Drawing.OnDraw += Drawing_OnDraw;

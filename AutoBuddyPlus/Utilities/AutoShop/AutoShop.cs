@@ -20,17 +20,13 @@ namespace AutoBuddy.Utilities.AutoShop
 
         public static void OnTick(EventArgs args)
         {
-            if (!Enabled || isDelayed) return;
-            //Core.DelayAction(() =>
-            //{
-            isDelayed = true;
+            if (!Enabled) return;
+            
             if (IsInShop())
             {
                 //Build
                 BuildController.BuyOrSellItems();
             }
-            isDelayed = false;
-            //}, 100);
         }
 
         public static bool IsInShop()
