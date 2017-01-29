@@ -18,9 +18,16 @@ namespace AutoBuddy.Utilities.AutoShop
             get { return MainMenu.GetMenu("AB").Get<CheckBox>("autoshop").CurrentValue; }
         }
 
+        static bool initialized = false;
+
+        public AutoShop()
+        {
+            initialized = true;
+        }
+
         public static void OnTick(EventArgs args)
         {
-            if (!Enabled) return;
+            if (!initialized) return;// || !Enabled) return;
             
             if (IsInShop())
             {

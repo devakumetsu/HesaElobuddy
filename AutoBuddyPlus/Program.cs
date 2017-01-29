@@ -150,11 +150,12 @@ namespace AutoBuddy
 
             Game.OnTick += OnTick;
             KickAss.KickAss.Initialize();
+            new AutoShop();
         }
 
         public static void OnTick(EventArgs args)
         {
-            //AutoShop.OnTick(args);
+            AutoShop.OnTick(args);
             AutoWalker.OnTick(args);
         }
 
