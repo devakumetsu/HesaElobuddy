@@ -269,7 +269,7 @@ namespace AutoBuddy
         {
             // fix for stuck at base:
             var turret = ObjectManager.Get<Obj_HQ>().First(tur => tur.IsAlly && tur.Name.Contains("HQ_T"));
-            if(Shop.CanShop)
+            if(Shop.CanShop && !ObjectManager.Player.IsDead)
             {
                 Time++;
 

@@ -126,7 +126,7 @@ AutoBuddy won't recall if you have less gold than needed for next item.
                     }
                 }
 
-                if ((!AutoWalker.myHero.IsMoving && ObjectManager.Player.Distance(recallPos) < Orbwalker.HoldRadius + 30) || (AutoWalker.myHero.IsMoving && ObjectManager.Player.Distance(recallPos) < 30))
+                if ((!AutoWalker.myHero.IsMoving && ObjectManager.Player.Distance(recallPos) < Orbwalker.HoldRadius + 60) || (AutoWalker.myHero.IsMoving && ObjectManager.Player.Distance(recallPos) < 60))
                 {
                     CastRecall();
                 }
