@@ -101,11 +101,29 @@ namespace AutoBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:1,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1055,&quot;Name&quot;:&quot;Doran&apos;s Blade&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:450,&quot;UpgradeCost&quot;:450,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3153,&quot;Name&quot;:&quot;Blade of the Ruined King&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:3400,&quot;UpgradeCost&quot;:900,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3144,&quot;Name&quot;:&quot;Bilgewater Cutlass&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1500,&quot;Upgra [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericADC {
+            get {
+                return ResourceManager.GetString("GenericADC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1413,&quot;Name&quot;:&quot;Enchantment: Cinderhulk&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2625,&quot;UpgradeCost&quot;:525,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3715,&quot;Name&quot;:&quot;Skirmisher&apos;s Sabre&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1000,&quot;UpgradeCost&quot;:300,&quot;BuildFrom&quot;:[{&quot;Id&quot;:1041,&quot;Name&quot;:&quot;Hunter&apos;s Machete&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;B [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GenericJungleAD {
             get {
                 return ResourceManager.GetString("GenericJungleAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1413,&quot;Name&quot;:&quot;Enchantment: Cinderhulk&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2625,&quot;UpgradeCost&quot;:525,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3715,&quot;Name&quot;:&quot;Skirmisher&apos;s Sabre&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1000,&quot;UpgradeCost&quot;:300,&quot;BuildFrom&quot;:[{&quot;Id&quot;:1041,&quot;Name&quot;:&quot;Hunter&apos;s Machete&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;B [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericJungleAD1 {
+            get {
+                return ResourceManager.GetString("GenericJungleAD1", resourceCulture);
             }
         }
         
@@ -119,11 +137,29 @@ namespace AutoBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1413,&quot;Name&quot;:&quot;Enchantment: Cinderhulk&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2625,&quot;UpgradeCost&quot;:525,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3715,&quot;Name&quot;:&quot;Skirmisher&apos;s Sabre&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1000,&quot;UpgradeCost&quot;:300,&quot;BuildFrom&quot;:[{&quot;Id&quot;:1041,&quot;Name&quot;:&quot;Hunter&apos;s Machete&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;B [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericJungleADTank1 {
+            get {
+                return ResourceManager.GetString("GenericJungleADTank1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1414,&quot;Name&quot;:&quot;Enchantment: Runic Echoes&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2625,&quot;UpgradeCost&quot;:340,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3715,&quot;Name&quot;:&quot;Skirmisher&apos;s Sabre&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1000,&quot;UpgradeCost&quot;:300,&quot;BuildFrom&quot;:[{&quot;Id&quot;:1041,&quot;Name&quot;:&quot;Hunter&apos;s Machete&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350, [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GenericJungleAP {
             get {
                 return ResourceManager.GetString("GenericJungleAP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1414,&quot;Name&quot;:&quot;Enchantment: Runic Echoes&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2625,&quot;UpgradeCost&quot;:340,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3715,&quot;Name&quot;:&quot;Skirmisher&apos;s Sabre&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1000,&quot;UpgradeCost&quot;:300,&quot;BuildFrom&quot;:[{&quot;Id&quot;:1041,&quot;Name&quot;:&quot;Hunter&apos;s Machete&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350, [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericJungleAP1 {
+            get {
+                return ResourceManager.GetString("GenericJungleAP1", resourceCulture);
             }
         }
         
@@ -137,11 +173,29 @@ namespace AutoBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1401,&quot;Name&quot;:&quot;Enchantment: Cinderhulk&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2625,&quot;UpgradeCost&quot;:525,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3706,&quot;Name&quot;:&quot;Stalker&apos;s Blade&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1000,&quot;UpgradeCost&quot;:300,&quot;BuildFrom&quot;:[{&quot;Id&quot;:1041,&quot;Name&quot;:&quot;Hunter&apos;s Machete&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;Buil [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericJungleAPTank1 {
+            get {
+                return ResourceManager.GetString("GenericJungleAPTank1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:1,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3142,&quot;Name&quot;:&quot;Youmuu&apos;s Ghostblade&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2900,&quot;UpgradeCost&quot;:700,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3133,&quot;Name&quot;:&quot;Caulfield&apos;s Warhammer&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1100,&quot;UpgradeCost&quot;:400,&quot;BuildFrom&quot;:[{&quot;Id&quot;:1036,&quot;Name&quot;:&quot;Long Sword&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;BuildFro [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GenericMidAD {
             get {
                 return ResourceManager.GetString("GenericMidAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:1,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3142,&quot;Name&quot;:&quot;Youmuu&apos;s Ghostblade&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2900,&quot;UpgradeCost&quot;:700,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3133,&quot;Name&quot;:&quot;Caulfield&apos;s Warhammer&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1100,&quot;UpgradeCost&quot;:400,&quot;BuildFrom&quot;:[{&quot;Id&quot;:1036,&quot;Name&quot;:&quot;Long Sword&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;BuildFro [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericMidAD1 {
+            get {
+                return ResourceManager.GetString("GenericMidAD1", resourceCulture);
             }
         }
         
@@ -155,11 +209,29 @@ namespace AutoBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:1,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1056,&quot;Name&quot;:&quot;Doran&apos;s Ring&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:400,&quot;UpgradeCost&quot;:400,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3285,&quot;Name&quot;:&quot;Luden&apos;s Echo&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:3200,&quot;UpgradeCost&quot;:1100,&quot;BuildFrom&quot;:[{&quot;Id&quot;:1058,&quot;Name&quot;:&quot;Needlessly Large Rod&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1250,&quot;UpgradeCost&quot;:12 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericMidAP1 {
+            get {
+                return ResourceManager.GetString("GenericMidAP1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3097,&quot;Name&quot;:&quot;Targon&apos;s Brace&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:850,&quot;UpgradeCost&quot;:350,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3302,&quot;Name&quot;:&quot;Relic Shield&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1006,&quot;Name&quot;:&quot;Rejuvenation Bead&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:150,&quot;UpgradeCost&quot;:150,&quot;B [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GenericSupportADTank {
             get {
                 return ResourceManager.GetString("GenericSupportADTank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3097,&quot;Name&quot;:&quot;Targon&apos;s Brace&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:850,&quot;UpgradeCost&quot;:350,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3302,&quot;Name&quot;:&quot;Relic Shield&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1006,&quot;Name&quot;:&quot;Rejuvenation Bead&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:150,&quot;UpgradeCost&quot;:150,&quot;B [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericSupportADTank1 {
+            get {
+                return ResourceManager.GetString("GenericSupportADTank1", resourceCulture);
             }
         }
         
@@ -175,9 +247,27 @@ namespace AutoBuddy.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3092,&quot;Name&quot;:&quot;Frost Queen&apos;s Claim&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2200,&quot;UpgradeCost&quot;:450,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3098,&quot;Name&quot;:&quot;Frostfang&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:850,&quot;UpgradeCost&quot;:375,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3303,&quot;Name&quot;:&quot;Spellthief&apos;s Edge&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;BuildFrom&quot;:[], [rest of string was truncated]&quot;;.
         /// </summary>
+        internal static string GenericSupportAPBurst1 {
+            get {
+                return ResourceManager.GetString("GenericSupportAPBurst1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3092,&quot;Name&quot;:&quot;Frost Queen&apos;s Claim&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2200,&quot;UpgradeCost&quot;:450,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3098,&quot;Name&quot;:&quot;Frostfang&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:850,&quot;UpgradeCost&quot;:375,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3303,&quot;Name&quot;:&quot;Spellthief&apos;s Edge&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;BuildFrom&quot;:[], [rest of string was truncated]&quot;;.
+        /// </summary>
         internal static string GenericSupportAPHeal {
             get {
                 return ResourceManager.GetString("GenericSupportAPHeal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3092,&quot;Name&quot;:&quot;Frost Queen&apos;s Claim&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2200,&quot;UpgradeCost&quot;:450,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3098,&quot;Name&quot;:&quot;Frostfang&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:850,&quot;UpgradeCost&quot;:375,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3303,&quot;Name&quot;:&quot;Spellthief&apos;s Edge&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;BuildFrom&quot;:[], [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericSupportAPHeal1 {
+            get {
+                return ResourceManager.GetString("GenericSupportAPHeal1", resourceCulture);
             }
         }
         
@@ -191,11 +281,29 @@ namespace AutoBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3069,&quot;Name&quot;:&quot;Talisman of Ascension&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2400,&quot;UpgradeCost&quot;:350,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3096,&quot;Name&quot;:&quot;Nomad&apos;s Medallion&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:850,&quot;UpgradeCost&quot;:375,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3301,&quot;Name&quot;:&quot;Ancient Coin&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;BuildFrom [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericSupportAPTank1 {
+            get {
+                return ResourceManager.GetString("GenericSupportAPTank1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3074,&quot;Name&quot;:&quot;Ravenous Hydra&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:3500,&quot;UpgradeCost&quot;:525,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3077,&quot;Name&quot;:&quot;Tiamat&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1200,&quot;UpgradeCost&quot;:350,&quot;BuildFrom&quot;:[{&quot;Id&quot;:1036,&quot;Name&quot;:&quot;Long Sword&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false}, [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GenericTopAD {
             get {
                 return ResourceManager.GetString("GenericTopAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3074,&quot;Name&quot;:&quot;Ravenous Hydra&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:3500,&quot;UpgradeCost&quot;:525,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3077,&quot;Name&quot;:&quot;Tiamat&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1200,&quot;UpgradeCost&quot;:350,&quot;BuildFrom&quot;:[{&quot;Id&quot;:1036,&quot;Name&quot;:&quot;Long Sword&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:350,&quot;UpgradeCost&quot;:350,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false}, [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericTopAD1 {
+            get {
+                return ResourceManager.GetString("GenericTopAD1", resourceCulture);
             }
         }
         
@@ -209,6 +317,15 @@ namespace AutoBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:1,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1054,&quot;Name&quot;:&quot;Doran&apos;s Shield&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:450,&quot;UpgradeCost&quot;:450,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3068,&quot;Name&quot;:&quot;Sunfire Cape&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2900,&quot;UpgradeCost&quot;:1000,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3751,&quot;Name&quot;:&quot;Bami&apos;s Cinder&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1100,&quot;UpgradeCost&quot;:700,&quot;Bu [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericTopADTank1 {
+            get {
+                return ResourceManager.GetString("GenericTopADTank1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:false,&quot;MaxHPotionCount&quot;:1,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1056,&quot;Name&quot;:&quot;Doran&apos;s Ring&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:400,&quot;UpgradeCost&quot;:400,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3027,&quot;Name&quot;:&quot;Rod of Ages&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2700,&quot;UpgradeCost&quot;:750,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3010,&quot;Name&quot;:&quot;Catalyst of Aeons&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1100,&quot;UpgradeCost&quot;:350,&quot;B [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GenericTopAP {
@@ -218,11 +335,29 @@ namespace AutoBuddy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:false,&quot;MaxHPotionCount&quot;:1,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1056,&quot;Name&quot;:&quot;Doran&apos;s Ring&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:400,&quot;UpgradeCost&quot;:400,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3027,&quot;Name&quot;:&quot;Rod of Ages&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:2700,&quot;UpgradeCost&quot;:750,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3010,&quot;Name&quot;:&quot;Catalyst of Aeons&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1100,&quot;UpgradeCost&quot;:350,&quot;B [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericTopAP1 {
+            get {
+                return ResourceManager.GetString("GenericTopAP1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1056,&quot;Name&quot;:&quot;Doran&apos;s Ring&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:400,&quot;UpgradeCost&quot;:400,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3027,&quot;Name&quot;:&quot;Rod of Ages&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:3000,&quot;UpgradeCost&quot;:950,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3010,&quot;Name&quot;:&quot;Catalyst the Protector&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1200,&quot;UpgradeCost&quot;:45 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GenericTopAPTank {
             get {
                 return ResourceManager.GetString("GenericTopAPTank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;UseHPotion&quot;:true,&quot;MaxHPotionCount&quot;:3,&quot;MaxHPotionLevel&quot;:11,&quot;Items&quot;:[{&quot;Id&quot;:3340,&quot;Name&quot;:&quot;Warding Totem (Trinket)&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:0,&quot;UpgradeCost&quot;:0,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:1056,&quot;Name&quot;:&quot;Doran&apos;s Ring&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:400,&quot;UpgradeCost&quot;:400,&quot;BuildFrom&quot;:[],&quot;Sell&quot;:false},{&quot;Id&quot;:3027,&quot;Name&quot;:&quot;Rod of Ages&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:3000,&quot;UpgradeCost&quot;:950,&quot;BuildFrom&quot;:[{&quot;Id&quot;:3010,&quot;Name&quot;:&quot;Catalyst the Protector&quot;,&quot;BuyNowIfWeCan&quot;:false,&quot;TotalCost&quot;:1200,&quot;UpgradeCost&quot;:45 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GenericTopAPTank1 {
+            get {
+                return ResourceManager.GetString("GenericTopAPTank1", resourceCulture);
             }
         }
         
@@ -271,6 +406,15 @@ namespace AutoBuddy.Properties {
         internal static string item1 {
             get {
                 return ResourceManager.GetString("item1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;type&quot;:&quot;item&quot;,&quot;version&quot;:&quot;6.22.1&quot;,&quot;basic&quot;:{&quot;name&quot;:&quot;&quot;,&quot;rune&quot;:{&quot;isrune&quot;:false,&quot;tier&quot;:1,&quot;type&quot;:&quot;red&quot;},&quot;gold&quot;:{&quot;base&quot;:0,&quot;total&quot;:0,&quot;sell&quot;:0,&quot;purchasable&quot;:false},&quot;group&quot;:&quot;&quot;,&quot;description&quot;:&quot;&quot;,&quot;colloq&quot;:&quot;;&quot;,&quot;plaintext&quot;:&quot;&quot;,&quot;consumed&quot;:false,&quot;stacks&quot;:1,&quot;depth&quot;:1,&quot;consumeOnFull&quot;:false,&quot;from&quot;:[],&quot;into&quot;:[],&quot;specialRecipe&quot;:0,&quot;inStore&quot;:true,&quot;hideFromAll&quot;:false,&quot;requiredChampion&quot;:&quot;&quot;,&quot;stats&quot;:{&quot;FlatHPPoolMod&quot;:0,&quot;rFlatHPModPerLevel&quot;:0,&quot;FlatMPPoolMod&quot;:0,&quot;rFlatMPModPerLevel&quot;:0,&quot;PercentHPPoolMod&quot;:0,&quot;PercentMPPoolMod&quot;:0,&quot;FlatHPRegen [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string item2 {
+            get {
+                return ResourceManager.GetString("item2", resourceCulture);
             }
         }
         

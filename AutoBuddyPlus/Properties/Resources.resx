@@ -250,4 +250,52 @@
   <data name="TopHUD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TopHUD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GenericADC" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericADC.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericJungleAD1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericJungleAD.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericJungleADTank1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericJungleADTank.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericJungleAP1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericJungleAP.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericJungleAPTank1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericJungleAPTank.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericMidAD1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericMidAD.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericMidAP1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericMidAP.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericSupportADTank1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericSupportADTank.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericSupportAPBurst1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericSupportAPBurst.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericSupportAPHeal1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericSupportAPHeal.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericSupportAPTank1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericSupportAPTank.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericTopAD1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericTopAD.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericTopADTank1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericTopADTank.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericTopAP1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericTopAP.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GenericTopAPTank1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericTopAPTank.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="item2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

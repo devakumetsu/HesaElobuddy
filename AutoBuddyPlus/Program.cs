@@ -148,9 +148,10 @@ namespace AutoBuddy
             
             Logic = new LogicSelector(myChamp, menu);
 
+            new AutoShop();
+
             Game.OnTick += OnTick;
             KickAss.KickAss.Initialize();
-            new AutoShop();
         }
 
         public static void OnTick(EventArgs args)

@@ -23,6 +23,7 @@ namespace AutoBuddy.Utilities.AutoShop
         public AutoShop()
         {
             initialized = true;
+            BuildController.Initialize();
         }
 
         public static void OnTick(EventArgs args)

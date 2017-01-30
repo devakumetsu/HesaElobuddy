@@ -12,19 +12,29 @@ namespace AutoBuddy.Utilities.AutoShop
         public static Build CurrentBuild;
         public static string LoadedBuildName;
         private static string BuildPath = "";
+        private static bool buildLoaded = false;
+
+        private static bool loadingBuild = false;
 
         static BuildController()
         {
+            Initialize();
+        }
+
+        public static void Initialize()
+        {
+            if (buildLoaded || loadingBuild) return;
             var fileName = ObjectManager.Player.ChampionName + "_" + Game.MapId + ".txt";
             LoadBuild(fileName);
         }
 
         public static void LoadBuild(string buildName)
         {
+            if (loadingBuild) return;
+            loadingBuild = true;
             if (string.IsNullOrEmpty(buildName))
             {
                 LoadGenericBuild();
-                return;
             }
             else
             {
@@ -33,7 +43,6 @@ namespace AutoBuddy.Utilities.AutoShop
                 if (!File.Exists(fullpath))
                 {
                     LoadGenericBuild();
-                    return;
                 }
                 else
                 {
@@ -41,7 +50,6 @@ namespace AutoBuddy.Utilities.AutoShop
                     if (build == null)
                     {
                         LoadGenericBuild();
-                        return;
                     }
                     else
                     {
@@ -52,24 +60,73 @@ namespace AutoBuddy.Utilities.AutoShop
                     }
                 }
             }
+            loadingBuild = false;
+            buildLoaded = true;
         }
 
         public static void LoadGenericBuild()
         {
-            var genericBuild = GetGenericBuildByChampion();
-            var specialPath = SandboxConfig.DataDirectory + "AutoShop\\";
-            var fullpath = Path.Combine(specialPath + genericBuild);
-
-            if (!Directory.Exists(specialPath)) Directory.CreateDirectory(specialPath);
-
-            if (!File.Exists(fullpath))
+            try
             {
-                using (StreamWriter writer = new StreamWriter(fullpath))
+                var genericBuild = GetGenericBuildByChampion();
+                var specialPath = SandboxConfig.DataDirectory + "AutoShop\\";
+                var fullpath = Path.Combine(specialPath + genericBuild);
+
+                if (!Directory.Exists(specialPath)) Directory.CreateDirectory(specialPath);
+
+                if (!File.Exists(fullpath))
                 {
-                    writer.Write(Properties.Resources.ResourceManager.GetString(genericBuild.Split('.')[0]));
+                    //CopyResource(genericBuild, fullpath);
+                    
+                    using (StreamWriter writer = new StreamWriter(fullpath))
+                    {
+                        writer.Write(Properties.Resources.ResourceManager.GetString(genericBuild.Split('.')[0]));
+                    }
+                    
+                }
+                else if (File.ReadAllBytes(fullpath).Length == 0)
+                {
+                    File.Delete(fullpath);
+                    //CopyResource(genericBuild, fullpath);
+                    
+                    using (StreamWriter writer = new StreamWriter(fullpath))
+                    {
+                        writer.Write(Properties.Resources.ResourceManager.GetString(genericBuild.Split('.')[0]));
+                    }
+                    
+                }
+
+                loadingBuild = false;
+
+                LoadBuild(genericBuild);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private static void CopyResource(string resourceName, string file)
+        {
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            foreach(var resourcename in assembly.GetManifestResourceNames())
+            {
+                Console.WriteLine(resourceName);
+            }
+
+            Console.WriteLine(assembly.GetName());
+
+            using (Stream resource = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("AutoBuddyPlus." + resourceName))
+            {
+                if (resource == null)
+                {
+                    throw new ArgumentException("No such resource", resourceName + " - " + file);
+                }
+                using (Stream output = File.OpenWrite(file))
+                {
+                    resource.CopyTo(output);
                 }
             }
-            LoadBuild(genericBuild);
         }
 
         public static void ReloadBuild()

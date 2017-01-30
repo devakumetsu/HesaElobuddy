@@ -18,7 +18,7 @@ namespace AutoBuddy.MainLogics
         private bool active;
         private Obj_AI_Minion[] currentWave;
         private int CurrentWaveNum;
-        private Lane lane;
+        public Lane lane { get; private set; }
 
         private float randomAngle;
         private float randomExtend;

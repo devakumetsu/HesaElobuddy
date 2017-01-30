@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -2112,49 +2112,49 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericADC.txt" />
+    <Content Include="Resources\GenericADC.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericJungleAD.txt" />
+    <Content Include="Resources\GenericJungleAD.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericJungleADTank.txt" />
+    <Content Include="Resources\GenericJungleADTank.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericJungleAP.txt" />
+    <Content Include="Resources\GenericJungleAP.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericJungleAPTank.txt" />
+    <Content Include="Resources\GenericJungleAPTank.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericMidAD.txt" />
+    <Content Include="Resources\GenericMidAD.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericMidAP.txt" />
+    <Content Include="Resources\GenericMidAP.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericSupportADTank.txt" />
+    <Content Include="Resources\GenericSupportADTank.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericSupportAPBurst.txt" />
+    <Content Include="Resources\GenericSupportAPBurst.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericSupportAPHeal.txt" />
+    <Content Include="Resources\GenericSupportAPHeal.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericSupportAPTank.txt" />
+    <Content Include="Resources\GenericSupportAPTank.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericTopAD.txt" />
+    <Content Include="Resources\GenericTopAD.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericTopADTank.txt" />
+    <Content Include="Resources\GenericTopADTank.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericTopAP.txt" />
+    <Content Include="Resources\GenericTopAP.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GenericTopAPTank.txt" />
+    <Content Include="Resources\GenericTopAPTank.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\item.txt" />
@@ -2194,8 +2194,8 @@
   <PropertyGroup>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>IF NOT "%25Brutal%25"=="" (IF "$(DevEnvDir)"=="D:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\" (java -jar C:\UpVer.jar $(ProjectDir)\Properties\AssemblyInfo.cs))
-</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("AutoBuddy Plus")]
-[assembly: AssemblyDescription("Created by Christian Brutal Sniper and updated by Tryller And DevAkumetsu")]
+[assembly: AssemblyTitle("AutoBuddyPlus")]
+[assembly: AssemblyDescription("Created by Christian Brutal Sniper and updated by Hesa, Tryller And DevAkumetsu")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Tryller")]
-[assembly: AssemblyProduct("AutoBuddy Plus")]
+[assembly: AssemblyCompany("Hesa")]
+[assembly: AssemblyProduct("AutoBuddyPlus")]
 [assembly: AssemblyCopyright("Copyright Christian Brutal Sniper@Elobuddy  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

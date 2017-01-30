@@ -11,6 +11,7 @@ using EloBuddy.SDK.Menu.Values;
 using SharpDX;
 using Color = System.Drawing.Color;
 using EloBuddy.Sandbox;
+using System.Text.RegularExpressions;
 
 namespace AutoBuddy.MainLogics
 {
@@ -138,6 +139,11 @@ namespace AutoBuddy.MainLogics
         bool saidGreating = false;
         bool saidHello = false;
 
+        string Between(string source, string left, string right)
+        {
+            return Regex.Match(source, string.Format("{0}(.*){1}", left, right)).Groups[1].Value;
+        }
+
         private void Chat_OnMessage(AIHeroClient sender, ChatMessageEventArgs args)
         {
             if (SandboxConfig.Username.Contains("eggbrother"))
@@ -145,61 +151,62 @@ namespace AutoBuddy.MainLogics
                 Chat.Say("/all Hi my name is eggbrother and i am botting using scripts");
             }
 
-            if (args.Sender == null || args.Sender.IsMe) return;
+            if (sender == null || sender.IsMe) return;
 
-            if(args.Sender.IsEnemy)
+            var message = Between(args.Message, "<font color=\"#ffffff\">", "</font>").ToLower();
+            var championName = ObjectManager.Player.ChampionName.ToLower();
+
+            //Console.WriteLine(message);
+            
+            if (sender.IsEnemy)
             {
                 if (!saidHello && !saidGreating)
                 {
                     saidHello = true;
-                    if (args.Message.Contains("hi") || args.Message.Contains("hello") || args.Message.Contains("wasup") || args.Message.Contains("yo"))
+                    if (message.Contains("hi") || message.Contains("hello") || message.Contains("wasup") || message.Contains("yo"))
                         Core.DelayAction(() => Chat.Say("/all hi"), RandGen.r.Next(2000, 4000));
                 }
                 
                 if (!saidGreating)
                 {
                     saidGreating = true;
-                    if (args.Message.Contains("have fun") || args.Message.Contains("gl") || args.Message.Contains("hf") || args.Message.Contains("good luck"))
+                    if (message.Contains("have fun") || message.Contains("gl") || message.Contains("hf") || message.Contains("good luck"))
                         Core.DelayAction(() => Chat.Say("/all gl hf"), RandGen.r.Next(2000, 4000));
                 }
             }else
             {
-                if(args.Message.Contains("go mid") && (args.Message.Contains(ObjectManager.Player.ChampionName) || ObjectManager.Player.Distance(args.Sender) < 1000))
+                if((message.Contains("comme mid") || message.Contains("go mid") || message.Contains("move mid") || message.Contains("go to mid")) && (message.Contains(championName) || ObjectManager.Player.Distance(sender) < 1000))
                 {
-                    Core.DelayAction(() => Chat.Say("ok"), RandGen.r.Next(1000, 2000));
-                    Core.DelayAction(() => SelectLane2(Lane.Mid), RandGen.r.Next(2500, 4000));
-                }else if (args.Message.Contains("go top") && (args.Message.Contains(ObjectManager.Player.ChampionName) || ObjectManager.Player.Distance(args.Sender) < 1000))
+                    if(currentLogic.pushLogic.lane != Lane.Mid)
+                    {
+                        Core.DelayAction(() => Chat.Say("ok"), RandGen.r.Next(1000, 2000));
+                        Core.DelayAction(() => SelectLane2(Lane.Mid), RandGen.r.Next(2500, 4000));
+                    }
+                }else if ((message.Contains("comme top") || message.Contains("go top") || message.Contains("move top") || message.Contains("go to top")) && (message.Contains(championName) || ObjectManager.Player.Distance(sender) < 1000))
                 {
-                    Core.DelayAction(() => Chat.Say("ok"), RandGen.r.Next(1000, 2000));
-                    Core.DelayAction(() => SelectLane2(Lane.Top), RandGen.r.Next(2500, 4000));
+                    if (currentLogic.pushLogic.lane != Lane.Top)
+                    {
+                        Core.DelayAction(() => Chat.Say("ok"), RandGen.r.Next(1000, 2000));
+                        Core.DelayAction(() => SelectLane2(Lane.Top), RandGen.r.Next(2500, 4000));
+                    }
                 }
-                else if (args.Message.Contains("go bot") && (args.Message.Contains(ObjectManager.Player.ChampionName) || ObjectManager.Player.Distance(args.Sender) < 1000))
+                else if ((message.Contains("comme bot") || message.Contains("go bot") || message.Contains("move bot") || message.Contains("go to bot")) && (message.Contains(championName) || ObjectManager.Player.Distance(sender) < 1000))
                 {
-                    Core.DelayAction(() => Chat.Say("ok"), RandGen.r.Next(1000, 2000));
-                    Core.DelayAction(() => SelectLane2(Lane.Bot), RandGen.r.Next(2500, 4000));
+                    if (currentLogic.pushLogic.lane != Lane.Bot)
+                    {
+                        Core.DelayAction(() => Chat.Say("ok"), RandGen.r.Next(1000, 2000));
+                        Core.DelayAction(() => SelectLane2(Lane.Bot), RandGen.r.Next(2500, 4000));
+                    }
                 }
-                else if (args.Message.Contains("go jg") && (args.Message.Contains(ObjectManager.Player.ChampionName) || ObjectManager.Player.Distance(args.Sender) < 1000))
-                {
-                    Core.DelayAction(() => Chat.Say("ok"), RandGen.r.Next(1000, 2000));
-                    Core.DelayAction(() => SelectLane2(Lane.Jungle), RandGen.r.Next(2500, 4000));
-                }
-                else if (args.Message.Contains("gtfo") && (args.Message.Contains(ObjectManager.Player.ChampionName) || ObjectManager.Player.Distance(args.Sender) < 1000))
+                else if (message.Contains("gtfo") && (message.Contains(championName) || ObjectManager.Player.Distance(sender) < 1000))
                 {
                     Core.DelayAction(SelectLane, RandGen.r.Next(2500, 4000));
                 }
-                else if (args.Message.Contains("go elsewhere") && (args.Message.Contains(ObjectManager.Player.ChampionName) || ObjectManager.Player.Distance(args.Sender) < 1000))
+                else if ((message.Contains("go elsewhere") || message.Contains("move elsewhere")) && (message.Contains(championName) || ObjectManager.Player.Distance(sender) < 1000))
                 {
                     Core.DelayAction(() => Chat.Say("np"), RandGen.r.Next(1000, 2000));
                     Core.DelayAction(SelectLane, RandGen.r.Next(2500, 4000));
                 }
-            }
-
-            if (!args.Message.StartsWith("<font color=\"#40c1ff\">Challenjour Ryze")) return;
-            
-            if (args.Message.Contains("Thank you"))
-            {
-                Core.DelayAction(() => Chat.Say("np"), RandGen.r.Next(1000, 2000));
-                Core.DelayAction(SelectLane, RandGen.r.Next(2500, 4000));
             }
         }
 
