@@ -28,26 +28,24 @@ namespace AutoBuddy
         static List<string> _allowed = new List<string> { "/noff", "/ff", "/mute all", "/msg", "/r", "/w", "/surrender", "/nosurrender", "/help", "/dance", "/d", "/taunt", "/t", "/joke", "/j", "/laugh", "/l" };
 
         private static void Main(string[] args)
-        {
-            // fix for aram map; and conflict with AramBuddy 
+        {           
             if (Game.MapId != GameMapId.SummonersRift)
             {
-                Chat.Print(Game.MapId + " IS NOT Supported By AutoBuddyPlus");
+                Chat.Print(Game.MapId + " IS NOT Supported By AutoBuddyPlus.");
                 return;
             }
-
             Loading.OnLoadingComplete += Loading_OnLoadingComplete;
         }
 
         private static void Loading_OnLoadingComplete(EventArgs args)
         {
             createFS();
-            var randomTime = new Random().Next(8000, 15000);
+            var randomStartTime = new Random().Next(8000, 15000);
             Chat.Print("<font size='30'>AB+</font> <font color='#b756c5'>customized by Hesa</font>");
-            Chat.Print("Starting in " + ((int) randomTime / 1000) +" seconds.");
-            Chat.Print("If you like botting consider to try www.HesaBot.com");
+            Chat.Print("Starting in " + ((int) randomStartTime / 1000) +" seconds.");
+            Chat.Print("<font size='30'>fixed for league 7.14</font><font color='#b756c5'>by DevAkumetsu</font>");
 
-            Core.DelayAction(Start, randomTime);
+            Core.DelayAction(Start, randomStartTime);
             menu = MainMenu.AddMenu("AB+", "AB");
             menu.AddGroupLabel("Default");
 
@@ -89,11 +87,11 @@ namespace AutoBuddy
             menu.Add("reselectlane", new CheckBox("Reselect lane", false));
 
             menu.AddLabel("----------------------------");
-            menu.Add("autoclose", new CheckBox("Auto close lol. Need Reload (F5)", true));
+            menu.Add("autoclose", new CheckBox("Auto close LoL. Need Reload (F5)", true));
             menu.Add("autoshop", new CheckBox("Enable AutoShop", true));
             menu.Add("oldWalk", new CheckBox("Use old orbwalk. Need Reload (F5)", true));
-            menu.Add("debuginfo", new CheckBox("Draw debug info", false));
-            menu.Add("l1", new Label("By Christian Brutal Sniper - Updated by Hesa, Tryller and DevAkumetsu"));
+            menu.Add("debuginfo", new CheckBox("Draw debug info", true));
+            menu.Add("l1", new Label("By Christian Brutal Sniper - Updated by Hesa, Tryller and DevAkumetsu."));
             
         }
         
