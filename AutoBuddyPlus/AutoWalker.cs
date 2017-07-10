@@ -56,10 +56,10 @@ namespace AutoBuddy
 
             Target = ObjectManager.Player.Position;
             Orbwalker.DisableMovement = false;
-
             Orbwalker.DisableAttacking = false;
             Game.OnUpdate += Game_OnUpdate;
             Orbwalker.OverrideOrbwalkPosition = () => Target;
+            
             if (Orbwalker.HoldRadius > 90 || Orbwalker.HoldRadius < 50)
             {
                 Chat.Print("=================WARNING=================", Color.Red);
@@ -68,8 +68,7 @@ namespace AutoBuddy
                 Chat.Print("Recommended values: Hold radius: 50-90, Delay between movements: 100-250");
             }
             
-            Drawing.OnDraw += Drawing_OnDraw;
-            
+            Drawing.OnDraw += Drawing_OnDraw;            
             Core.DelayAction(OnEndGame, 20000);
             updateItems();
             oldOrbwalk();
@@ -82,7 +81,6 @@ namespace AutoBuddy
 
         private static void OnEndGame()
         {
-
             if (MyNexus != null && EneMyNexus != null && (MyNexus.Health > 1) && (EneMyNexus.Health > 1))
             {
                 Core.DelayAction(OnEndGame, 5000);
@@ -229,14 +227,6 @@ namespace AutoBuddy
             Exhaust = Player.Spells.FirstOrDefault(sp => sp.SData.Name.Contains("summonerexhaust")) == null ? null : new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerexhaust"), 600);
             Teleport = Player.Spells.FirstOrDefault(sp => sp.SData.Name.Contains("summonerteleport")) == null ? null : new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerteleport"), int.MaxValue);
             Smite = Player.Spells.FirstOrDefault(sp => sp.SData.Name.Contains("smite")) == null ? null : new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("smite"), 600);
-
-            /*Ghost = new Spell.Active(ObjectManager.Player.GetSpellSlotFromName("summonerhaste"));
-            Flash = new Spell.Skillshot(ObjectManager.Player.GetSpellSlotFromName("summonerflash"), 600, SkillShotType.Circular);
-            Ignite = new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerdot"), 600);
-            Exhaust = new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerexhaust"), 600);
-            Teleport = new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerteleport"), int.MaxValue);
-            Smite = new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("smite"), 600);
-*/
             Heal = new Spell.Active(ObjectManager.Player.GetSpellSlotFromName("summonerheal"), 600);
             Barrier = new Spell.Active(ObjectManager.Player.GetSpellSlotFromName("summonerbarrier"));
         }
@@ -247,12 +237,10 @@ namespace AutoBuddy
         private static int adjustAnimation = 20;
         private static float holdRadius = 50;
         private static float movementDelay = .25f;
-
         private static float nextMove;
         
         private static void oldOrbwalk()
         {
-
             if (!MainMenu.GetMenu("AB").Get<CheckBox>("oldWalk").CurrentValue) return;
             oldWalk = true;
             Orbwalker.OnPreAttack+=Orbwalker_OnPreAttack;
@@ -266,8 +254,7 @@ namespace AutoBuddy
         }
 
         public static void OnTick(EventArgs args)
-        {
-            // fix for stuck at base:
+        {           
             var turret = ObjectManager.Get<Obj_HQ>().First(tur => tur.IsAlly && tur.Name.Contains("HQ_T"));
             if(Shop.CanShop && !ObjectManager.Player.IsDead)
             {
@@ -301,8 +288,7 @@ namespace AutoBuddy
                 Target = PfNodes[0];
                 if (ObjectManager.Player.Distance(PfNodes[0]) < 600)
                 {
-                    PfNodes.RemoveAt(0);
-                    
+                    PfNodes.RemoveAt(0);                    
                 }
             }
             if (!oldWalk||ObjectManager.Player.Position.Distance(Target) < holdRadius || Game.Time < nextMove) return;
