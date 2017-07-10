@@ -78,12 +78,12 @@ AutoBuddy won't recall if you have less gold than needed for next item.
             active = true;
             g = null;
             Game.OnTick += Game_OnTick;
-            //Chat.Print("Recall Activated");
+            if (MainMenu.GetMenu("AB").Get<CheckBox>("debugChatInfo").CurrentValue) Chat.Print("Recall Activated");
         }
 
         public void Deactivate()
         {
-            //Chat.Print("Recall desactivated");
+            if (MainMenu.GetMenu("AB").Get<CheckBox>("debugChatInfo").CurrentValue) Chat.Print("Recall desactivated");
             lastRecallTime = 0;
             active = false;
             Game.OnTick -= Game_OnTick;
@@ -114,13 +114,14 @@ AutoBuddy won't recall if you have less gold than needed for next item.
                 {
                     if (g == null)
                     {
-
+                        if (MainMenu.GetMenu("AB").Get<CheckBox>("debugChatInfo").CurrentValue) Chat.Print("Recall.cs g == null");
                         g = ObjectManager.Get<GrassObject>().Where(gr => gr.Distance(AutoWalker.MyNexus) < AutoWalker.myHero.Distance(AutoWalker.MyNexus) && gr.Distance(AutoWalker.myHero) > Orbwalker.HoldRadius)
                             .OrderBy(gg => gg.Distance(AutoWalker.myHero)).FirstOrDefault(gr => ObjectManager.Get<GrassObject>().Count(gr2 => gr.Distance(gr2) < 65) >= 4);
                     }
 
                     if (g != null && g.Distance(AutoWalker.myHero) < nearestTurret.Position.Distance(AutoWalker.myHero))
                     {
+                        if (MainMenu.GetMenu("AB").Get<CheckBox>("debugChatInfo").CurrentValue) Chat.Print("Recall.cs ActiveModes.Flee");
                         AutoWalker.SetMode(Orbwalker.ActiveModes.Flee);
                         recallPos = g.Position;
                     }
@@ -128,10 +129,13 @@ AutoBuddy won't recall if you have less gold than needed for next item.
 
                 if ((!AutoWalker.myHero.IsMoving && ObjectManager.Player.Distance(recallPos) < Orbwalker.HoldRadius + 60) || (AutoWalker.myHero.IsMoving && ObjectManager.Player.Distance(recallPos) < 60))
                 {
+                    if (MainMenu.GetMenu("AB").Get<CheckBox>("debugChatInfo").CurrentValue) Chat.Print("Recall.cs castRecall");
                     CastRecall();
                 }
-                else
+                else{
+                    if (MainMenu.GetMenu("AB").Get<CheckBox>("debugChatInfo").CurrentValue) Chat.Print("Recall.cs WalkTo");
                     AutoWalker.WalkTo(recallPos);
+                }     
             }
         }
 
