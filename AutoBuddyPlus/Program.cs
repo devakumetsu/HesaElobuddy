@@ -91,6 +91,7 @@ namespace AutoBuddy
             menu.Add("autoshop", new CheckBox("Enable AutoShop", true));
             menu.Add("oldWalk", new CheckBox("Use old orbwalk. Need Reload (F5)", true));
             menu.Add("debuginfo", new CheckBox("Draw debug info", true));
+            menu.Add("debugChatInfo", new CheckBox("Chat debug info", false));
             menu.Add("l1", new Label("By Christian Brutal Sniper - Updated by Hesa, Tryller and DevAkumetsu."));
             
         }
@@ -103,43 +104,7 @@ namespace AutoBuddy
         private static void Start()
         {
             RandGen.Start();
-            /*
-            bool generic = false;
-            switch (ObjectManager.Player.Hero)
-            {
-                case Champion.Aatrox:
-                    myChamp = new Aatrox();
-                break;
-                case Champion.Ashe:
-                    myChamp = new Ashe();
-                break;
-                case Champion.Caitlyn:
-                    myChamp = new Caitlyn();
-                break;
-                case Champion.Cassiopeia:
-                    myChamp = new Cassiopeia();
-                break;
-                case Champion.Ezreal:
-                    myChamp = new Ezreal();
-                break;
-                case Champion.Jinx:
-                    myChamp = new Jinx();
-                break;
-                case Champion.Sivir:
-                    myChamp = new Sivir();
-                break;
-                case Champion.Tristana:
-                    myChamp = new Tristana();
-                break;
-                case Champion.Vayne:
-                    myChamp = new Vayne();
-                break;
-
-                default:
-                    generic = true;
-                    myChamp = new Generic();
-                break;
-            }*/
+            
             var generic = true;
             myChamp = new Generic();
             CustomLvlSeq cl = new CustomLvlSeq(menu, AutoWalker.myHero, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EloBuddy\\AutoBuddyPlus\\Skills"));
